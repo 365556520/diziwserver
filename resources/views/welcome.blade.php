@@ -78,7 +78,7 @@
             @endif
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel-6.0
+                    Laravel-6.0 测试成功
                 </div>
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
