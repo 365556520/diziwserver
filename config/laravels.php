@@ -22,7 +22,7 @@ return [
     'websocket'                => [
         'enable' => true,
         //'handler' => XxxWebSocketHandler::class,
-        'handler' =>\app\server\WebSocketService::class
+        'handler' => \App\server\WebSocketService::class
     ],
     'sockets'                  => [],
     'processes'                => [

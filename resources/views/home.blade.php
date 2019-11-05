@@ -5,7 +5,9 @@
     <title>Chat Client</title>
 </head>
 <body>
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 <script>
+
     window.onload = function () {
         var nick = prompt("Enter your nickname");
         var input = document.getElementById("input");
@@ -28,12 +30,10 @@
             document.body.insertBefore(div, input);
             input.scrollIntoView();
         };
-
         // 连接关闭时触发
         socket.onclose = function (event) {
             console.log("Connection closed ...");
         };
-
         input.onchange = function () {
             var msg = nick + ": " + input.value;
             // 将输入框变更信息通过 send 方法发送到服务器
