@@ -78,10 +78,9 @@
                     @endauth
                 </div>
             @endif
-
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Laravel-6.0测试着急
                 </div>
 
                 <div class="links">
