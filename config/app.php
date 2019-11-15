@@ -66,13 +66,7 @@ return [
     | ahead and set this to a sensible default for you out of the box.
     |
     */
-
-<<<<<<< HEAD
     'timezone' => 'PRC',
-=======
-    'timezone' => 'UTC',
->>>>>>> 21ec9b11ce76e17dcd64855928ef718e80336593
-
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -83,13 +77,7 @@ return [
     | to any of the locales which will be supported by the application.
     |
     */
-
-<<<<<<< HEAD
     'locale' => 'zh-CN',
-=======
-    'locale' => 'en',
->>>>>>> 21ec9b11ce76e17dcd64855928ef718e80336593
-
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
