@@ -13,6 +13,7 @@
                 {{ csrf_field() }}
                 <div class="layadmin-user-login-box layadmin-user-login-header">
                     <h2>{{trans('auth/login.register.title')}}</h2>
+                    <h3>注册页面控制还没有些</h3>
                 </div>
                 <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
                     {{--用户名--}}
