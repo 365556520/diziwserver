@@ -13,5 +13,8 @@
 
 
 Auth::routes();
-
+Route::group(['namespace'=>'Auth'],function () {
+    //成功页面
+    Route::get('auth/success/{massage}', 'RegisterController@success');
+});
 Route::get('/home', 'HomeController@index')->name('home');

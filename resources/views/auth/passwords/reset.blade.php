@@ -1,65 +1,62 @@
-@extends('layouts.app')
-
+@extends('layouts.layuicontent')
+@section('title')
+    <title>修改密码</title>
+@endsection
+@section('css')
+    {{--注册页面css--}}
+    <link href="{{ asset('mycss/Auth/login.css')}}" rel="stylesheet">
+@endsection
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
-
-                        <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+<div>
+    <div class="layadmin-user-login-main">
+            <form class="form-horizontal" method="POST" action="{{ route('password.update') }}">
+                @csrf
+                <div class="layadmin-user-login-box layadmin-user-login-header">
+                    <h2>修改密码</h2>
                 </div>
-            </div>
-        </div>
+                <input type="hidden" name="token" value="{{ $token }}">
+                <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+                    {{--邮箱--}}
+                    <div class="layui-form-item">
+                        <label class="layadmin-user-login-icon layui-icon layui-icon-chat" for="LAY-user-login-username"></label>
+                        <input id="email" type="email" name="email" value="{{ $email ?? old('email') }}"  placeholder="{{trans('auth/login.email.email')}}" lay-verify="required"  class="layui-input">
+                        @error('email')
+                             <span class="help-block">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
+                    {{--密码--}}
+                    <div class="layui-form-item">
+                        <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
+                        <input  id="password" type="password"  name="password"  placeholder="新密码" lay-verify="required"  class="layui-input">
+                        @error('password')
+                            <span class="help-block">
+                                <i class="layui-icon">&#xe69c;</i> {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
+
+                    {{--确认密码--}}
+                    <div class="layui-form-item">
+                        <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
+                        <input  id="password-confirm" type="password"  placeholder="{{trans('auth/login.register.confirmPassword')}}"  name="password_confirmation" lay-verify="required"  class="layui-input">
+                    </div>
+
+
+                    <div class="layui-form-item">
+                        <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="LAY-user-login-submit">修改密码</button>
+                    </div>
+                </div>
+            </form>
     </div>
 </div>
+@endsection
+@section('js')
+    <script>
+        //form提交
+        layui.use('form', function(){
+            var form = layui.form;
+        });
+    </script>
 @endsection

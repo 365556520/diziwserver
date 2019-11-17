@@ -61,7 +61,7 @@
                         <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
                         <input  id="password-confirm" type="password"  placeholder="{{trans('auth/login.register.confirmPassword')}}"  name="password_confirmation" lay-verify="required"  class="layui-input">
                     </div>
-              {{--     --}}{{--验证码--}}{{--
+                 {{--  验证码--}}
                     <div class="layui-form-item">
                         <div class="layui-row">
                             <div class="layui-col-xs7">
@@ -75,11 +75,11 @@
                             </div>
                             <div class="layui-col-xs5">
                                 <div style="margin-left: 10px;">
-                                    <img class="layadmin-user-login-codeimg" src="{{captcha_src('flat')}}" style="cursor: pointer;" onclick="this.src='{{captcha_src('flat')}}'+Math.random()">
+                                    <img class="layadmin-user-login-codeimg" src="{{captcha_src('math')}}" style="cursor: pointer;" onclick="this.src='{{captcha_src('math')}}'+Math.random()">
                                 </div>
                             </div>
                         </div>
-                    </div>--}}
+                    </div>
                     <div class="layui-form-item">
                         <button class="layui-btn layui-btn-fluid " style="background-color:#ec706b;" lay-submit="" lay-filter="LAY-user-login-submit">{{trans('auth/login.register.submit')}}</button>
                     </div>
