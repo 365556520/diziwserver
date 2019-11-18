@@ -6,7 +6,7 @@
 @if ($level === 'error')
 # @lang('Whoops!')
 @else
-# @lang('你好评!')
+# @lang('亲爱的diziw用户您好!')
 @endif
 @endif
 
@@ -36,7 +36,6 @@
 {{-- Outro Lines --}}
 @foreach ($outroLines as $line)
 {{ $line }}
-
 @endforeach
 
 {{-- Salutation --}}
@@ -51,8 +50,9 @@
 @isset($actionText)
 @slot('subcopy')
 @lang(
-    "aaa啊啊If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\n".
-    'into your web browser: [:actionURL](:actionURL)',
+
+    "如果您无法单击\":actionText\"按钮,请将下面的URL复制并粘贴".
+    '到您的web浏览器: [:actionURL](:actionURL)',
     [
         'actionText' => $actionText,
         'actionURL' => $actionUrl,
