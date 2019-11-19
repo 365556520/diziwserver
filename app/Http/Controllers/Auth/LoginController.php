@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -102,7 +104,7 @@ class LoginController extends Controller
         }
         // 手动登录该用户
         Auth::login($user);
-        // 登录成功后将用户重定向到首页
+      /*  // 登录成功后将用户重定向到首页
         //判断登录用户是否有后台权限没有权限就退出登录
         if (Auth::user()->can(config('admin.permissions.system.login'))) {
             return redirect(url('/admin/home'));
@@ -110,6 +112,6 @@ class LoginController extends Controller
             // 用户已经登录了...
             Auth::logout();//不是管理员就退出登录
             abort(500, trans('admin/errors.permissions'));
-        }
+        }*/
     }
 }

@@ -19,7 +19,8 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         'SocialiteProviders\Manager\SocialiteWasCalled' => [
-            'SocialiteProviders\Weibo\WeiboExtendSocialite@handle',
+            'SocialiteProviders\Weibo\WeiboExtendSocialite@handle',//微博事件监听器
+            'SocialiteProviders\QQ\QqExtendSocialite@handle',//QQ事件监听器
         ],
     ];
 
