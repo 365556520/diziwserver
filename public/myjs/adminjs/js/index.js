@@ -17,7 +17,7 @@ $(function () {
             openTabNum: "50",  //最大可打开窗口数量
             tabFilter: "bodyTab",  //layui的element模块事件过滤器
             ajaxSettings: {  //ajax参数，与jquery.ajax一致
-                url: "../services/data/menu.json",
+                url: "myjs/adminjs/menu.json",
                 type: 'get'
             }
         });

@@ -4,7 +4,7 @@ $(function () {
 
     //config的设置是全局的
     layui.config({
-        base: '../../plugins/layui-extend/' //这是你存放拓展模块的根目录
+        base: 'myjs/adminjs/plugins/layui-extend/' //这是你存放拓展模块的根目录
     });
 
     layui.use(['form', 'layer', 'element', 'laydate', 'table', 'echarts'], function () {
