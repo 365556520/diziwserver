@@ -1,10 +1,9 @@
 var bodyTab;
 
 $(function () {
-
     //config的设置是全局的
     layui.config({
-        base: 'myjs/adminjs/plugins/layui-extend/' //这是你存放拓展模块的根目录
+        base: '../myjs/adminjs/plugins/layui-extend/' //这是你存放拓展模块的根目录
     }).use(['bodyTab', 'form', 'colorpicker'], function () {
 
         var colorpicker = layui.colorpicker;
@@ -12,12 +11,11 @@ $(function () {
         var form = layui.form;
         var layer = layui.layer;
         bodyTab = layui.bodyTab;
-
         bodyTab.set({
             openTabNum: "50",  //最大可打开窗口数量
             tabFilter: "bodyTab",  //layui的element模块事件过滤器
             ajaxSettings: {  //ajax参数，与jquery.ajax一致
-                url: "myjs/adminjs/menu.json",
+                url: "../myjs/adminjs/menu.json",
                 type: 'get'
             }
         });
