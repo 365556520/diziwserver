@@ -29,6 +29,7 @@ class HomeController extends Controller
      * 后台左边菜单列表、
      * */
     public function menus(){
-        dd($this->menu->getMenuListJson());
+        return ['code' => 200,"token"=>'','msg'=>'成功获取列表','data' => $this->menu->getMenuListJson()];
+
     }
 }

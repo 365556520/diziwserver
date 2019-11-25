@@ -5,3 +5,7 @@
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/menus', 'HomeController@menus')->name('menus');
+//图标路由
+Route::get('icons', 'MenuController@icons');
+/*菜单路由*/
+Route::resource('menu','MenuController');

@@ -61,35 +61,7 @@ class  MenuRepository extends Repository{
         }
         return $this->sortMenuSetCache();
     }
-    /*获取左边菜单json数据*/
-    public function getMenuListJson(){
-        $menu = [];
-        if(Cache::has(config('admin.globals.cache.menusList'))){
-            $menu = Cache::get(config('admin.globals.cache.menusList'));
-        }else{
-            $menu = $this->sortMenuSetCache();
-        }
-        return json_encode($this->getMenu($menu));
-    }
-    /*递归menu得到左边菜单数据*/
-    public function getMenu($menus){
-        $arr = [];
-        if (empty($menus)){
-            return '';
-        };
-        foreach($menus as  $key=>$v){
-            $arr[$key]['mid'] = $v['id'];
-            $arr[$key]['title'] = $v['name'];
-            $arr[$key]['icon'] = $v['icon'];
-            $arr[$key]['href'] = $v['url'];
-            if(empty($v['child'])){ //判断是否有分类
-                 $arr[$key]['children'] = $this->getMenu($v);
-             }else{
-                 $arr[$key]['children']= [];
-             }
-        }
-        return $arr;
-    }
+
 
     /*修改菜单*/
     public function editMenu($id)
@@ -146,5 +118,37 @@ class  MenuRepository extends Repository{
         }
         flash(trans('admin/alert.menu.destroy_error'),'error');
         return false;
+    }
+
+    /*获取左边菜单json数据*/
+    public function getMenuListJson(){
+        $menu = [];
+        if(Cache::has(config('admin.globals.cache.menusList'))){
+            $menu = Cache::get(config('admin.globals.cache.menusList'));
+        }else{
+            $menu = $this->sortMenuSetCache();
+        }
+        return $this->getMenu($menu);
+    }
+    /*递归menu得到左边菜单数据*/
+    public function getMenu($menus){
+        $arr = [];
+        if (empty($menus)){
+            return '';
+        };
+        $i = 0;
+        foreach($menus as  $v){
+            $arr[$i]['mid'] = $v['id'];
+            $arr[$i]['title'] = $v['name'];
+            $arr[$i]['icon'] = $v['icon'];
+            $arr[$i]['href'] = $v['url'];
+            if(isset($v['child'])){ //判断是否有分类
+                $arr[$i]['children'] = $this->getMenu($v['child']);
+            }else{
+                $arr[$i]['children']= [];
+            }
+            $i++;
+        }
+        return $arr;
     }
 }
