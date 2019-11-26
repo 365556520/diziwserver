@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\MenuRequest;
 use App\Repositories\Eloquent\Admin\MenuRepository;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
 class MenuController extends Controller {
     private $menu;
     public function __construct(MenuRepository $menuRepository){
@@ -23,6 +25,10 @@ class MenuController extends Controller {
         //进入的时候刷新缓存
         $this->menu->sortMenuSetCache();
         return view('admin.menu.list')->with(compact('menu','menuList'));
+    }
+    public function ajaxIndex(Request $request)
+    {
+        return $this->menu->ajaxIndex($request->all());
     }
     /*添加菜单
      * */

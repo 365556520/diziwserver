@@ -26,7 +26,7 @@ class  MenuRepository extends Repository{
         foreach ($menus as  $key => $v){
             if($v['parent_id'] == $pid ){
                 $arr[$key] = $v;
-                $arr[$key]['child'] = self::sortMenus($menus,$v['id']);
+                $arr[$key]['children'] = self::sortMenus($menus,$v['id']);
             }
         }
         return $arr;
@@ -40,18 +40,41 @@ class  MenuRepository extends Repository{
             $menusList = $this->sortMenus($menus);
             //对子菜单进行排序
             foreach ($menusList as $key => &$v){
-                if($v['child']){
+                if($v['children']){
                     //提取子菜单的sort的所有列
-                    $sort = array_column($v['child'],'sort');
+                    $sort = array_column($v['children'],'sort');
                     //array_multisort是php的排序方法
-                    array_multisort($sort,$v['child'],SORT_DESC);
+                    array_multisort($sort,$v['children'],SORT_DESC);
                 }
             }
-            //添加到redios缓存
-            Cache::forever(config('admin.globals.cache.menusList'),$menusList);
+
+                Cache::forever(config('admin.globals.cache.menusList'),$menusList);
+
            return $menusList;
         }
         return '';
+    }
+    /*从数据库中获取数据*/
+    /*后台menus显示数据*/
+    public function ajaxIndex($data){
+        //得到模型
+        $menu = $this->model;
+        $menus = [];
+        //判断是否有缓存如果有缓存直接从缓存里拿数据
+        if(Cache::has(config('admin.globals.cache.menusList'))){
+            $menus = Cache::get(config('admin.globals.cache.menusList'));
+        }
+        $menus = $this->model->orderBy('sort','desc')->get();
+        $count = $menu->count();//查出所有数据的条数
+        // datatables固定的返回格式
+        return [
+            'code' => 0,
+            'msg' => '',//消息
+            'count' => $count,//总条数
+            'data' => $menus,//数据
+             "is"=> true,
+            "tip"=> "操作成功！"
+        ];
     }
     /*得到成品的排过序的子菜单和菜单*/
     public function getMenuList(){
@@ -142,11 +165,7 @@ class  MenuRepository extends Repository{
             $arr[$i]['title'] = $v['name'];
             $arr[$i]['icon'] = $v['icon'];
             $arr[$i]['href'] = $v['url'];
-            if(isset($v['child'])){ //判断是否有分类
-                $arr[$i]['children'] = $this->getMenu($v['child']);
-            }else{
-                $arr[$i]['children']= [];
-            }
+            $arr[$i]['children'] = $this->getMenu($v['children']);
             $i++;
         }
         return $arr;
