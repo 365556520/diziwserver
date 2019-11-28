@@ -44,24 +44,29 @@
             padding: 0px 5px;
             font-size: 12px;
         }
+        .success{
+            color: #5ccb22;
+
+        }
+        .error{
+            color: #cb0322;
+        }
     </style>
 @endsection
 @section('content')
     <div style="height: 100%">
         <div class="dHead">
-            <a class="layui-btn layui-btn-primary layui-btn-xs layui-btn-xstree" onclick="reload()">reload</a>
-            <a class="layui-btn layui-btn-primary layui-btn-xs layui-btn-xstree" onclick="query()">query</a>
-            <a class="layui-btn layui-btn-primary layui-btn-xs layui-btn-xstree" onclick="add(null);">新增顶级菜单</a>
-            <a class="layui-btn layui-btn-primary layui-btn-xs layui-btn-xstree" onclick="openorclose();">隐藏或打开香蕉节点</a>
-            <a class="layui-btn layui-btn-primary layui-btn-xs layui-btn-xstree" onclick="getCheckData();">获取选中行数据</a>
-            <a class="layui-btn layui-btn-primary layui-btn-xs layui-btn-xstree" onclick="getCheckLength();">获取选中数目</a>
-            <a class="layui-btn layui-btn-primary layui-btn-xs layui-btn-xstree" onclick="print();">打印缓存对象</a>
-            <a class="layui-btn layui-btn-primary layui-btn-xs layui-btn-xstree" onclick="openAll();">展开或折叠全部</a>
-            <a class="layui-btn layui-btn-primary layui-btn-xs layui-btn-xstree" onclick="radioStatus();">获取单选数据</a>
-            <a class="layui-btn layui-btn-primary layui-btn-xs layui-btn-xstree" onclick="test();">test</a>
+            <a class="layui-btn  layui-btn-xs layui-btn-xstree" onclick="newmenu()">新增顶级菜单</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs layui-btn-xstree" onclick="openAll();">展开或折叠全部菜单</a>
+            <a class="layui-btn layui-btn-primary layui-btn-xs layui-btn-xstree" onclick="reload()">刷新</a>
             <br>
             <br>
-            <b>此服务器配置不是一般低</b>，请您耐心等待，如长时间无法加载，可以手动刷新一次（一机多用，所以宽带和内存有限的问题导致资源无法及时加载成功）。
+            <b style="color:#cb0322 ">注意:顶级菜单只能通过“新增顶级菜单添加”子菜单可以通过点击顶级菜单的添加来添加，添加完成后记得保存!</b>
+            @if(flash()->message)
+                <div >
+                    <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
+                </div>
+            @endif
             <img src="" onerror="src=''" alt="">
         </div>
         <div class="dBody">
@@ -101,7 +106,6 @@
                 , limit: 1000 //默认采用100
                 , cols: [[
                     {type: 'numbers'}
-                    , {type: 'checkbox', sort: true}
                     , {field: 'name', width: 200, title: '菜单名称', edit: 'text', sort: true}
                     , {field: 'id', width: 60, title: 'id', sort: true}
                     , {field: 'slug', width: 200, edit: 'text', title: '权限'}
@@ -112,11 +116,12 @@
                     , {
                         width: 160, title: '操作', align: 'center'/*toolbar: '#barDemo'*/
                         , templet: function (d) {
+                            console.log(d.children.length, "看下按钮的、");
                             var html = '';
-                            var saveBtn = '<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="save">保存</a>';
-                            var addBtn = '<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="add">添加</a>';
-                            var delBtn = '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
-                            return saveBtn+addBtn + delBtn;
+                            var saveBtn = '<a class="layui-btn  layui-btn-xs" lay-event="save">保存</a>';
+                            var addBtn = d.parent_id==0?'<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="add">添加</a>':'';
+                            var delBtn = d.children.length>0?'':'<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
+                            return saveBtn + addBtn + delBtn;
                         }
                     }
                 ]]
@@ -130,14 +135,6 @@
                 , onDblClickRow: function (index, o) {
                     console.log(index, o, "双击");
                     msg("双击！,按F12，在控制台查看详细参数！");
-                }
-                , onCheck: function (obj, checked, isAll) {//复选事件
-                    console.log(obj, checked, isAll, "复选");
-                    msg("复选,按F12，在控制台查看详细参数！");
-                }
-                , onRadio: function (obj) {//单选事件
-                    console.log(obj, "单选");
-                    msg("单选,按F12，在控制台查看详细参数！");
                 }
             });
 
@@ -155,15 +152,36 @@
                 var value = obj.value //得到修改后的值
                     ,data = obj.data //得到所在行所有键值
                     ,field = obj.field; //得到字段
-                layer.msg('[ID: '+ data.id +']  更改为：'+ value);
+                layer.msg('[ID: '+ data.id +']  更改为:'+ value+'不要忘记保存');
             });
         });
 
         function del(obj) {
-            layer.confirm("你确定删除数据吗？如果存在下级节点则一并删除，此操作不能撤销！", {icon: 3, title: '提示'},
+            let id = obj.data.id; //获取id
+            layer.confirm("你确定删除此菜单吗？顶级菜单必须在没有子菜单情况下可以删除！", {icon: 3, title: '提示'},
                 function (index) {//确定回调
-                    obj.del();
-                    layer.close(index);
+                    $.ajax({
+                        type: "POST",
+                        url: "{{url('/admin/menu')}}/"+ id,
+                        cache: false,
+                        data:{_method:"DELETE", _token: "{{csrf_token()}}"},
+                        success: function (data) {
+                            layer.msg('删除成功', {
+                                time: 2000, //20s后自动关
+                            });
+                            obj.del();
+                            //删除成功后删除缓存
+                            layer.close(index);
+                        },
+                        error: function (xhr, status, error) {
+                            layer.msg('删除失败', {
+                                time: 2000, //20s后自动关
+                            });
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(error);
+                        }
+                    });
                 }, function (index) {//取消回调
                     layer.close(index);
                 }
@@ -175,9 +193,6 @@
             let param ={};
             console.log(obj, "更改和保存的数据");
             if(data){
-                if (data.id!=''){ //更改数据
-                    param.id = data.id;
-                }
                 param.name = data.name;
                 param.icon = data.icon;
                 param.parent_id = data.parent_id;
@@ -186,7 +201,30 @@
                 param.sort = data.sort;
             }
         }
+        //新建顶级菜单
+        function newmenu(){
+            layer.open({
+                type: 2,//2类型窗口 这里内容是一个网址
+                title: '<div><i class="layui-icon layui-icon-edit" style="font-size: 22px; color: #ff2315;"></i>添加顶级菜单</div>',
+                shadeClose: true,
+                shade: false,
+                anim: 2, //打开动画
+                maxmin: true, //开启最大化最小化按钮
+                area: ['50%', '80%'],
+                content: '{{url("/admin/menu/create")}}',
+                cancel: function(index, layero){
+                    // 刷新表格
+                    treeGrid.reload(tableId, {
+                        page: {
+                            curr: 1
+                        }
+                    });
+                    return true;
+                }
+            });
+        }
         var i = 100;
+
         //添加
         function add(pObj) {
             console.log(pObj);
@@ -204,13 +242,9 @@
             param.slug = '';
             param.url = '';
             param.sort = 0;
-            treeGrid.addRow(tableId,pdata?pdata[treeGrid.config.indexName] + 1:0,param);  //这个地方下标报错
+            treeGrid.addRow(tableId,pdata?pdata[treeGrid.config.indexName] + 1:0,param);
         }
 
-        function print() {
-            console.log(treeGrid.cache[tableId]);
-            msg("对象已打印，按F12，在控制台查看！");
-        }
         function msg(msg) {
             var loadIndex = layer.msg(msg, {
                 time: 3000
@@ -218,13 +252,6 @@
                 , shade: 0
             });
         }
-
-        function openorclose() {
-            var map = treeGrid.getDataMap(tableId);
-            var o = map['102'];
-            treeGrid.treeNodeOpen(tableId, o, !o[treeGrid.config.cols.isOpen]);
-        }
-
 
         function openAll() {
             var treedata = treeGrid.getDataTreeList(tableId);
@@ -237,41 +264,12 @@
             layer.alert(JSON.stringify(data));
         }
 
-        function radioStatus() {
-            var data = treeGrid.radioStatus(tableId)
-            layer.alert(JSON.stringify(data));
-        }
-
-        function getCheckLength() {
-            var checkStatus = treeGrid.checkStatus(tableId)
-                , data = checkStatus.data;
-            layer.msg('选中了：' + data.length + ' 个');
-        }
-
         function reload() {
             treeGrid.reload(tableId, {
                 page: {
                     curr: 1
                 }
             });
-        }
-
-        function query() {
-            treeGrid.query(tableId, {
-                where: {
-                    name: 'sdfsdfsdf'
-                }
-            });
-        }
-
-        function test() {
-            console.log(treeGrid.cache[tableId], treeGrid.getClass(tableId));
-
-
-            /*var map=treeGrid.getDataMap(tableId);
-            var o= map['102'];
-            o.name="更新";
-            treeGrid.updateRow(tableId,o);*/
         }
     </script>
     <script>

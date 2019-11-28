@@ -26,11 +26,23 @@ class MenuController extends Controller {
         $this->menu->sortMenuSetCache();
         return view('admin.menu.list')->with(compact('menu','menuList'));
     }
+    /*获取表单数据*/
     public function ajaxIndex(Request $request)
     {
         return $this->menu->ajaxIndex($request->all());
     }
-    /*添加菜单
+
+    /**添加菜单视图
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('admin.menu.add');
+    }
+
+    /*添加菜单逻辑
      * */
     public function store(MenuRequest $request){
         $request = $this->menu->create($request->all());
@@ -38,10 +50,11 @@ class MenuController extends Controller {
         $this->menu->sortMenuSetCache();
         if($request){
             flash(trans('admin/alert.menu.create_success'),'success');
+
         }else{
-            flash(trans('admin/alert.menu.create_error'), 'error');
+            flash(trans('admin/alert.menu.create_error'),'flasherror');
         }
-        return redirect('admin/menu');
+        return redirect('admin/menu/create');
     }
     /*修改菜单*/
     public function edit($id){
