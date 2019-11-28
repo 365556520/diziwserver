@@ -252,18 +252,12 @@
                 , shade: 0
             });
         }
-
+        //展开和合并
         function openAll() {
             var treedata = treeGrid.getDataTreeList(tableId);
             treeGrid.treeOpenAll(tableId, !treedata[0][treeGrid.config.cols.isOpen]);
         }
-
-        function getCheckData() {
-            var checkStatus = treeGrid.checkStatus(tableId)
-                , data = checkStatus.data;
-            layer.alert(JSON.stringify(data));
-        }
-
+        //刷新
         function reload() {
             treeGrid.reload(tableId, {
                 page: {
