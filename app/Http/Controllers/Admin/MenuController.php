@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\MenuRequest;
 use App\Repositories\Eloquent\Admin\MenuRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MenuController extends Controller {
     private $menu;
@@ -65,8 +65,22 @@ class MenuController extends Controller {
     /**
      * 修改菜单数据
      */
-    public function update(MenuRequest $request)
+    public function update(Request $request)
     {
+        $request->validate([
+          'name' => 'required|unique:menus,name',
+          'parent_id' => 'required',
+          'url' => 'required',
+          'slug' => 'required',
+          'sort' => 'integer',
+        ],[
+          'name.required' => '菜单名称不能为空',
+          'name.unique'  => '菜单名称已存在',
+          'parent_id.required' => '菜单层级不能为空',
+          'url.required' => '菜单url不能为空',
+          'slug.required' => '菜单权限不能为空',
+          'sort.integer' => '排序必须为整数'
+        ]);
         $this->menu->updateMenu($request);
         return redirect('admin/menu');
     }

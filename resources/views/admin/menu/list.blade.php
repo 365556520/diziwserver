@@ -193,12 +193,44 @@
             let param ={};
             console.log(obj, "更改和保存的数据");
             if(data){
-                param.name = data.name;
+ /*               param.name = data.name;
                 param.icon = data.icon;
                 param.parent_id = data.parent_id;
                 param.slug = data.slug;
                 param.url = data.url;
-                param.sort = data.sort;
+                param.sort = data.sort;*/
+                $.ajax({
+                    type: "post",
+                    url: "{{url('/admin/menu')}}/"+ data.id,
+                    cache: false,
+                    data:{
+                        '_method':'PUT',
+                        name : data.name,
+                         icon :data.icon,
+                         parent_id :data.parent_id,
+                         slug :data.slug,
+                         url :data.url,
+                         sort :data.sort,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN':"{{csrf_token()}}",
+                    },
+                    success: function (data) {
+                        layer.msg('保存成功', {
+                            time: 2000, //20s后自动关
+                        });
+                        //成功后刷新当前行
+                        treeGrid.updateRow(tableId,obj);
+                    },
+                    error: function (xhr, status, error) {
+                        layer.msg('保存失败', {
+                            time: 2000, //20s后自动关
+                        });
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    }
+                });
             }
         }
         //新建顶级菜单
