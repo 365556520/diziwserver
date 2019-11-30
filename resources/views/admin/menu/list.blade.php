@@ -67,6 +67,7 @@
                     <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
                 </div>
             @endif
+
             <img src="" onerror="src=''" alt="">
         </div>
         <div class="dBody">
@@ -204,8 +205,9 @@
                     url: "{{url('/admin/menu')}}/"+ data.id,
                     cache: false,
                     data:{
-                        '_method':'PUT',
-                        name : data.name,
+                        '_method':'PATCH',
+                         id:data.id,
+                         name : data.name,
                          icon :data.icon,
                          parent_id :data.parent_id,
                          slug :data.slug,
@@ -223,10 +225,10 @@
                         treeGrid.updateRow(tableId,obj);
                     },
                     error: function (xhr, status, error) {
-                        layer.msg('保存失败', {
+                        layer.msg(xhr.responseJSON.errors.name[0], {
                             time: 2000, //20s后自动关
                         });
-                        console.log(xhr);
+                        console.log(xhr.responseJSON.errors.name[0]);
                         console.log(status);
                         console.log(error);
                     }
