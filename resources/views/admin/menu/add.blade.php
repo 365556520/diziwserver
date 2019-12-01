@@ -18,7 +18,7 @@
     </style>
 @endsection
 @section('content')
-    <div class="layui-row" style="padding: 2px 15px 2px 15px;text-align:center">
+    <div class="layui-row" style="padding: 2px 15px 2px 15px;">
         <br>
        <form class="layui-form layui-form-pane" action="{{url('admin/menu')}}" method="post">
             @csrf
@@ -26,6 +26,18 @@
                 <label class="layui-form-label">菜单名称</label>
                 <div class="layui-input-block">
                     <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入菜单名称" class="layui-input">
+                </div>
+                @error('name') <div class="layui-form-mid error ">{{ $message }}</div>@enderror
+            </div>
+           <div class="layui-form-item">
+               <label class="layui-form-label">菜单分类</label>
+                <div class="layui-input-block">
+                    <select name="parent_id" lay-filter="aihao">
+                        <option value=0 selected>顶级菜单</option>
+                        @foreach($menus as $v)
+                            <option value={{$v->id}}>{{$v->name}}</option>
+                        @endforeach
+                    </select>
                 </div>
                 @error('name') <div class="layui-form-mid error ">{{ $message }}</div>@enderror
             </div>
@@ -56,13 +68,12 @@
                 </div>
                 @error('sort') <div class="layui-form-mid error" >{{ $message }}</div>@enderror
             </div>
-            <input type="text" name="parent_id" value=0 hidden>  {{--因为只添加顶级菜单所以pid固定是0--}}
             <div class="layui-form-item">
                 <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="demo">新增顶级菜单</button>
             </div>
         </form>
         @if(flash()->message)
-            <div >
+            <div style="text-align:center;">
                 <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
             </div>
         @endif

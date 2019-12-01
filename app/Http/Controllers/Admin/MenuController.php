@@ -19,13 +19,12 @@ class MenuController extends Controller {
         return view('admin.menu.icons');
     }
     public function index(){
-        //查出顶级菜单
-        $menu = $this->menu->findByField('parent_id',0);
+
         //按照层级关系得到所有菜单
         $menuList = $this->menu->getMenuList();
         //进入的时候刷新缓存
         $this->menu->sortMenuSetCache();
-        return view('admin.menu.list')->with(compact('menu','menuList'));
+        return view('admin.menu.list')->with(compact('menuList'));
     }
     /*获取表单数据*/
     public function ajaxIndex(Request $request)
@@ -40,7 +39,9 @@ class MenuController extends Controller {
      */
     public function create()
     {
-        return view('admin.menu.add');
+        //查出顶级菜单
+        $menus = $this->menu->findByField('parent_id',0);
+        return view('admin.menu.add')->with(compact('menus'));
     }
 
     /*添加菜单逻辑

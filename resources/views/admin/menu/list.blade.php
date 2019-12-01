@@ -61,7 +61,7 @@
             <a class="layui-btn layui-btn-primary layui-btn-xs layui-btn-xstree" onclick="reload()">刷新</a>
             <br>
             <br>
-            <b style="color:#cb0322 ">注意:顶级菜单只能通过“新增顶级菜单添加”子菜单可以通过点击顶级菜单的添加来添加，添加完成后记得保存!</b>
+            <b style="color:#cb0322 ">注意:修改菜单完成后记得保存!</b>
             @if(flash()->message)
                 <div >
                     <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
@@ -117,12 +117,11 @@
                     , {
                         width: 160, title: '操作', align: 'center'/*toolbar: '#barDemo'*/
                         , templet: function (d) {
-                            console.log(d.children.length, "看下按钮的、");
                             var html = '';
                             var saveBtn = '<a class="layui-btn  layui-btn-xs" lay-event="save">保存</a>';
-                            var addBtn = d.parent_id==0?'<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="add">添加</a>':'';
+                            //var addBtn = d.parent_id==0?'<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="add">添加</a>':'';
                             var delBtn = d.children.length>0?'':'<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
-                            return saveBtn + addBtn + delBtn;
+                            return saveBtn + delBtn;
                         }
                     }
                 ]]
@@ -130,12 +129,12 @@
                     return res;
                 }
                 , onClickRow: function (index, o) {
-                    console.log(index, o, "单击！");
+                   // console.log(index, o, "单击！");
                     //msg("单击！,按F12，在控制台查看详细参数！");
                 }
                 , onDblClickRow: function (index, o) {
-                    console.log(index, o, "双击");
-                    msg("双击！,按F12，在控制台查看详细参数！");
+                    // console.log(index, o, "双击");
+                    // msg("双击！,按F12，在控制台查看详细参数！");
                 }
             });
 
