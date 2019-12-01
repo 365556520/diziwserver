@@ -20,6 +20,7 @@ class CreatePermissionTables extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('guard_name');
+            $table->integer('pid')->default(0)->comment('父子分类');
             $table->timestamps();
         });
 
