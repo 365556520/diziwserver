@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class MenuController extends Controller {
+class MenuController extends CommonController {
     private $menu;
     public function __construct(MenuRepository $menuRepository){
 

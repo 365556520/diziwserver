@@ -90,7 +90,7 @@
             ptable = treeGrid.render({
                 id: tableId
                 , elem: '#' + tableId
-                , url: '/admin/ajaxIndex'
+                , url: '/admin/menus/ajaxIndex'
                 , cellMinWidth: 100
                 , idField: 'id'//必須字段
                 , treeId: 'id'//树形id字段名称
