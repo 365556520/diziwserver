@@ -8,6 +8,11 @@
 @section('content')
         <div >
             <script type="text/html" id="toolbarDemo">
+                <div class="layui-btn-container">
+                    <button class="layui-btn layui-btn-sm" onclick="addPermissions()">新建权限</button>
+                    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+                    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+                </div>
             </script>
             <table class="layui-hide" id="permissions" lay-filter="permissions" lay-size="lg"></table>
             <script type="text/html" id="barDemo">
@@ -33,11 +38,6 @@
                 ,elem: '#' + tableId
                 ,url:'/admin/permissions/ajaxIndex'
                 ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-                ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
-                    title: '提示'
-                    ,layEvent: 'LAYTABLE_TIPS'
-                    ,icon: 'layui-icon-tips'
-                }]
                 , idField: 'id'//必須字段
                 , treeId: 'id'//树形id字段名称
                 , treeUpId: 'pid'//树形父id字段名称
@@ -61,6 +61,10 @@
                 ]]
             });
         });
+        //保存数据
+        function addPermissions() {
+            console.log('新建权限');
+        };
     </script>
 
 @endsection
