@@ -11,9 +11,10 @@
                 <div class="layui-btn-container">
                     <button class="layui-btn layui-btn-sm" onclick="addPermissions()">新增权限</button>
                     <button class="layui-btn layui-btn-primary  layui-btn-sm" onclick="reload()">刷新</button>
-
                 </div>
+                <b style="color:#cb0322 ">注意:修改权限完成后记得保存!</b>
             </script>
+
             <table class="layui-hide" id="permissions" lay-filter="permissions" lay-size="lg"></table>
 
         </div>
