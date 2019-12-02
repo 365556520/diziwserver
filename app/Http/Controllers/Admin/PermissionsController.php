@@ -41,7 +41,8 @@ class PermissionsController extends CommonController
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        return view('admin.permissions.create');
+        $permissions = Permission::all(); // 获取所有权限
+        return view('admin.permissions.add')->with(compact('permissions'));
     }
 
     /**
@@ -50,14 +51,19 @@ class PermissionsController extends CommonController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PermissionRequest $request)
+    public function store(PermissionsRequest $request)
     {
-        $permissions = $this->permissions->createPermission($request->all());
-        if ($permissions){
-            /*添加成功后更新超级管理员的权限*/
-            $this->role->upadmin(config('admin.globals.upadmin.name'),config('admin.globals.upadmin.admin'));
+        $permission = Permission::create($request->all());
+        if ($permission){
+            flash(trans('admin/alert.permission.create_success'),'success');
+        }else{
+            flash(trans('admin/alert.permission.create_error'), 'error');
         }
-        return redirect(url('admin/permissions'));
+      /*  if ($permission){
+            //添加成功后更新超级管理员的权限
+         //$this->role->upadmin(config('admin.globals.upadmin.name'),config('admin.globals.upadmin.admin'));
+        }*/
+        return redirect(url('admin/permissions/create'));
     }
 
     /**
@@ -67,19 +73,16 @@ class PermissionsController extends CommonController
      * @return \Illuminate\Http\Response
      */
     public function show($id){
-        $permissions = $this->permissions->find($id);
-         return view('admin.permissions.show')->with(compact('permissions'));
+
     }
 
     /**
-     * 点击修改获取要这条记录
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        $permissions = $this->permissions->editView($id);
-        return view('admin.permissions.edit')->with(compact('permissions'));
+
     }
 
     /**
@@ -89,28 +92,27 @@ class PermissionsController extends CommonController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PermissionRequest $request, $id)
+    public function update(PermissionsRequest $request, $id)
     {
-        $permissions = $this->permissions->updatePermission($request->all(),$id);
-        if ($permissions){
-            /*修改成功后更新超级管理员的权限*/
-            $this->role->upadmin(config('admin.globals.upadmin.name'),config('admin.globals.upadmin.admin'));
+        $permission = Permission::findOrFail($id);
+        if ($permission){
+            $input = $request->all();
+            $permission->fill($input)->save();
         }
         return redirect('admin/permissions');
     }
 
     /**
      * Remove the specified resource from storage.
-     *
+     *删除权限
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $permissions = $this->permissions->destroyPermission($id);
-        if ($permissions){
-            /*删除成功后更新超级管理员的权限*/
-            $this->role->upadmin(config('admin.globals.upadmin.name'),config('admin.globals.upadmin.admin'));
+        $permission = Permission::findOrFail($id);
+        if ($permission){
+              $permission->delete();
         }
         return redirect('admin/permissions');
     }

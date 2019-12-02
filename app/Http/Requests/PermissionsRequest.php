@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PermissionRequest extends FormRequest
+class PermissionsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class PermissionRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'display_name' => 'required',
+            'guard_name' => 'required',
         ];
         if (request('id','')) {
             $rules['name'] = 'required|unique:permissions,name,'.$this->id;
@@ -39,7 +39,7 @@ class PermissionRequest extends FormRequest
         return [
             'name.required' => '权限不能为空',
             'name.unique' => '权限不能重复',
-            'display_name.required' => '权限名称不能为空',
+            'guard_name.required' => '权限名称不能为空',
         ];
     }
 }

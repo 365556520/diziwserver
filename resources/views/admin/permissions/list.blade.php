@@ -9,16 +9,13 @@
         <div >
             <script type="text/html" id="toolbarDemo">
                 <div class="layui-btn-container">
-                    <button class="layui-btn layui-btn-sm" onclick="addPermissions()">新建权限</button>
-                    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-                    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+                    <button class="layui-btn layui-btn-sm" onclick="addPermissions()">新增权限</button>
+                    <button class="layui-btn layui-btn-primary  layui-btn-sm" onclick="reload()">刷新</button>
+
                 </div>
             </script>
             <table class="layui-hide" id="permissions" lay-filter="permissions" lay-size="lg"></table>
-            <script type="text/html" id="barDemo">
-                <a class="layui-btn layui-btn-xs" lay-event="edit">保存</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-            </script>
+
         </div>
 @endsection
 @section('js')
@@ -52,19 +49,128 @@
                 , isPage: false
                 , limit: 1000 //默认采用100
                 ,cols: [[
-                    {type: 'checkbox', fixed: 'left'}
-                    ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
+                    {field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
                     ,{field:'name', title:'权限名字', width:220, edit: 'text' }
                     ,{field:'guard_name', title:'权限看守', width:300, edit: 'text'}
                     ,{field:'created_at', title:'创建时间', width:300 , sort: true}
-                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
+                    , {
+                        width: 200, title: '操作', align: 'center'/*toolbar: '#barDemo'*/
+                        , templet: function (d) {
+                            var html = '';
+                            var saveBtn = '<a class="layui-btn  layui-btn-xs" lay-event="save">保存</a>';
+                            var delBtn = d.children.length>0?'':'<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
+                            return saveBtn + delBtn;
+                        }
+                    }
                 ]]
             });
+            treeGrid.on('tool(' + tableId + ')', function (obj) {
+                if (obj.event === 'del') {//删除行
+                    del(obj);
+                }  else if (obj.event === "save") {//添加行
+                    save(obj);
+                }
+            });
         });
-        //保存数据
+        //删除权限
+        function del(obj) {
+            let id = obj.data.id; //获取id
+            layer.confirm("你确定删除此权限吗？顶级权限必须在没有子菜单情况下可以删除！", {icon: 3, title: '提示'},
+                function (index) {//确定回调
+                    $.ajax({
+                        type: "POST",
+                        url: "{{url('/admin/permissions')}}/"+ id,
+                        cache: false,
+                        data:{_method:"DELETE", _token: "{{csrf_token()}}"},
+                        success: function (data) {
+                            layer.msg('删除成功', {
+                                time: 2000, //20s后自动关
+                            });
+                            obj.del();
+                            //删除成功后删除缓存
+                            layer.close(index);
+                        },
+                        error: function (xhr, status, error) {
+                            layer.msg('删除失败', {
+                                time: 2000, //20s后自动关
+                            });
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(error);
+                        }
+                    });
+                }, function (index) {//取消回调
+                    layer.close(index);
+                }
+            );
+        }
+        //新增权限
         function addPermissions() {
-            console.log('新建权限');
+            layer.open({
+                type: 2,//2类型窗口 这里内容是一个网址
+                title: '<div><i class="layui-icon layui-icon-edit" style="font-size: 22px; color: #ff2315;"></i>添加权限</div>',
+                shadeClose: true,
+                shade: false,
+                anim: 2, //打开动画
+                maxmin: true, //开启最大化最小化按钮
+                area: ['50%', '80%'],
+                content: '{{url("/admin/permissions/create")}}',
+                cancel: function(index, layero){
+                    // 刷新表格
+                    treeGrid.reload(tableId, {
+                        page: {
+                            curr: 1
+                        }
+                    });
+                    return true;
+                }
+            });
         };
+        //修改权限
+        function save(obj) {
+            let data =obj ? obj.data : null;
+            console.log(obj, "更改权限？");
+            if(data){
+                $.ajax({
+                    type: "post",
+                    url: "{{url('/admin/permissions')}}/"+ data.id,
+                    cache: false,
+                    data:{
+                        '_method':'PATCH',
+                        id:data.id,
+                        name : data.name,
+                        guard_name :data.guard_name,
+                        pid :data.pid,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN':"{{csrf_token()}}",
+                    },
+                    success: function (data) {
+                        layer.msg('保存成功', {
+                            time: 2000, //20s后自动关
+                        });
+                        //成功后刷新当前行
+                        treeGrid.updateRow(tableId,obj);
+                    },
+                    error: function (xhr, status, error) {
+                        layer.msg('删除失败', {
+                            time: 2000, //20s后自动关
+                        });
+                        console.log(xhr.responseJSON);
+                        console.log(status);
+                        console.log(error);
+                    }
+                });
+            }
+        }
+        //刷新
+        function reload() {
+            treeGrid.reload(tableId, {
+                page: {
+                    curr: 1
+                }
+            });
+        }
     </script>
 
 @endsection

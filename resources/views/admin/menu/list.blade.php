@@ -190,15 +190,8 @@
         //保存数据
         function save(obj) {
             let data =obj ? obj.data : null;
-            let param ={};
             console.log(obj, "更改和保存的数据");
             if(data){
- /*               param.name = data.name;
-                param.icon = data.icon;
-                param.parent_id = data.parent_id;
-                param.slug = data.slug;
-                param.url = data.url;
-                param.sort = data.sort;*/
                 $.ajax({
                     type: "post",
                     url: "{{url('/admin/menu')}}/"+ data.id,
@@ -238,7 +231,7 @@
         function newmenu(){
             layer.open({
                 type: 2,//2类型窗口 这里内容是一个网址
-                title: '<div><i class="layui-icon layui-icon-edit" style="font-size: 22px; color: #ff2315;"></i>添加顶级菜单</div>',
+                title: '<div><i class="layui-icon layui-icon-edit" style="font-size: 22px; color: #ff2315;"></i>添加菜单</div>',
                 shadeClose: true,
                 shade: false,
                 anim: 2, //打开动画

@@ -39,7 +39,7 @@
                         @endforeach
                     </select>
                 </div>
-                @error('name') <div class="layui-form-mid error ">{{ $message }}</div>@enderror
+                @error('parent_id') <div class="layui-form-mid error ">{{ $message }}</div>@enderror
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">菜单url</label>
