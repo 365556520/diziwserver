@@ -3,19 +3,6 @@
     <title>新增权限</title>
 @endsection
 @section('css')
-    <style>
-        .success{
-            color: #5ccb22;
-            font-size:28px;
-        }
-        .flasherror{
-            font-size:28px;
-            color: #cb0322;
-        }
-        .error{
-            color: #cb0322;
-        }
-    </style>
 @endsection
 @section('content')
     <div class="layui-row" style="padding: 2px 15px 2px 15px;">

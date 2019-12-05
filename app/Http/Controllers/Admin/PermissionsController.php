@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\PermissionsRequest;
 use App\Repositories\Eloquent\Admin\Rabc\PermissionsRepository;
 use App\Repositories\Eloquent\Admin\Rabc\RolesRepository;
+use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 
 
@@ -32,7 +33,7 @@ class PermissionsController extends CommonController
 //权限表DataTables
     public function ajaxIndex(){
         $permissions = Permission::all(); // 获取所有权限
-        return ['code' => 0,'msg' => '数据更新成功','data' =>$permissions];
+        return $this->response(0,'数据更新成功',$permissions);
     }
 
     /**
@@ -92,7 +93,7 @@ class PermissionsController extends CommonController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PermissionsRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $permission = Permission::findOrFail($id);
         if ($permission){

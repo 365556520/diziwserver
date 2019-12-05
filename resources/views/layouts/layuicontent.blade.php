@@ -13,6 +13,19 @@
         {{--layui--}}
         <link href="{{ asset('extend/layui/css/layui.css')}}" rel="stylesheet">
         @yield('css')
+        <style>
+            .success{
+                color: #5ccb22;
+                font-size:28px;
+            }
+            .flasherror{
+                font-size:28px;
+                color: #cb0322;
+            }
+            .error{
+                color: #cb0322;
+            }
+        </style>
     </head>
     <body class="layui-bg-gray">
          @yield('content')

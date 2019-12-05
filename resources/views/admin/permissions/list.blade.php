@@ -58,7 +58,7 @@
                         width: 200, title: '操作', align: 'center'/*toolbar: '#barDemo'*/
                         , templet: function (d) {
                             var html = '';
-                            var saveBtn = '<a class="layui-btn  layui-btn-xs" lay-event="save">保存</a>';
+                            var saveBtn = '<a class="layui-btn  layui-btn-xs" lay-event="save">保存编辑</a>';
                             var delBtn = d.children.length>0?'':'<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
                             return saveBtn + delBtn;
                         }

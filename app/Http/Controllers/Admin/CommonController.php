@@ -14,4 +14,8 @@ class CommonController extends Controller
     {
 
     }
+    //返回数据模式
+    public function response($code = 200,$msg = "",$data){
+        return ['code' => $code,'msg'=>$msg,'data' => $data];
+    }
 }
