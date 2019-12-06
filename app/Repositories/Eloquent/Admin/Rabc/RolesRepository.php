@@ -7,9 +7,13 @@ namespace App\Repositories\Eloquent\Admin\Rabc;
  * Time: 15:55
  * 说明：
  */
-use App\Models\Permission;
-use App\Models\Permission_Role;
-use App\Models\Role;
+
+
+// 引入 laravel-permission 模型
+
+use App\Models\AminModels\role_has_permissions;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use App\Repositories\Eloquent\Repository;
 
 
@@ -38,21 +42,14 @@ class  RolesRepository extends Repository{
             'data' => $roles,//数据
         ];
     }
-    //获取权限
+    //获取所有权限
     public function getAllPermissionList(){
         return Permission::all();
     }
     //添加角色
     public function createRole($attributes){
-
         $role = $this->model->create($attributes);
-        if ($role){
-            if (isset($attributes['permission'])) {
-                /*添加权限*/
-                $role->perms()->sync($attributes['permission']);
-            }else{
-                $role->perms()->sync([]);
-            }
+        if($role){
             flash(trans('admin/alert.role.create_success'),'success');
         }else{
             flash(trans('admin/alert.role.create_error'), 'error');
@@ -63,34 +60,21 @@ class  RolesRepository extends Repository{
     public function destroyRole($id){
         $result =false;
         //删除排除超级管理员
-        if($this->isRoleAdmin($id)){
-            abort(500,trans('admin/errors.role_error'));
-        }else{
-            $result = $this->delete($id);
-            if ($result) {
-                flash(trans('admin/alert.role.destroy_success'),'success');
-            } else {
-                flash(trans('admin/alert.role.destroy_error'), 'error');
-            }
+
+        $result = $this->delete($id);
+        if ($result) {
+            flash(trans('admin/alert.role.destroy_success'),'success');
+        } else {
+            flash(trans('admin/alert.role.destroy_error'), 'error');
         }
         return $result;
     }
-    // 修改权限视图数据
-    public function editView($id)
-    {
-        $role = $this->find($id);
-        //根据id获取角色所有权限
-        $role['permission'] = $this->getRolePermission($id);
-        if ($role) {
-            return $role;
-        }
-        abort(404);
-    }
-    // 修改角色的权限数据
+
+    // 修改角色数据
     public function updateRole($attributes,$id){
         //修改排除超级管理员
         // 防止用户恶意修改表单id，如果id不一致直接跳转500
-        if ($attributes['id'] != $id||$this->isRoleAdmin($id)) {
+        if ($attributes['id'] != $id) {
             abort(500,trans('admin/errors.role_error'));
         }
         $result = $this->update($attributes,$id);
@@ -101,14 +85,18 @@ class  RolesRepository extends Repository{
         }
         return $result;
     }
-    /*角色授权*/
-    public function setRolePermission($permissions,$id){
+    /*角色授权
+    $permissionsid  需要添加权限的id数组
+    $id  角色id
+    */
+    public function setRolePermission($permissionsid,$id){
         $role =  Role::where('id',$id)->first();
+        $permissions = Permission::with('id',$permissionsid)->get();
         if (isset($permissions)) {
             //添加权限
-            $role = $role->perms()->sync($permissions);
+            $role = $role->syncPermissions($permissions);
         }else{
-            $role =  $role->perms()->sync([]);
+            $role =  $role->syncPermissions([]);
         }
         if ($role) {
             flash("授权成功",'success');
@@ -117,18 +105,16 @@ class  RolesRepository extends Repository{
         }
         return $role;
     }
-    /*获取角色数据*/
+    /*获取角色所拥有的权限和没有的权限*/
     public function getRole($id){
         $role = $this->model->find($id);
-        //根据id获取角色所有权限
-        $rolePermission =  $this->getRolePermission($id);
-        $role['permission'] = Permission::whereIn('id',$rolePermission)->get();
-        $role['notpermission'] = Permission::whereNotIn('id',$rolePermission)->get();
+        $role['role_permission'] =  $this->getRolePermission($id);   //根据id获取角色所有权限
+        $role['permissions'] = $this->getAllPermissionList(); //全部权限
         return $role;
     }
     //获取角色权限
     public function getRolePermission($id){
-        return Permission_Role::where('role_id',$id)->pluck('permission_id');
+        return role_has_permissions::where('role_id',$id)->pluck('permission_id');
     }
     /*管理员获取全部权限*/
     public function upadmin($name='name',$admin='admin'){
@@ -141,6 +127,6 @@ class  RolesRepository extends Repository{
     /*超级管理员拦截*/
     public function isRoleAdmin($id){
         //超级管理不能修改数据
-        return $this->model->where('id',$id)->first()->is_admin();
+
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\RoleRequest;
 // 引入 laravel-permission 模型
+use App\Repositories\Eloquent\Admin\Rabc\RolesRepository;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
@@ -11,13 +12,11 @@ use Illuminate\Http\Request;
 
 class RolesController extends CommonController
 {
-/*    private $role;
-    function __construct(RoleRepository $role){
-        //调用父类的构造方法传
-        parent::__construct('role');
+   private $role;
+    function __construct(RolesRepository $role){
         //role
         $this->role = $role;
-    }*/
+    }
     /**
      * Display a listing of the resource.
      *
@@ -29,8 +28,8 @@ class RolesController extends CommonController
     }
 //权限表DataTables
     public function ajaxIndex(Request $request){
-        $roles = Role::all();// 获取所有角色
-        return $this->response(0,'数据更新成功',$roles);
+        $roles =  $this->role->ajaxIndex($request->all());// 获取角色分页
+        return $roles;
     }
 
     /**
@@ -49,17 +48,12 @@ class RolesController extends CommonController
      * @return \Illuminate\Http\Response
      */
     public function store(RoleRequest $request){
-        $roles = Role::create($request->all());
-        if($roles){
-            flash(trans('admin/alert.role.create_success'),'success');
-        }else{
-            flash(trans('admin/alert.role.create_error'), 'error');
-        }
+        $roles =  $this->role->createRole($request->all());
         return redirect(url('admin/roles/create'));
     }
     /**
      * Display the specified resource.
-     *授权
+     *授权视图
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -75,8 +69,7 @@ class RolesController extends CommonController
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        $role = $this->role->editView($id);
-        return view('admin.roles.edit')->with(compact('role'));
+
     }
 
     /**
@@ -87,11 +80,7 @@ class RolesController extends CommonController
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        $role = Role::findOrFail($id);
-        if ($role){
-            $input = $request->all();
-            $role->fill($input)->save();
-        }
+       $this->role->updateRole($request->all(),$id);
         return redirect('admin/roles');
     }
 
@@ -102,13 +91,7 @@ class RolesController extends CommonController
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        $role = Role::findOrFail($id);
-        $result=$role->delete();
-        if ($result) {
-            flash(trans('admin/alert.role.destroy_success'),'success');
-        } else {
-            flash(trans('admin/alert.role.destroy_error'), 'error');
-        }
+        $this->role->destroyRole($id);
         return redirect('admin/roles');
     }
     /*
@@ -116,7 +99,7 @@ class RolesController extends CommonController
      * */
     public function upPermission(Request $request){
         $data = $request->all();
-        $this->role->setRolePermission(explode(",", $data["permission"]),$data["id"]);
+        $this->role->setRolePermission(explode(",", $data["permissionid"]),$data["id"]);
         return redirect('admin/roles');
     }
 }

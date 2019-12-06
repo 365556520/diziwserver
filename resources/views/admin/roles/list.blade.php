@@ -20,7 +20,7 @@
                 {{--操作按钮--}}
                 <script type="text/html" id="barbtn">
                     <div class="layui-btn-group">
-                        <button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="show">授权</button>
+                        <button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="empower">授权</button>
                         <button class="layui-btn layui-btn-xs" lay-event="edit">保存编辑</button>
                         <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button>
                     </div>
@@ -36,7 +36,7 @@
             // 表格渲染
             var tableIns = table.render({
                 elem: '#test'
-                , height: $(window).height() - ( $('.my-btn-box').outerHeight(true) ? $('.my-btn-box').outerHeight(true) + 35 :  40 )    //获取高度容器高度
+               // , height: '100%'    //获取高度容器高度
                 ,url:'/admin/roles/ajaxIndex'
                 ,toolbar: '#toolbarDemo'
                 ,title: '{{trans('admin/role.desc')}}'
@@ -46,6 +46,9 @@
                     ,{field:'guard_name', title:'{{trans('admin/role.model.display_name')}}', width:300, edit: 'text',}
                     ,{fixed:'right', title:'{{trans('admin/role.model.operate')}}', toolbar: '#barbtn', width:180}
                 ]]
+                , page: true
+                , limits: [10, 30, 50, 100]
+                , limit: 10 //默认采用30
                 ,loading: false
             });
 
@@ -63,21 +66,20 @@
             });
             //监听行工具条事件
             table.on('tool(test)', function(obj){
-                var data = obj ? obj.data : null;
                 //console.log('kankan22222 '+obj.data);
                 if(obj.event === 'del'){
-                    del(data);
+                    del(obj);
                 } else if(obj.event === 'edit'){
-                    save(data);
-                } else if(obj.event === 'show'){
+                    save(obj);
+                } else if(obj.event === 'empower'){
                     //多窗口模式，层叠置顶
                     layer.open({
                         type: 2 //1类型窗口 这里内容可以自己写
                         ,title:'授权'
-                        ,area: ['97%', '100%']
+                        ,area: ['39%', '80%']
                         ,shade: 0
                         ,maxmin: true
-                        ,content: '{{url("/admin/role")}}/'+ data.id
+                        ,content: '{{url("/admin/roles")}}/'+ obj.data.id
                     });
                 }
             });
@@ -93,18 +95,14 @@
                     area: ['33%', '60%'],
                     content: '{{url("/admin/roles/create")}}',
                     cancel: function(index, layero){
-                        // 刷新表格
-                        tableIns.reload({
-                            page: {
-                                curr: 1 //重新从第 1 页开始
-                            }
-                        });
+                        isreload();//刷新表格
                         return true;
                     }
                 });
             }
             //删除角色
-            function del(data) {
+            function del(obj) {
+                var data = obj ? obj.data : null;
                 if(data.name==="admin"){
                     layer.msg('超级管理员不能删除！', {
                         time: 2000, //20s后自动关
@@ -120,12 +118,7 @@
                                 layer.msg('删除成功', {
                                     time: 2000, //20s后自动关
                                 });
-                                // 刷新表格
-                                tableIns.reload({
-                                    page: {
-                                        curr: 1 //重新从第 1 页开始
-                                    }
-                                });
+                                obj.del();//删除对应的行
                                 //删除成功后删除缓存
                                 layer.close(index);
                             },
@@ -143,7 +136,7 @@
             }
             //修改保存角色
             function save(obj) {
-                let data = obj;
+                var data = obj ? obj.data : null;
                 console.log(obj, "更改角色？");
                 if(data){
                     $.ajax({
@@ -163,8 +156,6 @@
                             layer.msg('保存成功', {
                                 time: 2000, //20s后自动关
                             });
-                            //成功后刷新当前行
-                            treeGrid.updateRow(tableId,obj);
                         },
                         error: function (xhr, status, error) {
                             layer.msg('删除失败', {
