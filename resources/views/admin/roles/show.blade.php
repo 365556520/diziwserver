@@ -39,14 +39,14 @@
                     console.log(index); //如果数据来自左边，index 为 0，否则为 1
                     var permission = [];
                     for (var i = 0; i < data.length; i++) {
-                        permission[i]=data[i]['value'];
+                        permission[i]=data[i]['title'];
                     }
                     if(index==0){//添加权限
                         $.ajax({
                             type: "POST",
                             url: "/admin/roles/upPermission",
                             cache: false,
-                            data:{'permissionid':permission,'id':"{{$role->id}}"},
+                            data:{'permissions':permission,'id':"{{$role->id}}"},
                             success: function (data) {
                                 layer.msg('授权成功');
                             },
@@ -57,8 +57,22 @@
                                 console.log(error);
                             }
                         });
-                    }else{ //删除权限
-
+                    }else{ //撤销权限
+                        $.ajax({
+                            type: "POST",
+                            url: "/admin/roles/destroyPermission",
+                            cache: false,
+                            data:{'permissions':permission,'id':"{{$role->id}}"},
+                            success: function (data) {
+                                layer.msg('撤销权限成功');
+                            },
+                            error: function (xhr, status, error) {
+                                layer.msg('撤销权限失败');
+                                console.log(xhr);
+                                console.log(status);
+                                console.log(error);
+                            }
+                        });
                     }
                 }
             });

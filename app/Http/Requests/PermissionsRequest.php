@@ -23,9 +23,7 @@ class PermissionsRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'guard_name' => 'required',
-        ];
+        $rules = [];
         if (request('id','')) {
             $rules['name'] = 'required|unique:permissions,name,'.$this->id;
         }else{
@@ -39,7 +37,6 @@ class PermissionsRequest extends FormRequest
         return [
             'name.required' => '权限不能为空',
             'name.unique' => '权限不能重复',
-            'guard_name.required' => '权限名称不能为空',
         ];
     }
 }

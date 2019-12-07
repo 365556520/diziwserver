@@ -23,9 +23,7 @@ class RoleRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'guard_name' => 'required',
-        ];
+        $rules = [];
         if (request('id','')) {
             //注意验证唯一unique:roles,name,中unique:后面的表名必须和数据库中的表名一样
             $rules['name'] = 'required|unique:roles,name,'.$this->id;
@@ -40,7 +38,6 @@ class RoleRequest extends FormRequest
         return [
             'name.required' => '角色不能为空',
             'name.unique' => '角色不能重复',
-            'guard_name.required' => '角色名称不能为空',
         ];
     }
 }

@@ -7,8 +7,8 @@ return [
     'show'      => '查看权限',
     'model' 	=> [
         'id' 			=> 'ID',
-        'name' 			=> '权限',
-        'display_name' => '权限名称',
+        'name' 			=> '权限名称',
+        'display_name' => '权限看守器',
         'description' 	=> '描述',
         'created_at' 	=> '创建时间',
         'updated_at' 	=> '修改时间',

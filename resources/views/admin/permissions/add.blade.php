@@ -33,7 +33,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">权限看守</label>
                 <div class="layui-input-block">
-                    <input type="text" name="guard_name" lay-verify="required" lay-reqtext="权限看守是必填项，岂能为空？" placeholder="请输入权限看守" autocomplete="off" class="layui-input">
+                    <input type="text" name="guard_name" lay-verify="" placeholder="默认看守器是web，可以为空。" autocomplete="off" class="layui-input">
                 </div>
                 @error('guard_name') <div class="layui-form-mid  error">{{ $message }}</div>@enderror
             </div>

@@ -43,7 +43,7 @@
                 ,cols: [[
                     {field:'id', title:'{{trans('admin/role.model.id')}}', width:80, fixed: 'left', unresize: true, sort: true}
                     ,{field:'name', title:'{{trans('admin/role.model.name')}}',  edit: 'text',width:200}
-                    ,{field:'guard_name', title:'{{trans('admin/role.model.display_name')}}', width:300, edit: 'text',}
+                    ,{field:'guard_name', title:'{{trans('admin/role.model.display_name')}}', edit: 'text', width:300}
                     ,{fixed:'right', title:'{{trans('admin/role.model.operate')}}', toolbar: '#barbtn', width:180}
                 ]]
                 , page: true

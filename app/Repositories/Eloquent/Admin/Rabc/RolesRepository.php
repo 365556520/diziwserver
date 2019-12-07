@@ -89,19 +89,31 @@ class  RolesRepository extends Repository{
     $permissionsid  需要添加权限的id数组
     $id  角色id
     */
-    public function setRolePermission($permissionsid,$id){
+    public function setRolePermission($permissions,$id){
         $role =  Role::where('id',$id)->first();
-        $permissions = Permission::with('id',$permissionsid)->get();
         if (isset($permissions)) {
             //添加权限
-            $role = $role->syncPermissions($permissions);
-        }else{
-            $role =  $role->syncPermissions([]);
+            $role = $role->givePermissionTo($permissions);
         }
         if ($role) {
             flash("授权成功",'success');
         } else {
             flash("授权失败", 'error');
+        }
+        return $role;
+    }
+    /*撤销角色授权
+    */
+    public function  delRolePermission($permissions,$id){
+        $role =  Role::where('id',$id)->first();
+        if (isset($permissions)) {
+            //删除角色有的权限
+            $role = $role->revokePermissionTo($permissions);
+        }
+        if ($role) {
+            flash("撤销授权成功",'success');
+        } else {
+            flash("撤销授权失败", 'error');
         }
         return $role;
     }
@@ -116,6 +128,9 @@ class  RolesRepository extends Repository{
     public function getRolePermission($id){
         return role_has_permissions::where('role_id',$id)->pluck('permission_id');
     }
+
+
+
     /*管理员获取全部权限*/
     public function upadmin($name='name',$admin='admin'){
         $role = Role::where($name,$admin)->first();

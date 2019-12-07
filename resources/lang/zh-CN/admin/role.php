@@ -7,8 +7,8 @@ return [
     'show'      => '查看角色',
     'model' 	=> [
         'id' 			=> 'ID',
-        'name' 			=> '角色',
-        'display_name' => '角色名称',
+        'name' 			=> '角色名称',
+        'display_name' => '角色看守器',
         'permission' => '权限',
         'description' 	=> '描述',
         'created_at' 	=> '创建时间',

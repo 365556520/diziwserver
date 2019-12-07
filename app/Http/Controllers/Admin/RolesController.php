@@ -86,7 +86,7 @@ class RolesController extends CommonController
 
     /**
      * Remove the specified resource from storage.
-     *
+     * 删除角色
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -99,7 +99,17 @@ class RolesController extends CommonController
      * */
     public function upPermission(Request $request){
         $data = $request->all();
-        $this->role->setRolePermission(explode(",", $data["permissionid"]),$data["id"]);
+        $this->role->setRolePermission($data["permissions"],$data["id"]);
         return redirect('admin/roles');
     }
+    /*
+     * 删除权限授权
+     * */
+    public function destroyPermission(Request $request){
+        $data = $request->all();
+        $this->role->delRolePermission($data["permissions"],$data["id"]);
+        return redirect('admin/roles');
+    }
+
+
 }
