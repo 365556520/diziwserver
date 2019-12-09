@@ -58,7 +58,7 @@
                         ,area: ['39%', '80%']
                         ,shade: 0
                         ,maxmin: true
-                        ,content: '{{url("/admin/roles")}}/'+ obj.data.id
+                        ,content: '{{url("/admin/user")}}/'+ obj.data.id+'/edit'
                     });
                 }
             });

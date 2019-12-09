@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\UserRequest;
+use App\Models\AminModels\model_has_roles;
 use App\Repositories\Eloquent\Admin\Rabc\UserRepository;
+use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 
 class UserController extends CommonController
@@ -72,7 +75,10 @@ class UserController extends CommonController
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-
+        $roles = Role::all(); //所有角色
+        //获取用户目前有的角色
+        $hasroles = model_has_roles::select('role_id')->where('model_id',$id)->get();//已经拥有的角色id
+        return view('admin.user.edit')->with(compact('roles','hasroles','id'));
     }
 
     /**
@@ -81,9 +87,11 @@ class UserController extends CommonController
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
+     **/
     public function update(Request $request, $id){
-
+        $user = User::where('id',$id)->first();
+        $user->syncRoles($request->all()['check']);
+        return redirect('admin/user');
     }
 
     /**
