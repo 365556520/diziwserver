@@ -20,7 +20,7 @@ return [
         'operate' 	=> '操作',
     ],
     'action' => [
-        'create' => '<i class="fa fa-user"></i> 添加用户',
+        'create' => ' 添加用户',
         'createDescription' => '添加用户需要管理员身份，才有权限添加。如果没有请联系管理员。',
     ],
     'other_permission'	=> '<strong>注意！</strong> 当某个角色的用户需要额外权限时添加。',

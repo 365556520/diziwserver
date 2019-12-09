@@ -42,9 +42,14 @@ class  RolesRepository extends Repository{
             'data' => $roles,//数据
         ];
     }
-    //获取所有权限
-    public function getAllPermissionList(){
-        return Permission::all();
+    //获取所有权限$guard_name  看守器
+    public function getAllPermissionList($guard_name = null){
+        if($guard_name != null){
+            return Permission::where('guard_name',$guard_name)->get();
+        }else{
+            return Permission::all();
+        }
+
     }
     //添加角色
     public function createRole($attributes){
@@ -121,7 +126,7 @@ class  RolesRepository extends Repository{
     public function getRole($id){
         $role = $this->model->find($id);
         $role['role_permission'] =  $this->getRolePermission($id);   //根据id获取角色所有权限
-        $role['permissions'] = $this->getAllPermissionList(); //全部权限
+        $role['permissions'] = $this->getAllPermissionList($role->guard_name); //获取该角色看守器相匹配的权限全部权限
         return $role;
     }
     //获取角色权限
@@ -131,14 +136,6 @@ class  RolesRepository extends Repository{
 
 
 
-    /*管理员获取全部权限*/
-    public function upadmin($name='name',$admin='admin'){
-        $role = Role::where($name,$admin)->first();
-        if ($role){
-            /*获取所有权限返回数组然后用array_column提取数组中id这列*/
-          $role->perms()->sync(array_column($this->getAllPermissionList()->toArray(),'id'));
-        }
-    }
     /*超级管理员拦截*/
     public function isRoleAdmin($id){
         //超级管理不能修改数据
