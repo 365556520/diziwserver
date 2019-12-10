@@ -90,8 +90,17 @@ class UserController extends CommonController
      **/
     public function update(Request $request, $id){
         $user = User::where('id',$id)->first();
-        $user->syncRoles($request->all()['check']);
-        return redirect('admin/user');
+        $role = false;
+        if(isset($request->all()['check'])){
+//            dd($request->all()['check']);
+             $role = $user->syncRoles($request->all()['check']);
+        }
+        if ($role) {
+            flash("角色授权成功",'success');
+        } else {
+            flash("角色授权失败", 'error');
+        }
+        return redirect(url()->previous());
     }
 
     /**

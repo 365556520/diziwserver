@@ -12,6 +12,8 @@ class User extends Authenticatable
 {
     use HasRoles;
     use Notifiable;
+
+    protected $guard_name = 'web'; // 使用任何你想要的守卫
     //这个表的路由的前缀
     private $action =  'user';
     /**

@@ -14,14 +14,23 @@
                 <label class="layui-form-label">选择角色:</label>
                 <div class="layui-input-block">
                     @foreach($roles as $v)
-                        <input type="checkbox" name=check[{{$v->id}}] value={{$v->name}} title="{{$v->name}}">
+                        @if($v->guard_name == 'web')
+                        <input type="checkbox" name=check[{{$v->id}}] value={{$v->id}} title="{{$v->name}}">
+                        @endif
                     @endforeach
                 </div>
             </div>
-            <div class="layui-form-item">
-                <button class="layui-btn" lay-submit="" lay-filter="demo2">创建角色</button>
+            <div class="layui-form-item" >
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="demo2">增加角色</button>
+                </div>
             </div>
         </form>
+        @if(flash()->message)
+            <div style="text-align:center;">
+                <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
+            </div>
+        @endif
     </div>
 @endsection
 @section('js')
