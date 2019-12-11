@@ -40,7 +40,7 @@
         <!-- jQuery -->
         <script src="{{asset('extend/jq/jquery.min.js')}}"></script>
         {{--vue js--}}
-        <script src="{{asset('extend/vue/vue.js')}}"></script>
+    {{--    <script src="{{asset('extend/vue/vue.js')}}"></script>--}}
         <script src="{{asset('extend/layui/layui.js')}}"></script>
         <script>
             $(function() {

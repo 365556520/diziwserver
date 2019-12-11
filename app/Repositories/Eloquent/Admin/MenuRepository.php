@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Cache;
 
 
 class  MenuRepository extends Repository{
+    private $userPs = '';  //该用户的权限
+    private $adminRole = false; //是否事超级管理员
     public function model(){
         return Menu::class;
     }
@@ -47,7 +49,6 @@ class  MenuRepository extends Repository{
                     array_multisort($sort,$v['children'],SORT_DESC);
                 }
             }
-
                 Cache::forever(config('admin.globals.cache.menusList'),$menusList);
 
            return $menusList;
@@ -145,6 +146,11 @@ class  MenuRepository extends Repository{
 
     /*获取左边菜单json数据*/
     public function getMenuListJson(){
+        $user = \Auth::user();
+        $this->adminRole = $user->hasRole('admin'); //判断是否事超级管理员
+        if(!$this->adminRole){  //如果不是超级管理员就获取当前用户的所有权限
+            $this->userPs = $user->getAllPermissions();
+        }
         $menu = [];
         if(Cache::has(config('admin.globals.cache.menusList'))){
             $menu = Cache::get(config('admin.globals.cache.menusList'));
@@ -161,11 +167,23 @@ class  MenuRepository extends Repository{
         };
         $i = 0;
         foreach($menus as  $v){
-            $arr[$i]['mid'] = $v['id'];
-            $arr[$i]['title'] = $v['name'];
-            $arr[$i]['icon'] = $v['icon'];
-            $arr[$i]['href'] = $v['url'];
-            $arr[$i]['children'] = $this->getMenu($v['children']);
+            if($this->adminRole){ //如果是admin角色就直接显示所有列表
+                $arr[$i]['mid'] = $v['id'];
+                $arr[$i]['title'] = $v['name'];
+                $arr[$i]['icon'] = $v['icon'];
+                $arr[$i]['href'] = $v['url'];
+                $arr[$i]['children'] = $this->getMenu($v['children']);
+            }else{
+                foreach ($this->userPs as $vl){ //如果不是就查看是否有权限显示
+                    if($v['slug']==$vl->name ){
+                        $arr[$i]['mid'] = $v['id'];
+                        $arr[$i]['title'] = $v['name'];
+                        $arr[$i]['icon'] = $v['icon'];
+                        $arr[$i]['href'] = $v['url'];
+                        $arr[$i]['children'] = $this->getMenu($v['children']);
+                    }
+                }
+            }
             $i++;
         }
         return $arr;
