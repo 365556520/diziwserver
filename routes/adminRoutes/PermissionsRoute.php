@@ -2,7 +2,7 @@
 /**
  * 权限路由
  */
-Route::group(['prefix' => 'permissions'],function (){
+Route::group(['prefix' => 'permission'],function (){
     Route::get('ajaxIndex','PermissionsController@ajaxIndex');
 });
-Route::resource('permissions','PermissionsController');
+Route::resource('permission','PermissionsController');

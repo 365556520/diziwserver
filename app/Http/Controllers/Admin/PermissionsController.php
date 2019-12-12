@@ -11,16 +11,11 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionsController extends CommonController
 {
-  /*  private $permissions;
-    private $role;
-    function __construct(PermissionsRepository $permissions,RolesRepository $role)
-    {
+    function __construct(){
+        //调用父累的构造方法
+        parent::__construct('permission');
 
-        $this->role = $role;
-        //注入permissions的model
-        $this->permissions = $permissions;
-
-    }*/
+    }
     /**
      * Display a listing of the resource.
      *
@@ -64,7 +59,7 @@ class PermissionsController extends CommonController
             //添加成功后更新超级管理员的权限
          //$this->role->upadmin(config('admin.globals.upadmin.name'),config('admin.globals.upadmin.admin'));
         }*/
-        return redirect(url('admin/permissions/create'));
+        return redirect(url('admin/permission/create'));
     }
 
     /**
@@ -100,7 +95,7 @@ class PermissionsController extends CommonController
             $input = $request->all();
             $permission->fill($input)->save();
         }
-        return redirect('admin/permissions');
+        return redirect('admin/permission');
     }
 
     /**
@@ -115,6 +110,6 @@ class PermissionsController extends CommonController
         if ($permission){
               $permission->delete();
         }
-        return redirect('admin/permissions');
+        return redirect('admin/permission');
     }
 }

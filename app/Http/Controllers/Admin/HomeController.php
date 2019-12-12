@@ -14,6 +14,8 @@ class HomeController extends CommonController
      */
     private $menu;
     public function __construct(MenuRepository $menuRepository){
+        //调用父累的构造方法
+        parent::__construct('system.login');
         $this->menu = $menuRepository;
     }
     /**

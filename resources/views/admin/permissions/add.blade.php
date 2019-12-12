@@ -7,7 +7,7 @@
 @section('content')
     <div class="layui-row" style="padding: 2px 15px 2px 15px;">
         <br>
-       <form class="layui-form layui-form-pane" action="{{url('admin/permissions')}}" method="post">
+       <form class="layui-form layui-form-pane" action="{{url('admin/permission')}}" method="post">
             @csrf
             <div class="layui-form-item">
                 <label class="layui-form-label">菜单名字</label>

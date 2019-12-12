@@ -34,7 +34,7 @@
             ptable = treeGrid.render({
                 id: tableId
                 ,elem: '#' + tableId
-                ,url:'/admin/permissions/ajaxIndex'
+                ,url:'/admin/permission/ajaxIndex'
                 ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                 , idField: 'id'//必須字段
                 , treeId: 'id'//树形id字段名称
@@ -80,7 +80,7 @@
                 function (index) {//确定回调
                     $.ajax({
                         type: "POST",
-                        url: "{{url('/admin/permissions')}}/"+ id,
+                        url: "{{url('/admin/permission')}}/"+ id,
                         cache: false,
                         data:{_method:"DELETE", _token: "{{csrf_token()}}"},
                         success: function (data) {
@@ -115,7 +115,7 @@
                 anim: 2, //打开动画
                 maxmin: true, //开启最大化最小化按钮
                 area: ['50%', '80%'],
-                content: '{{url("/admin/permissions/create")}}',
+                content: '{{url("/admin/permission/create")}}',
                 cancel: function(index, layero){
                     // 刷新表格
                     treeGrid.reload(tableId, {
@@ -134,7 +134,7 @@
             if(data){
                 $.ajax({
                     type: "post",
-                    url: "{{url('/admin/permissions')}}/"+ data.id,
+                    url: "{{url('/admin/permission')}}/"+ data.id,
                     cache: false,
                     data:{
                         '_method':'PATCH',
