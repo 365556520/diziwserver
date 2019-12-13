@@ -7,7 +7,7 @@
 @section('content')
     <div class="layui-row" style="padding: 2px 15px 2px 15px">
         <br>
-        <form class="layui-form layui-form-pane" method="post" action="{{url('admin/roles')}}">
+        <form class="layui-form layui-form-pane" method="post" action="{{url('admin/role')}}">
             @csrf
             <div class="layui-form-item">
                 <label class="layui-form-label">{{trans('admin/role.model.name')}}</label>

@@ -19,11 +19,16 @@
            <div class="layui-form-item">
                <label class="layui-form-label">权限分类</label>
                 <div class="layui-input-block">
-                    <select name="pid" lay-filter="aihao">
+                    <select name="pid" lay-filter="aihao" lay-search>
                         <option value=0 selected>顶级权限</option>
                         @foreach($permissions as $v)
                             @if($v->pid==0)
                                 <option value={{$v->id}}>{{$v->name}}</option>
+                                @foreach($permissions as $vl)
+                                    @if($vl->pid==$v->id)
+                                        <option value={{$vl->id}}>——{{$vl->name}}</option>
+                                    @endif
+                                @endforeach
                             @endif
                         @endforeach
                     </select>

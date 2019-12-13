@@ -37,7 +37,7 @@
             var tableIns = table.render({
                 elem: '#test'
                // , height: '100%'    //获取高度容器高度
-                ,url:'/admin/roles/ajaxIndex'
+                ,url:'/admin/role/ajaxIndex'
                 ,toolbar: '#toolbarDemo'
                 ,title: '{{trans('admin/role.desc')}}'
                 ,cols: [[
@@ -79,7 +79,7 @@
                         ,area: ['39%', '80%']
                         ,shade: 0
                         ,maxmin: true
-                        ,content: '{{url("/admin/roles")}}/'+ obj.data.id
+                        ,content: '{{url("/admin/role")}}/'+ obj.data.id
                     });
                 }
             });
@@ -93,7 +93,7 @@
                     anim: 2, //打开动画
                     maxmin: true, //开启最大化最小化按钮
                     area: ['33%', '60%'],
-                    content: '{{url("/admin/roles/create")}}',
+                    content: '{{url("/admin/role/create")}}',
                     cancel: function(index, layero){
                         isreload();//刷新表格
                         return true;
@@ -111,7 +111,7 @@
                     layer.confirm('真的删除此分类吗？', function(index){
                         $.ajax({
                             type: "POST",
-                            url: "{{url('/admin/roles')}}/"+data.id,
+                            url: "{{url('/admin/role')}}/"+data.id,
                             cache: false,
                             data:{_method:"DELETE", _token: "{{csrf_token()}}"},
                             success: function (data) {
@@ -141,7 +141,7 @@
                 if(data){
                     $.ajax({
                         type: "post",
-                        url: "{{url('/admin/roles')}}/"+ data.id,
+                        url: "{{url('/admin/role')}}/"+ data.id,
                         cache: false,
                         data:{
                             '_method':'PATCH',

@@ -53,6 +53,7 @@
                     {field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
                     ,{field:'name', title:'权限名字', width:220, edit: 'text' }
                     ,{field:'guard_name', title:'权限看守', width:300, edit: 'text'}
+                    ,{field:'pid', title:'pid', width:200, edit: 'text'}
                     ,{field:'created_at', title:'创建时间', width:300 , sort: true}
                     , {
                         width: 200, title: '操作', align: 'center'/*toolbar: '#barDemo'*/

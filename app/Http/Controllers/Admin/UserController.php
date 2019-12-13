@@ -14,7 +14,8 @@ class UserController extends CommonController
 {
     private $user;
     function __construct(UserRepository $user)
-    {
+    {        //调用父累的构造方法
+        parent::__construct('user');
         //user
         $this->user = $user;
 

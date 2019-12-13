@@ -5,9 +5,8 @@
 @section('css')
 @endsection
 @section('content')
-    <div class="layui-row" style="padding: 2px 15px 2px 15px">
+    <div class="layui-row" style="text-align:center;">
         <br>
-
         <div id="rolePermissions" class="demo-transfer"></div>
     </div>
     @if(flash()->message)
@@ -44,7 +43,7 @@
                     if(index==0){//添加权限
                         $.ajax({
                             type: "POST",
-                            url: "/admin/roles/upPermission",
+                            url: "/admin/role/upPermission",
                             cache: false,
                             data:{'permissions':permission,'id':"{{$role->id}}"},
                             success: function (data) {
@@ -60,7 +59,7 @@
                     }else{ //撤销权限
                         $.ajax({
                             type: "POST",
-                            url: "/admin/roles/destroyPermission",
+                            url: "/admin/role/destroyPermission",
                             cache: false,
                             data:{'permissions':permission,'id':"{{$role->id}}"},
                             success: function (data) {

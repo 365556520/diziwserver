@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Validator;
 class MenuController extends CommonController {
     private $menu;
     public function __construct(MenuRepository $menuRepository){
-
-            $this->menu = $menuRepository;
+        parent::__construct('menu');
+        $this->menu = $menuRepository;
     }
     //菜单icons代码
     public function icons(){

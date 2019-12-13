@@ -14,6 +14,8 @@ class RolesController extends CommonController
 {
    private $role;
     function __construct(RolesRepository $role){
+        //调用父累的构造方法
+        parent::__construct('role');
         //role
         $this->role = $role;
     }
@@ -49,7 +51,7 @@ class RolesController extends CommonController
      */
     public function store(RoleRequest $request){
         $roles =  $this->role->createRole($request->all());
-        return redirect(url('admin/roles/create'));
+        return redirect(url('admin/role/create'));
     }
     /**
      * Display the specified resource.
@@ -81,7 +83,7 @@ class RolesController extends CommonController
      */
     public function update(Request $request, $id){
        $this->role->updateRole($request->all(),$id);
-        return redirect('admin/roles');
+        return redirect('admin/role');
     }
 
     /**
@@ -92,7 +94,7 @@ class RolesController extends CommonController
      */
     public function destroy($id){
         $this->role->destroyRole($id);
-        return redirect('admin/roles');
+        return redirect('admin/role');
     }
     /*
      * 授权
@@ -100,7 +102,7 @@ class RolesController extends CommonController
     public function upPermission(Request $request){
         $data = $request->all();
         $this->role->setRolePermission($data["permissions"],$data["id"]);
-        return redirect('admin/roles');
+        return redirect('admin/role');
     }
     /*
      * 删除权限授权
@@ -108,7 +110,7 @@ class RolesController extends CommonController
     public function destroyPermission(Request $request){
         $data = $request->all();
         $this->role->delRolePermission($data["permissions"],$data["id"]);
-        return redirect('admin/roles');
+        return redirect('admin/role');
     }
 
 
