@@ -74,7 +74,7 @@
             });
 
             //头工具栏事件
-            table.on('toolbar(test)', function(obj){
+            ptable.on('toolbar(' + tableId + ')', function(obj){
                 var checkStatus = table.checkStatus(obj.config.id);
                 switch(obj.event){
                     case 'getCheckData':
@@ -152,7 +152,7 @@
                 };
             });
             //监听行工具条事件
-            table.on('tool(test)', function(obj){
+            treeGrid.on('tool(' + tableId + ')', function(obj){
                 var data = obj.data;
                 //console.log('kankan22222 '+obj.data);
                 if(obj.event === 'del'){
