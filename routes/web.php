@@ -33,5 +33,7 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin','middleware' => ['auth']]
     require(__DIR__.'/adminRoutes/RoleRoute.php');
     //用户路由
     require(__DIR__.'/adminRoutes/UserRoute.php');
+    //文章 分类  评论 记事本等路由
+    require(__DIR__.'/adminRoutes/articlesRoute.php');
 });
 

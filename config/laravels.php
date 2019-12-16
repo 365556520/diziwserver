@@ -71,12 +71,14 @@ return [
         'daemonize'          => env('LARAVELS_DAEMONIZE', false),
         'dispatch_mode'      => 2,
         'reactor_num'        => function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 4,
-        'worker_num'         => function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 8,
+     //   'worker_num'         => function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 8,  //正式启动时候这样写
         //'task_worker_num'    => function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 8,
+        'worker_num' =>1, //测试时候这样写 这样写严重影响性能
         'task_ipc_mode'      => 1,
         'task_max_request'   => 8000,
         'task_tmpdir'        => @is_writable('/dev/shm/') ? '/dev/shm' : '/tmp',
-        'max_request'        => 8000,
+        //'max_request'        => 8000, //正式启动时候这样写
+        'max_request'=>1, //测试时候这样写 这样写严重影响性能
         'open_tcp_nodelay'   => true,
         'pid_file'           => storage_path('laravels.pid'),
         'log_file'           => storage_path(sprintf('logs/swoole-%s.log', date('Y-m'))),
