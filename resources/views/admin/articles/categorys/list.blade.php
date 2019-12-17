@@ -74,8 +74,8 @@
             });
 
             //头工具栏事件
-            ptable.on('toolbar(' + tableId + ')', function(obj){
-                var checkStatus = table.checkStatus(obj.config.id);
+            treeGrid.on('toolbar(' + tableId + ')', function(obj){
+                var checkStatus = table.checkStaptus(obj.config.id);
                 switch(obj.event){
                     case 'getCheckData':
                         var data = checkStatus.data;  //得到选中数据的数组
