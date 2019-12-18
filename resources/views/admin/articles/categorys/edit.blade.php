@@ -1,4 +1,4 @@
-@extends('admin.layouts.layuicontent')
+@extends('layouts.layuicontent')
 @section('title')
     <title>{{ trans('admin/menu.title')}}</title>
 @endsection
@@ -7,7 +7,6 @@
 @section('content')
     <div class="layui-row" style="padding: 2px 15px 2px 15px">
         <br>
-        <div style="color: #ec162d;size:38px">@include('flash::message')<br></div>
         <form class="layui-form layui-form-pane" lay-filter="edit" method="post" action="{{url('admin/categorys/'.$categorysEdit->id)}}">
             {{csrf_field()}}
             {{method_field('PUT')}}
@@ -56,7 +55,11 @@
                 <button class="layui-btn" lay-submit="" lay-filter="demo2">修改分类</button>
             </div>
         </form>
-
+        @if(flash()->message)
+            <div style="text-align:center;">
+                <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
+            </div>
+        @endif
     </div>
 @endsection
 @section('js')

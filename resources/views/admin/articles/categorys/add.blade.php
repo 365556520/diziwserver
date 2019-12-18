@@ -1,4 +1,4 @@
-@extends('admin.layouts.layuicontent')
+@extends('layouts.layuicontent')
 @section('title')
     <title>{{ trans('admin/menu.title')}}</title>
 @endsection
@@ -7,7 +7,6 @@
 @section('content')
     <div class="layui-row" style="padding: 2px 15px 2px 15px">
         <br>
-        @include('flash::message')
         <form class="layui-form layui-form-pane" method="post" action="{{url('admin/categorys')}}">
             {{csrf_field()}}
             <div class="layui-form-item">
@@ -32,7 +31,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">浏览次数</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="cate_view" lay-verify="cate_view" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    <input type="text" name="cate_view" lay-verify="cate_view" placeholder="请输入浏览次数" autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">必须填写数字但不能大于7位</div>
             </div>
@@ -54,7 +53,11 @@
                 <button class="layui-btn" lay-submit="" lay-filter="demo2">添加分类</button>
             </div>
         </form>
-
+        @if(flash()->message)
+            <div style="text-align:center;">
+                <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
+            </div>
+        @endif
     </div>
 @endsection
 @section('js')
