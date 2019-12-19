@@ -21,7 +21,7 @@ class Comments extends Model
     //得到评论的文章
     public function getArticles(){
         //反向关联
-        return $this->belongsTo('App\Models\UsersModel\Articles\Articles','topic_id');
+        return $this->belongsTo('App\Models\AminModels\Articles\Articles','topic_id');
     }
     //获取评论用户
     public function getFrom_uid(){

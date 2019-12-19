@@ -32,6 +32,6 @@ class Articles extends Model
     }
     //获取文章评论
     public function getComments(){
-        return $this->hasMany('App\Models\UsersModel\Articles\Comments', 'topic_id');
+        return $this->hasMany('App\Models\AminModels\Articles\Comments', 'topic_id');
     }
 }

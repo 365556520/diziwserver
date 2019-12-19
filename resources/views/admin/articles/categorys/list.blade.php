@@ -11,6 +11,7 @@
             <div class="layui-btn-container layui-btn-group my-btn-box">
                 <button class="layui-btn layui-btn-warm layui-btn-xs" lay-event="isAll" onclick="reload()">刷新</button>
                 <button class="layui-btn layui-btn-xs" lay-event="add" onclick="add()">添加分类</button>
+                <button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="add" onclick="openAll()">全部展开或折叠</button>
             </div>
         </script>
     </div>
@@ -171,6 +172,11 @@
                     return true;
                 }
             });
+        }
+        //展开和合并
+        function openAll() {
+            var treedata = treeGrid.getDataTreeList(tableId);
+            treeGrid.treeOpenAll(tableId, !treedata[0][treeGrid.config.cols.isOpen]);
         }
         //刷新
         function reload() {

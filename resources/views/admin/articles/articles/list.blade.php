@@ -1,25 +1,24 @@
-@extends('admin.layouts.layuicontent')
+@extends('layouts.layuicontent')
 @section('title')
     <title>{{ trans('admin/menu.title')}}</title>
 @endsection
 @section('css')
-    <link href="{{ asset('/backend/myvebdors/layui/layui_ext/dtree/dtree.css')}}" rel="stylesheet">
-    <link href="{{ asset('/backend/myvebdors/layui/layui_ext/dtree/font/dtreefont.css')}}" rel="stylesheet">
+
 @endsection
 @section('content')
     <div class="layui-row">
-        <div class="layui-col-xs3 layui-col-sm2 layui-col-md2" style="height: 550px;overflow:scroll">
+        <div class="layui-col-xs3 layui-col-sm2 layui-col-md2" style="height: 600px;overflow:scroll">
+            <br>
             <!-- tree -->
-            {{--<ul id="tree" class="tree-table-tree-box"></ul>--}}
-            <ul id="tree" class="dtree" data-id="0"></ul>
+            <div id="tree"  class="demo-tree"></div>
         </div>
         <div class="layui-col-xs9 layui-col-sm10 layui-col-md10">
-            <!-- table -->
-            <table class="layui-hide" id="dateTable" lay-filter="dateTable"></table>
-            <br>
-            <!-- 工具集 -->
-            <script type="text/html" id="toolbarDemo">
-                <div class="my-btn-box">
+                <!-- table -->
+                <table class="layui-hide" id="dateTable" lay-filter="dateTable"></table>
+                <br>
+                <!-- 工具集 -->
+                <script type="text/html" id="toolbarDemo">
+                    <div class="my-btn-box">
                     <span class="fl">
                         <div class="layui-btn-group">
                             <button class="layui-btn layui-btn-danger layui-btn-xs"  lay-event="delete-all">批量删除</button>
@@ -27,7 +26,7 @@
                         </div>
 
                     </span>
-                    <span class="fr">
+                        <span class="fr">
                         <div class="layui-inline">
                             <div class="layui-input-inline">
                                     <select name="ifs" id="ifs" lay-verify="">
@@ -42,37 +41,55 @@
                         </div>
                         <button class="layui-btn mgl-20" data-type="reload" lay-event="reload"><i class="layui-icon layui-icon-search"></i>   </button>
                     </span>
-                </div>
-            </script>
+                    </div>
+                </script>
 
-            <script type="text/html" id="switchTpl">
-                <input type="checkbox" name="state" value="@{{d.state}}"  id="@{{d.id}}" lay-skin="switch" lay-text="已审核|未审核" lay-filter="state" @{{ d.state == 1 ? 'checked' : '' }}>
-            </script>
+                <script type="text/html" id="switchTpl">
+                    <input type="checkbox" name="state" value="@{{d.state}}"  id="@{{d.id}}" lay-skin="switch" lay-text="已审核|未审核" lay-filter="state" @{{ d.state == 1 ? 'checked' : '' }}>
+                </script>
 
-        </div>
+            </div>
+
+
     </div>
 @endsection
 @section('js')
     <script type="text/javascript">
-        // layui方法
-        layui.config({
-            base: '/backend/myvebdors/layui/layui_ext/dtree/'//配置 layui 第三方扩展组件存放的基础目录
-        }).extend({
-            dtree: 'dtree' //定义该组件模块名
-        }).use(['tree' ,'table', 'layer', 'dtree'], function () {
-            // 操作对象
-            var table = layui.table
-                , layer = layui.layer
-                ,dtree = layui.dtree
+        let data = [
+                    @foreach($categorys as $v){
+                    title:'{{$v->cate_name}}'
+                    ,id:'{{$v->id}}'
+                    ,parentId : '{{$v->cate_pid}}'
+                    @if($v->children)
+                    ,basicData: {
+                        @foreach($v->children as $k => $id)"{{$k}}":'{{$id->id}}',@endforeach
+                    }
+                    ,children:[
+                            @foreach($v->children as $vs){
+                            title:'{{$vs->cate_name}}'
+                            ,id:'{{$vs->id}}'
+                            ,parentId : '{{$vs->cate_pid}}'
+                        },
+                        @endforeach
+                    ]
+                    @endif
+                },
+                @endforeach
+            ];
+        layui.use(['tree','table', 'layer', 'util'], function(){
+            var  table = layui.table
+                ,layer = layui.layer
+                ,tree = layui.tree
                 ,form = layui.form
-                , $ = layui.jquery;
+                , $ = layui.jquery
+                ,util = layui.util;
             // 表格渲染
             var tableIns = table.render({
                 elem: '#dateTable'                  //指定原始表格元素选择器（推荐id选择器）
-                , height: $(window).height() - ( $('.my-btn-box').outerHeight(true) ? $('.my-btn-box').outerHeight(true) + 35 :  40 )    //获取高度容器高度
+                , height: $(window).height() - ( $('.my-btn-box').outerHeight(true) ? $('.my-btn-box').outerHeight(true) + 40 :  40 )    //获取高度容器高度
                 , id: 'dataCheck'
                 , url: '/admin/articles/ajaxIndex'
-                 ,toolbar: '#toolbarDemo'
+                ,toolbar: '#toolbarDemo'
                 , where: {'articles_ids': null,'category_id': null,'ifs':null,'reload':null} //设定异步数据接口的额外参数
                 , method: 'get'
                 , page: true
@@ -86,8 +103,8 @@
                     , {field: 'tag', title: '关键词', width: 120}
                     , {field: 'description', title: '描述', width: 120}
                     , {field: 'level', title: '级别', width: 100}
-                   // , {field: 'state', title: '文章状态', width: 90}
-                     ,{field:'state', title:'文章状态', width:110, templet: '#switchTpl', unresize: true}
+                    // , {field: 'state', title: '文章状态', width: 90}
+                    ,{field:'state', title:'文章状态', width:110, templet: '#switchTpl', unresize: true}
                     , {field: 'view', title: '浏览次数', width: 100 ,sort: true,}
                     , {field: 'user_name', title: '作者', width: 100}
                     , {field: 'created_at', title: '创建时间', width: 180}
@@ -125,7 +142,6 @@
                     });
                 }
             };
-
             //监听开启操作
             form.on('switch(state)', function(obj){
                 $.ajax({
@@ -216,12 +232,12 @@
                         break;
                 };
             });
-/*            // 获取选中行
-            table.on('checkbox(dataCheck)', function (obj) {
-                console.log(obj.checked); //当前是否选中状态
-                console.log(obj.data); //选中行的相关数据
-                console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
-            });*/
+            /*            // 获取选中行
+                        table.on('checkbox(dataCheck)', function (obj) {
+                            console.log(obj.checked); //当前是否选中状态
+                            console.log(obj.data); //选中行的相关数据
+                            console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
+                        });*/
 
             //监听行工具条事件
             table.on('tool(dateTable)', function(obj){
@@ -268,16 +284,6 @@
                             return true;
                         }
                     });
-
-                    /*   layer.prompt({
-                     formType: 2
-                     ,value:data.id
-                     }, function(value, index){
-                     obj.update({
-                     cate_keywords: value
-                     });
-                     layer.close(index);
-                     });*/
                 } else if(obj.event === 'show'){
                     //多窗口模式，层叠置顶
                     layer.open({
@@ -290,68 +296,42 @@
                     });
                 }
             });
-            //树
-            dtree.render({
-                elem: "#tree",  //绑定元素
-                initLevel:1,
-                leafIconArray:{"8":"dtree-icon-xinxipilu"},  // 自定义扩展的二级最后一级图标，从8开始
-                icon: "8", // 使用
-                dot: false,//隐藏小圆点
-                //  url: "../json/case/tree.json"  //异步接口
-                data:[
-                        @foreach($categorys as $v){
-                            title:'{{$v->cate_name}}'
-                            ,id:'{{$v->id}}'
-                            ,parentId : '{{$v->cate_pid}}'
-                            @if($v->children)
-                            ,basicData: {
-                                @foreach($v->children as $k => $id)"{{$k}}":'{{$id->id}}',@endforeach
+            //分类树渲染
+            tree.render({
+                elem: '#tree'  //绑定元素
+                ,data:data
+                ,click: function(obj){
+                    console.log('点击树节点的属性'+JSON.stringify(obj.data.basicData));
+                    if (obj.data.parentId != 0) {
+                        newcategory_id = obj.data.id;
+                        // 加载中...
+                        var loadIndex = layer.load(2, {shade: false});
+                        // 关闭加载
+                        layer.close(loadIndex);
+                        // 刷新表格
+                        tableIns.reload({
+                            where: {'articles_ids':null,'category_id': newcategory_id,'ifs':null,'reload':null} //设定异步数据接口的额外参数
+                            , page: {
+                                curr: 1 //重新从第 1 页开始
                             }
-                                ,children:[
-                                    @foreach($v->children as $vs){
-                                    title:'{{$vs->cate_name}}'
-                                    ,id:'{{$vs->id}}'
-                                    ,parentId : '{{$vs->cate_pid}}'
-                                 },
-                                @endforeach
-                                ]
-                            @endif
-                        },
-                        @endforeach
-                ],
-            });
-            //单击节点 监听事件
-            dtree.on("node('tree')" ,function(param){
-                console.log('点击树节点的属性'+JSON.stringify(param.param));
-                if (param.param.parentId != 0) {
-                    newcategory_id = param.param.nodeId;
-                    // 加载中...
-                    var loadIndex = layer.load(2, {shade: false});
-                    // 关闭加载
-                    layer.close(loadIndex);
-                    // 刷新表格
-                    tableIns.reload({
-                        where: {'articles_ids':null,'category_id': newcategory_id,'ifs':null,'reload':null} //设定异步数据接口的额外参数
-                        , page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                    });
-                }else {
-                    ids = param.param.basicData;
-                    // 加载中...
-                    var loadIndex = layer.load(2, {shade: false});
-                    // 关闭加载
-                    layer.close(loadIndex);
-                    // 刷新表格
-                    tableIns.reload({
-                        where: {'articles_ids':ids,'category_id':null,'ifs':null,'reload':null} //设定异步数据接口的额外参数
-                        , page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                    });
-
+                        });
+                    }else {
+                        let ids = JSON.stringify(obj.data.basicData);
+                        // 加载中...
+                        var loadIndex = layer.load(2, {shade: false});
+                        // 刷新表格
+                        tableIns.reload({
+                            where: {'articles_ids':ids,'category_id':null,'ifs':null,'reload':null} //设定异步数据接口的额外参数
+                            , page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                        // 关闭加载
+                        layer.close(loadIndex);
+                    }
                 }
             });
+
         });
     </script>
 @endsection
