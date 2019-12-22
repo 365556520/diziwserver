@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Repositories\Eloquent\Admin\Articles\ArticlesRepository;
 use App\Repositories\Eloquent\Admin\Articles\CategorysRepository;
+use App\Traits\qiniuCosTrait;
 use Illuminate\Http\Request;
 
 
 class ArticlesController extends CommonController
 {
+    use qiniuCosTrait;
     /**
      * 文章路由
      * Display a listing of the resource.
@@ -77,7 +79,8 @@ class ArticlesController extends CommonController
     {
         //得到树分类
         $categorys= $this->categorys->getCategorysList();
-        return view("admin.articles.articles.add")->with(compact('categorys','categorys'));
+        $token = $this->getQiniuToken();
+        return view("admin.articles.articles.add")->with(compact('categorys','token'));
     }
 
     /**

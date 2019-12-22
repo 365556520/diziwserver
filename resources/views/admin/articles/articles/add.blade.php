@@ -44,7 +44,14 @@
                                 </div>
                             </div>
                         </div>
-
+                        {{--文章图片--}}
+                        <div class="layui-form-item">
+          {{--                  <div class="layui-upload-drag thumb" id="thumb"  name="thumb">
+                                <i class="layui-icon"></i>
+                                <p>点击上传，或将文件拖拽到此处</p>
+                            </div>--}}
+                            <input type="file" class="thumb" name="thumb" id="thumb">
+                        </div>
                         <div class="layui-form-item" pane="">
                             <label class="layui-form-label">文章级别</label>
                             <div class="layui-input-block">
@@ -89,6 +96,7 @@
             </div>
             <div class="layui-form-item">
                 <button class="layui-btn" lay-submit="" lay-filter="demo2">发布文章</button>
+
             </div>
         </form>
         @if(flash()->message)
@@ -137,12 +145,18 @@
             importcss_append: true,
             autosave_ask_before_unload: false,
         });
-        layui.use(['form', 'layedit', 'laydate','element','layedit', 'layer', 'jquery'], function(){
-            var $ = layui.jquery
+
+        layui.config({
+            base: '/extend/layui/extend/' //静态资源所在路径
+        }).extend({
+            qiniuyun: 'qiniuyun/index',
+        }).use(['form', 'layedit', 'laydate','element','layedit', 'layer','qiniuyun'], function(){
+            var $ = layui.$
                 ,form = layui.form
                 ,layer = layui.layer
                 ,element = layui.element
-                ,layedit = layui.layedit;
+                ,layedit = layui.layedit
+                ,qiniuyun = layui.qiniuyun;
             //自定义验证规则
             form.verify({
                 cate_view: [/^[0-9]{1,7}$/, '必须数字但不能大于7位']
@@ -162,6 +176,23 @@
             //初始只
             form.val("add", {
                 "view":0
+            });
+            //上传图片到七牛
+            qiniuyun.loader({
+                domain: "diziwpublic.s3-cn-north-1.qiniucs.com"
+                , elem: "#thumb"
+                , token: "{{$token}}"
+                , next: function(response){
+                    $(".thumb").show();
+                    console.log("上传进度为：" + response.total.percent + "%");
+                    element.progress('video-progress', response.total.percent + '%');
+                }
+                , complete: function(res){
+                    // layer.closeAll('loading'); // 可以调用loading
+                    layer.msg("上传成功！");
+                    $("#video_url").val('{$domain}/'+res.key);
+                    $(".thumb").find("video").attr("src", '{$domain}/'+res.key);
+                }
             });
 
 /*       , calldel: {
