@@ -182,7 +182,6 @@
                 domain: "{{$bucket}}"
                 ,elem: "#thumb"
                 ,token: "{{$token}}"
-                ,method: 'post'
                 , next: function(response){
                     $(".thumb").show();
                     console.log("上传进度为：" + response.total.percent + "%");
