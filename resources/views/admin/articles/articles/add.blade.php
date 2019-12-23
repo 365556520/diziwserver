@@ -179,9 +179,10 @@
             });
             //上传图片到七牛
             qiniuyun.loader({
-                domain: "diziwpublic.s3-cn-north-1.qiniucs.com"
-                , elem: "#thumb"
-                , token: "{{$token}}"
+                domain: "{{$bucket}}"
+                ,elem: "#thumb"
+                ,token: "{{$token}}"
+                ,method: 'post'
                 , next: function(response){
                     $(".thumb").show();
                     console.log("上传进度为：" + response.total.percent + "%");

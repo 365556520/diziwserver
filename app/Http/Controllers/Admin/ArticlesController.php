@@ -80,7 +80,8 @@ class ArticlesController extends CommonController
         //得到树分类
         $categorys= $this->categorys->getCategorysList();
         $token = $this->getQiniuToken();
-        return view("admin.articles.articles.add")->with(compact('categorys','token'));
+        $bucket= env('QINIU_BUCKET');
+        return view("admin.articles.articles.add")->with(compact('categorys','token','bucket'));
     }
 
     /**
