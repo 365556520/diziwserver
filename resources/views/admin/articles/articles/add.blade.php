@@ -182,6 +182,7 @@
                 domain: "{{$bucket}}"
                 ,elem: "#thumb"
                 ,token: "{{$token}}"
+                ,prefix: "diziw/articles/imgs"
                 , next: function(response){
                     $(".thumb").show();
                     console.log("上传进度为：" + response.total.percent + "%");

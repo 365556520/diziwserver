@@ -19,21 +19,20 @@ layui.define('layer', function(exports){
 					useCdnDomain: true,
 					disableStatisticsReport: false,
 					retryCount: options.browse_button || 6,
-					region: options.browse_button || qiniu.region.z2
+					region: options.browse_button || qiniu.region.z2 //七牛空间上传的区域  华东 z0 华北z1 华南z2
 				};
 				var putExtra = {
 					fname: "",
 					params: {},
 					mimeType: null
 				};
-
+                var prefix = options.prefix; //名字的前缀
 				$(options.elem).unbind("change").bind("change",function(){
 					var file = this.files[0];
 					var finishedAttr = [];
 					var compareChunks = [];
 					var observable;
-					var key = file.name;
-
+					var key = prefix+'/'+file.name; //这个文件名字需要md5加密
 					putExtra.params["x:name"] = key.split(".")[0];
 
 					var error = function(err) {
