@@ -32,7 +32,12 @@ layui.define('layer', function(exports){
 					var finishedAttr = [];
 					var compareChunks = [];
 					var observable;
-					var key = prefix+'/'+file.name; //这个文件名字需要md5加密
+                    //文件名字加密
+                    var filename= file.name;
+                   // var fileExt=(/[.]/.exec(filename)) ? /[^.]+$/.exec(filename.toLowerCase()) : ''; //后缀名
+                    var timestamp=new Date().getTime(); //当前时间戳
+                    var newfilename = timestamp+'jia'+ filename ; //当前时间戳+文件名字
+                    var key = prefix+'/'+newfilename; //这个文件名字需要md5加密
 					putExtra.params["x:name"] = key.split(".")[0];
 
 					var error = function(err) {

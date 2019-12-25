@@ -110,6 +110,10 @@
    {{--加载富文本编辑器--}}
     <script src="{{asset('/extend/tinymce/tinymce.min.js')}}"></script>
     <script>
+        let qiniuToken = '' , qiniubucket = '';
+        $(function(){ //进入页面初始化
+            getQiNiuToken(); //获取页七牛token
+        });
         //富文本编辑器配置
         tinymce.init({
             selector: '#content'
@@ -121,11 +125,6 @@
                         table   charmap emoticons hr pagebreak insertdatetime | fullscreen   ',
             height: 650, //编辑器高度
             min_height: 400,
-            /*content_css: [ //可设置编辑区内容展示的css，谨慎使用
-                '/static/reset.css',
-                '/static/ax.css',
-                '/static/css.css',
-            ],*/
             fontsize_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
             font_formats: '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;',
             link_list: [
@@ -145,7 +144,6 @@
             importcss_append: true,
             autosave_ask_before_unload: false,
         });
-
         layui.config({
             base: '/extend/layui/extend/' //静态资源所在路径
         }).extend({
@@ -172,16 +170,19 @@
             //监听指定开关
             form.on('switch(state)', function(data){
                 layer.tips('温馨提示：'+ (this.checked != 0 ? '直接通过审核！' : '不审核该文章！'), data.othis)
+
             });
             //初始只
             form.val("add", {
                 "view":0
             });
+
+
             //上传图片到七牛
             qiniuyun.loader({
-                domain: "{{$bucket}}"
+                domain: qiniubucket
                 ,elem: "#thumb"
-                ,token: "{{$token}}"
+                ,token: qiniuToken
                 ,prefix: "diziw/articles/imgs"
                 , next: function(response){
                     $(".thumb").show();
@@ -229,8 +230,23 @@
                 }
      */
 
-
-
         });
+
+        //获取七牛上传图片令牌
+        function getQiNiuToken() {
+            $.ajax({
+                type: "get",
+                url: "{{url('/admin/getQiNiuToken')}}",
+                cache: false,
+                success: function (data) {
+                    qiniuToken = data.token;
+                    qiniubucket = data.bucket;
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                }
+            });
+        }
+
     </script>
 @endsection

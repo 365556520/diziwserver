@@ -2,6 +2,8 @@
 /**
  * 文章管理
  */
+//获取上传七牛图片的token
+Route::get('getQiNiuToken','ArticlesController@getQnToken');
 //文章
 Route::group(['prefix' => 'articles'],function (){
     //列表数据

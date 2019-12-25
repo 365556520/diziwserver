@@ -79,11 +79,17 @@ class ArticlesController extends CommonController
     {
         //得到树分类
         $categorys= $this->categorys->getCategorysList();
+        return view("admin.articles.articles.add")->with(compact('categorys'));
+    }
+     /**
+      *获取七牛上传token
+     */
+    public function getQnToken()
+    {
         $token = $this->getQiniuToken();
         $bucket= env('QINIU_BUCKET');
-        return view("admin.articles.articles.add")->with(compact('categorys','token','bucket'));
+        return  ['code' => 200,'token' => $token,'bucket' => $bucket];
     }
-
     /**
      * Store a newly created resource in storage.
      *添加文章
