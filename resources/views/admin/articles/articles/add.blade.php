@@ -3,7 +3,6 @@
     <title>{{ trans('admin/menu.title')}}</title>
 @endsection
 @section('css')
-
 @endsection
 @section('content')
     <div class="layui-row" style="padding: 2px 15px 2px 15px">
@@ -44,14 +43,14 @@
                                 </div>
                             </div>
                         </div>
-                        {{--文章图片--}}
+                     {{--   --}}{{--文章图片--}}{{--
                         <div class="layui-form-item">
-          {{--                  <div class="layui-upload-drag thumb" id="thumb"  name="thumb">
-                                <i class="layui-icon"></i>
-                                <p>点击上传，或将文件拖拽到此处</p>
-                            </div>--}}
-                            <input type="file" class="thumb" name="thumb" id="thumb">
-                        </div>
+                            <div class="layui-input-inline">
+                                <a href="javascript:;" class="file">选择文件
+                                    <input type="file" class="thumb file" name="thumb" id="thumb">
+                                </a>
+                            </div>
+                        </div>--}}
                         <div class="layui-form-item" pane="">
                             <label class="layui-form-label">文章级别</label>
                             <div class="layui-input-block">
@@ -148,12 +147,13 @@
             base: '/extend/layui/extend/' //静态资源所在路径
         }).extend({
             qiniuyun: 'qiniuyun/index',
-        }).use(['form', 'layedit', 'laydate','element','layedit', 'layer','qiniuyun'], function(){
+        }).use(['form', 'layedit', 'laydate','element','layedit', 'layer','upload','qiniuyun'], function(){
             var $ = layui.$
                 ,form = layui.form
                 ,layer = layui.layer
                 ,element = layui.element
                 ,layedit = layui.layedit
+                ,upload = layui.upload
                 ,qiniuyun = layui.qiniuyun;
             //自定义验证规则
             form.verify({
@@ -177,8 +177,7 @@
                 "view":0
             });
 
-
-            //上传图片到七牛
+            //上传图片到七牛  目前没用
             qiniuyun.loader({
                 domain: qiniubucket
                 ,elem: "#thumb"
@@ -197,42 +196,9 @@
                 }
             });
 
-/*       , calldel: {
-                url: '/admin/articles/calldel',
-                    done: function (data) {
-                    if (data.code == 0) {
-                        layer.msg(data.msg, {
-                            time: 1000, //1s后自动关闭
-                        });
-                    }else{
-                        layer.msg(data.msg, {
-                            time: 1000, //1s后自动关闭
-                        });
-                    }
-                    // console.log(data);
-                }
-            }
-
-               //暴露layupload参数设置接口 --详细查看layupload参数说明
-                uploadImage: {
-                    url: '/admin/articles/upload',
-                    accept: 'image',
-                    acceptMime: 'image/!*',
-                    exts: 'jpg|png|gif|bmp|jpeg',
-                    size: 1024 * 5,
-                    done: function (data) {
-                        if (data.code == 0){
-                            layer.msg(data.msg, {
-                                time: 1000, //1s后自动关闭
-                            });
-                        }
-                    }
-                }
-     */
-
         });
 
-        //获取七牛上传图片令牌
+        //获取七牛上传图片令牌  目前没用
         function getQiNiuToken() {
             $.ajax({
                 type: "get",

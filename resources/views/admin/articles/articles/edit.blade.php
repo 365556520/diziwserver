@@ -102,10 +102,40 @@
     </div>
 @endsection
 @section('js')
-    {{--查看本编辑中查看源码需要用到ace插件--}}
-    <script src="{{asset('/backend/myvebdors/layui/ace/ace.js')}}"></script>
+    {{--加载富文本编辑器--}}
+    <script src="{{asset('/extend/tinymce/tinymce.min.js')}}"></script>
+
     <script>
-        var url = 'http://www.diziw.cn/';
+        //富文本编辑器配置
+        tinymce.init({
+            selector: '#content'
+            ,height: 500
+            ,language:'zh_CN'//注意大小写
+            ,plugins: 'print preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help emoticons autosave  autoresize   ',
+            toolbar: 'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
+                        styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
+                        table   charmap emoticons hr pagebreak insertdatetime | fullscreen   ',
+            height: 650, //编辑器高度
+            min_height: 400,
+            fontsize_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
+            font_formats: '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;',
+            link_list: [
+                { title: '链接例子1', value: 'http://www.tinymce.com' },
+                { title: '链接例子2', value: 'http://tinymce.ax-z.cn' }
+            ],
+            image_list: [
+                { title: '图片例子1', value: 'https://www.tiny.cloud/images/glyph-tinymce@2x.png' },
+                { title: '图片例子2', value: 'https://www.baidu.com/img/bd_logo1.png' }
+            ],
+            image_class_list: [
+                { title: 'None', value: '' },
+                { title: 'Some class', value: 'class-name' }
+            ],
+            image_caption: true, //图片标题
+            image_advtab: true, //开启图片css样式
+            importcss_append: true,
+            autosave_ask_before_unload: false,
+        });
         layui.use(['form', 'layedit', 'laydate','element','layedit', 'layer', 'jquery'], function(){
             var $ = layui.jquery
                 ,form = layui.form
@@ -118,9 +148,6 @@
             });
             //监听提交
             form.on('submit(demo2)', function(data){
-                /*     layer.alert(JSON.stringify(data.field), {
-                 title: '最终的提交信息'
-                 })*/
                 return true;
             });
             //监听指定开关
@@ -130,121 +157,15 @@
             //表单初始值
             form.val("edit", {
                 "title": '{{$articlesEdit->title}}',
-                @foreach($articlesEdit->thumb as $k => $v)
-                "thumb[{{$k}}]":url+'{{$v}}',
-                @endforeach
                 'category_id': '{{$articlesEdit->category_id}}',
+                'thumb': '{{$articlesEdit->thumb}}',
                 "view":'{{$articlesEdit->category_id}}',
                 "level":'{{$articlesEdit->level}}',
                 "state": '{{$articlesEdit->state}}'==1 ? true : false,
                 "tag": '{{$articlesEdit->tag}}',
                 "description": '{{$articlesEdit->description}}',
             });
-            //富文本框
-            layedit.set({
-                //暴露layupload参数设置接口 --详细查看layupload参数说明
-                uploadImage: {
-                    url: '/admin/articles/upload',
-                    accept: 'image',
-                    acceptMime: 'image/*',
-                    exts: 'jpg|png|gif|bmp|jpeg',
-                    size: 1024 * 5,
-                    done: function (data) {
-                        if (data.code == 0){
-                            layer.msg(data.msg, {
-                                time: 1000, //1s后自动关闭data.data.src
-                            });
-                        }
-                    }
-                }
 
-                /*     // 需要在tool加入'video'
-                 , uploadVideo: {
-                 url: 'your url',
-                 accept: 'video',
-                 acceptMime: 'video/!*',
-                 exts: 'mp4|flv|avi|rm|rmvb',
-                 size: 1024 * 10 * 2,
-                 done: function (data) {
-                 console.log(data);
-                 }
-                 }
-                 //需要在tool加入'attachment'
-                 , uploadFiles: {
-                 url: 'your url',
-                 accept: 'file',
-                 acceptMime: 'file/!*',
-                 size: '20480',
-                 done: function (data) {
-                 console.log(data);
-                 }
-                 }*/
-                //右键删除图片/视频时的回调参数，post到后台删除服务器文件等操作，
-                //传递参数：
-                //图片： imgpath --图片路径
-                //视频： filepath --视频路径 imgpath --封面路径
-                , calldel: {
-                    url: '/admin/articles/calldel',
-                    done: function (data) {
-                        if (data.code == 0) {
-                            layer.msg(data.msg, {
-                                time: 1000, //1s后自动关闭
-                            });
-                        }else if(data.code == 1){
-                            layer.msg(data.msg, {
-                                time: 1000, //1s后自动关闭
-                            });
-                        }
-
-                    }
-                }
-                //开发者模式 --默认为false
-                , devmode: false
-                //插入代码设置 --hide:true 等同于不配置codeConfig
-                , codeConfig: {
-                    hide: false,  //是否显示编码语言选择框
-                    default: 'javascript' //hide为true时的默认语言格式
-                }
-                ,autoSync:true
-                //新增iframe外置样式和js
-                //, quote:{
-                //    style: ['/Content/Layui-KnifeZ/css/layui.css','/others'],
-                //    js: ['/Content/Layui-KnifeZ/lay/modules/jquery.js']
-                //}
-                //自定义样式-暂只支持video添加
-                //, customTheme: {
-                //    video: {
-                //        title: ['原版', 'custom_1', 'custom_2']
-                //        , content: ['', 'theme1', 'theme2']
-                //        , preview: ['', '/images/prive.jpg', '/images/prive2.jpg']
-                //    }
-                //}
-                //插入自定义链接
-                , customlink:{
-                    title: '插入layui官网'
-                    ,href: ''
-                    ,onmouseup:''
-                }
-                , facePath:'http://knifez.gitee.io/kz.layedit/Content/Layui-KnifeZ/' //这个是表情地址
-                , tool: [
-                    'html'//源码模式
-                    ,'undo','redo' //撤销重做--实验功能，不推荐使用
-                    ,'code', 'strong', 'italic', 'underline', 'del'
-                    ,'addhr' //添加水平线
-                    ,'|', 'fontFomatt','fontfamily','fontSize' //段落格式，字体样式，字体颜色
-                    , 'colorpicker', 'fontBackColor'//字体颜色,字体背景色
-                    , 'face', '|', 'left', 'center', 'right', '|', 'link', 'unlink'
-                    ,'images'//多图上传
-                    , 'image_alt'//上传图片拓展
-                    ,'anchors' //锚点
-                    , '|', 'table'//插入表格
-                    ,'customlink'//插入自定义链接
-                    ,'fullScreen'//全屏
-                    ,'preview'//预览
-                ]
-                , height: '90%'
-            });
-            var ieditor = layedit.build('content');
 
         });
     </script>

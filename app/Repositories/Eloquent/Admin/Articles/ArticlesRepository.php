@@ -56,19 +56,10 @@ class ArticlesRepository extends Repository {
     }
     /*添加文章*/
     public function createArticle($formData){
-        $img =[];
         //把文章中的图片提取出来
         $imgs = $this->get_images_from_html($formData['content']);
-        if($imgs != null){
-            foreach ($imgs as $k => $v){
-                //判断图片地址是否是本地的如果不是可能不是图片
-                if(stripos($v,"diziw.cn/backend/images/articleImages")!== false){
-                    $img[$k] = $v;
-                }
-            }
-        }
         //把图片名字以字符串行式存到数组
-        $formData['thumb']= $this->getImgArr($img);
+        $formData['thumb']= json_encode($imgs);
         //防止xxs攻击过滤
         $formData['content'] =Purifier::clean($formData['content'],array('Attr.EnableID' => true));
         $result = $this->model->create($formData);
@@ -84,8 +75,6 @@ class ArticlesRepository extends Repository {
          2、文章的id
     */
     public function destroyArticles($thumb,$id){
-        //删除图片
-        $this->getImg($thumb);
        //删除数据库数据
         $result = $this->delete($id);
         if ($result) {
@@ -94,33 +83,12 @@ class ArticlesRepository extends Repository {
             flash('删除失败','error');
         }
     }
-    //得到图片删除图片
-    public function getImg($thumb){
-        $result =  false;
-        $thumbs = '';
-        if(is_array($thumb)){
-            $thumbs = implode($thumb); //把图片数组转换成字符串
-        } else {
-            $thumbs =  $thumb;
-        }
-       $imgs = array_filter(explode("/", $thumbs));//以/为分割符转换为数组    array_filter去掉数组中值为空的
-       foreach ($imgs as $v){
-           $result =  $this->deImg($v);
-       }
-       return $result;
-    }
+
     // 修改文章视图数据
     public function editView($id)
     {
         //得到修改的数据
         $articlesEdit = $this->find($id);
-        $img = array_filter(explode("/", $articlesEdit->thumb)); //得到图片名字存到数组中
-        $imgs = [];
-        //图片加上路径
-        foreach ($img as $v){
-            array_push($imgs,'backend/images/articleImages/'.$v);
-        }
-        $articlesEdit->thumb=$imgs;
         if ($articlesEdit) {
             return $articlesEdit;
         }
@@ -132,18 +100,10 @@ class ArticlesRepository extends Repository {
         if ($attributes['id'] != $id) {
             abort(500,trans('admin/errors.user_error'));
         }
-        $img =[];
         //提取出文章图片
         $imgs = $this->get_images_from_html($attributes['content']);
-        if($imgs != null){
-            foreach ($imgs as $k => $v){
-                //取出上传的图片
-                if(stripos($v,"diziw.cn/backend/images/articleImages")!== false){
-                    $img[$k] = $v;
-                }
-            }
-        }
-        $attributes['thumb'] = $this->getImgArr($img);
+        //把图片名字以字符串行式存到数组
+        $attributes['thumb']= json_encode($imgs);
         //防止xxs攻击过滤
         $attributes['content'] =Purifier::clean($attributes['content'],array('Attr.EnableID' => true));
         $result = $this->update($attributes,$id);
@@ -159,19 +119,8 @@ class ArticlesRepository extends Repository {
         $result = $this->update($state,$id);
         return $result;
     }
-    //删除服务器图片
-    public function deImg($img){
-        return Storage::delete('backend/images/articleImages/'.$img);
-    }
-    //获取图片名字，并转换成字符串
-    public function getImgArr($imgs){
-        $img ='';
-        foreach ($imgs as $v){
-            $img .= strrchr($v,'/'); //获取图片名字
-        }
-        //把图片名字以字符串行式存到数组
-        return $img;
-    }
+
+
     /**
      * 提取文章内容的图片
      * @param $content
@@ -187,6 +136,36 @@ class ArticlesRepository extends Repository {
         }
         return null;
     }
+
+
+  /*  //删除服务器图片
+    public function deImg($img){
+        return Storage::delete('backend/images/articleImages/'.$img);
+    }
+    //得到图片删除图片
+    public function getImg($thumb){
+        $result =  false;
+        $thumbs = '';
+        if(is_array($thumb)){
+            $thumbs = implode($thumb); //把图片数组转换成字符串
+        } else {
+            $thumbs =  $thumb;
+        }
+        $imgs = array_filter(explode("/", $thumbs));//以/为分割符转换为数组    array_filter去掉数组中值为空的
+        foreach ($imgs as $v){
+            $result =  $this->deImg($v);
+        }
+        return $result;
+    }
+    //获取图片名字，并转换成字符串
+    public function getImgArr($imgs){
+        $img ='';
+        foreach ($imgs as $v){
+            $img .= strrchr($v,'/'); //获取图片名字
+        }
+        //把图片名字以字符串行式存到数组
+        return $img;
+    }
     //获取完整的图片名字数组
     public function getimgurl($imgs){
         foreach ($imgs as &$v){
@@ -194,7 +173,9 @@ class ArticlesRepository extends Repository {
         }
         //把图片名字以字符串行式存到数组
         return $imgs;
-    }
+    }*/
+
+
     //前台
     /*前台文章列表*/
     public function getArticles($data){
