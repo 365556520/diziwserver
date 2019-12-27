@@ -1,11 +1,15 @@
-@extends('admin.layouts.layuicontent')
+@extends('layouts.layuicontent')
 @section('title')
     <title>{{ trans('admin/menu.title')}}</title>
 @endsection
 @section('css')
 @endsection
 @section('content')
-    <div style="background: #beff9f;color: #ec4e20;size: 18px">@include('flash::message')</div>
+    @if(flash()->message)
+        <div style="text-align:center;">
+            <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
+        </div>
+    @endif
     <div class="layui-row">
         <table class="layui-hide" id="test" lay-filter="test"></table>
         <script type="text/html" id="toolbarDemo">
@@ -34,7 +38,7 @@
                     {type: 'checkbox', fixed: 'left'}
                     ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
                     ,{field:'title', title:'标题', width:120}
-                    ,{field:'content', title:'回复内容', width:260}
+                    ,{field:'content', title:'回复内容', width:350}
                     ,{field:'user_id', title:'用户id', width:120}
                     ,{field:'created_at', title:'创建时间', width:210, sort: true}
                     ,{field:'updated_at', title:'更新时间', width:210, sort: true}

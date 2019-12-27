@@ -1,12 +1,16 @@
-@extends('admin.layouts.layuicontent')
+@extends('layouts.layuicontent')
 @section('title')
     <title>{{ trans('admin/menu.title')}}</title>
 @endsection
 @section('css')
 @endsection
 @section('content')
-    <div style="background: #beff9f;color: #ec4e20;size: 18px">@include('flash::message')</div>
     <div class="layui-row">
+        @if(flash()->message)
+            <div style="text-align:center;">
+                <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
+            </div>
+        @endif
         <table class="layui-hide" id="test" lay-filter="test"></table>
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container layui-btn-group my-btn-box">
@@ -53,10 +57,17 @@
                     case 'getCheckData':
                         var data = checkStatus.data;  //得到选中数据的数组
                         if(data.length>0){
+                            var ids = new Array(); //id变量
+                            //获取图片和id
+                            for (var k in data) {
+                                ids.push({
+                                    'id' : data[k]['id'],
+                                });
+                            }
                             layer.confirm('真的删除这些分类吗？', function(index){
                                 $.ajax({
                                     type: "GET",
-                                    url: "{{url('/admin/comments/destroys')}}/"+ JSON.stringify(data),
+                                    url: "{{url('/admin/comments/destroys')}}/"+ JSON.stringify(ids),
                                     cache: false,
                                     success: function (data) {
                                         layer.msg('删除成功', {

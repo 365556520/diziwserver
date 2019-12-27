@@ -74,7 +74,7 @@ class ArticlesRepository extends Repository {
     参数 1、$thumb图片的名称
          2、文章的id
     */
-    public function destroyArticles($thumb,$id){
+    public function destroyArticles($id){
        //删除数据库数据
         $result = $this->delete($id);
         if ($result) {

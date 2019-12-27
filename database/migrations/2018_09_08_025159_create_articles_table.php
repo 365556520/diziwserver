@@ -30,7 +30,7 @@ class CreateArticlesTable extends Migration
             $table->string('title')->default("")->comment('标题');
             $table->string('tag')->default("")->comment('关键词');
             $table->string('description')->default("")->comment('描述');
-            $table->string('thumb')->default("")->comment('缩略图');
+            $table->json('thumb')->nullable ()->comment('缩略图');
             $table->integer('view')->default(0)->comment('查看次数');
             $table->integer('state')->default(0)->comment('文章状态');
             $table->integer('level')->default(0)->comment('文章级别置顶推荐热门');

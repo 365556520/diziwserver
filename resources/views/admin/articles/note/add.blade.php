@@ -1,4 +1,4 @@
-@extends('admin.layouts.layuicontent')
+@extends('layouts.layuicontent')
 @section('title')
     <title>添加备忘录</title>
 @endsection
@@ -7,7 +7,6 @@
 @section('content')
     <div class="layui-row" style="padding: 2px 15px 2px 15px">
         <br>
-        @include('flash::message')
         <form class="layui-form layui-form-pane" method="post" action="{{url('admin/note')}}">
             {{csrf_field()}}
             <div class="layui-form-item">
@@ -19,7 +18,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">用户id</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="user_id" lay-verify="required" placeholder="请输入" value="{{Auth::user()->id}}" autocomplete="off" class="layui-input">
+                    <input type="text" name="user_id"  lay-verify="required|number"   placeholder="必填必须数字" value="{{Auth::user()->id}}" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
@@ -33,7 +32,11 @@
                 <button class="layui-btn" lay-submit="" lay-filter="demo2">添加备忘录</button>
             </div>
         </form>
-
+        @if(flash()->message)
+            <div style="text-align:center;">
+                <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
+            </div>
+        @endif
     </div>
 @endsection
 @section('js')

@@ -8,9 +8,9 @@ Route::get('getQiNiuToken','ArticlesController@getQnToken');
 Route::group(['prefix' => 'articles'],function (){
     //列表数据
     Route::get('ajaxIndex','ArticlesController@ajaxIndex');
-    //上传图片
+    //上传图片 旧没用
     Route::post('upload','ArticlesController@upload');
-    //删除图片
+    //删除图片 旧没用
     Route::post('calldel','ArticlesController@calldel');
     //批量删除文章
     Route::post('destroys/{id}','ArticlesController@destroys');
