@@ -34,7 +34,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">途经</label>
                 <div class="layui-input-block tags" id="tags">
-                    <input type="text" name="buses_midway"  id="inputTags" placeholder="输入一个完成后回车生成地名" autocomplete="off">
+                    <input type="text" name="buses_midway"  id="inputTags" placeholder="回车生成地名" autocomplete="off">
                 </div>
             </div>
 
