@@ -17,7 +17,7 @@ class CreateBusesTable extends Migration
         Schema::create('busesroute', function (Blueprint $table) {
             $table->increments('id');
             $table->string('buses_start')->comment('起点');
-            $table->string('buses_midway')->nullable()->comment('途经');
+            $table->json('buses_midway')->nullable()->comment('途经');
             $table->string('buses_end')->comment('终点');
             $table->integer('buses_pid')->default(0)->comment('父类id');
             $table->timestamps();

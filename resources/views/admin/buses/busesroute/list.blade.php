@@ -50,10 +50,10 @@
                 ,title: '用户数据表'
                 ,cols: [[
                     {field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
-                    ,{field:'buses_start', title:'起点', width:300}
-                    ,{field:'buses_midway', title:'途径', width:600}
-                    ,{field:'buses_end', title:'终点', width:300}
-                    ,{field:'buses_pid', title:'PID', width:120}
+                    ,{field:'buses_start', title:'起点', width:200}
+                    ,{field:'buses_midway', title:'途径', width:400}
+                    ,{field:'buses_end', title:'终点', width:150}
+                    ,{field:'buses_pid', title:'PID', width:80}
                     ,{field:'created_at', title:'创建时间', width:180, sort: true}
                     , {
                         width: 200, title: '操作', align: 'center'/*toolbar: '#barDemo'*/
@@ -81,7 +81,7 @@
                             anim: 2, //打开动画
                             maxmin: true, //开启最大化最小化按钮
                             area: ['893px', '100%'],
-                            content: '{{url("/admin/categorys/create")}}',
+                            content: '{{url("/admin/busesroute/create")}}',
                             cancel: function(index, layero){
                                 // 刷新表格
                                 tableIns.reload({
@@ -160,7 +160,7 @@
                 anim: 2, //打开动画
                 maxmin: true, //开启最大化最小化按钮
                 area: ['893px', '100%'],
-                content: '{{url("/admin/categorys/create")}}',
+                content: '{{url("/admin/busesroute/create")}}',
                 cancel: function(index, layero){
                     // 刷新表格
                     treeGrid.reload(tableId, {

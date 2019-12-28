@@ -39,7 +39,8 @@ class BusesRouteController extends CommonController
      */
     public function create()
     {
-        //
+        $busesroute = $this->busesroute->getpid(); //顶级线路
+        return view('admin.buses.busesroute.add')->with(compact('busesroute'));
     }
 
     /**
