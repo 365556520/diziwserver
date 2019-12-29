@@ -67,6 +67,7 @@
         layui.use(['form', 'layedit', 'laydate'], function(){
             var form = layui.form
                 ,layer = layui.layer
+                ,layedit = layui.layedit;
             //自定义验证规则
             form.verify({
                 cate_view: [/^[0-9]{1,7}$/, '必须数字但不能大于7位']

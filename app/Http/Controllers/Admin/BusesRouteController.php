@@ -34,7 +34,7 @@ class BusesRouteController extends CommonController
     }
     /**
      * Show the form for creating a new resource.
-     *
+     *创建视图
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -44,17 +44,14 @@ class BusesRouteController extends CommonController
     }
 
     /**
-     * 添加班车线路
-     *
+     * 添加班车线路逻辑
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(BusesRouteRequest $request){
-        //$request->except('_token')不获取_token的值，其他值正常获取
-        $result = $this->busesroute->createBusesRoute($request->except('_token'));
-        return redirect(url('admin/busesroute'));
+         $this->busesroute->createBusesRoute($request->except('_token'));
+        return redirect(url('admin/busesroute/create'));
     }
-
     /**
      *显示视图
      * @param  int  $id
@@ -98,7 +95,7 @@ class BusesRouteController extends CommonController
      */
     public function destroy($id)
     {
-        $this->busesroute->destroyBusesRoute($id);
-        return redirect(url('admin/busesroute'));
+        $msg = $this->busesroute->destroyBusesRoute($id);
+        return response()->json($msg);
     }
 }

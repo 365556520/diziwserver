@@ -6,6 +6,7 @@
 @endsection
 @section('content')
     <div class="layui-row">
+
         <table class="layui-hide" id="test" lay-filter="test"></table>
         <script type="text/html" id="barDemo">
             <div class="layui-btn-container layui-btn-group my-btn-box">
@@ -103,7 +104,7 @@
                     layer.confirm('真的删除此分类吗？', function(index){
                         $.ajax({
                             type: "POST",
-                            url: "{{url('/admin/categorys')}}/"+data.id,
+                            url: "{{url('/admin/busesroute')}}/"+data.id,
                             cache: false,
                             data:{_method:"DELETE", _token: "{{csrf_token()}}"},
                             success: function (data) {
@@ -129,13 +130,13 @@
                 } else if(obj.event === 'edit'){
                     layer.open({
                         type: 2,//2类型窗口 这里内容是一个网址
-                        title: '修改文章分类',
+                        title: '修改线路',
                         shadeClose: true,
                         shade: false,
                         anim: 2, //打开动画
                         maxmin: true, //开启最大化最小化按钮
                         area: ['893px', '100%'],
-                        content: '{{url("/admin/categorys")}}/'+ data.id + '/edit',
+                        content: '{{url("/admin/busesroute")}}/'+ data.id + '/edit',
                         cancel: function(index, layero){
                             // 刷新表格
                             treeGrid.reload({
@@ -154,7 +155,7 @@
         function add() {
             layer.open({
                 type: 2,//2类型窗口 这里内容是一个网址
-                title: '添加文章分类',
+                title: '添加线路',
                 shadeClose: true,
                 shade: false,
                 anim: 2, //打开动画

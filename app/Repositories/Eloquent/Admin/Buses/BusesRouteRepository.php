@@ -40,13 +40,13 @@ class BusesRouteRepository extends Repository {
         $categorysTree = $this->getTree($date,'buses_pid',0);
         return $categorysTree;
     }
-    /*添加视频标签*/
+    /*添加线路*/
     public function createBusesRoute($formData){
         $result = $this->model->create($formData);
         if ($result) {
-            flash('线路添加成功','success');
+            flash('添加成功','success');
         }else{
-            flash('线路添加失败','error');
+            flash('添加失败','error');
         }
         return $result;
     }
@@ -61,13 +61,12 @@ class BusesRouteRepository extends Repository {
             }else{
                 $result = $this->delete($id);
                 if ($result) {
-                    flash('删除成功','success');
+                    return ['code' => 200,'msg'=>'删除成功'];
                 } else {
-                    flash('删除失败','error');
+                    return ['code' => 0,'msg'=>'删除失败'];
                 }
             }
         }
-        return $result;
     }
 
     // 修改班车线路视图数据
