@@ -68,34 +68,6 @@
                 ]]
             });
 
-            //头工具栏事件
-            treeGrid.on('toolbar(' + tableId + ')', function(obj){
-                var checkStatus = table.checkStaptus(obj.config.id);
-                switch(obj.event){
-
-                    case 'add':
-                        layer.open({
-                            type: 2,//2类型窗口 这里内容是一个网址
-                            title: '添加文章分类',
-                            shadeClose: true,
-                            shade: false,
-                            anim: 2, //打开动画
-                            maxmin: true, //开启最大化最小化按钮
-                            area: ['893px', '100%'],
-                            content: '{{url("/admin/busesroute/create")}}',
-                            cancel: function(index, layero){
-                                // 刷新表格
-                                tableIns.reload({
-                                    page: {
-                                        curr: 1 //重新从第 1 页开始
-                                    }
-                                });
-                                return true;
-                            }
-                        });
-                        break;
-                };
-            });
             //监听行工具条事件
             treeGrid.on('tool(' + tableId + ')', function(obj){
                 var data = obj.data;
@@ -139,7 +111,7 @@
                         content: '{{url("/admin/busesroute")}}/'+ data.id + '/edit',
                         cancel: function(index, layero){
                             // 刷新表格
-                            treeGrid.reload({
+                            treeGrid.reload(tableId,{
                                 page: {
                                     curr: 1 //重新从第 1 页开始
                                 }

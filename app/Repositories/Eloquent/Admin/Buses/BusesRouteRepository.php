@@ -42,6 +42,8 @@ class BusesRouteRepository extends Repository {
     }
     /*添加线路*/
     public function createBusesRoute($formData){
+        //先一点为准把字符串转换成数组，然后把数组转化成json
+        $formData['buses_midway'] = $this->getBuses_midwayJson($formData['buses_midway']);
         $result = $this->model->create($formData);
         if ($result) {
             flash('添加成功','success');
@@ -73,6 +75,7 @@ class BusesRouteRepository extends Repository {
     public function editView($id)
     {
         $result = $this->find($id);
+        //$result->buses_midway = json_decode($result->buses_midway); //把json转换成字符串
         if ($result) {
             return $result;
         }
@@ -84,6 +87,8 @@ class BusesRouteRepository extends Repository {
         if ($attributes['id'] != $id) {
             abort(500,trans('admin/errors.user_error'));
         }
+        //先一点为准把字符串转换成数组，然后把数组转化成json
+        $attributes['buses_midway'] = $this->getBuses_midwayJson($attributes['buses_midway']);
         $result = $this->update($attributes,$id);
         if ($result) {
             flash('班线修改成功','success');
@@ -91,6 +96,9 @@ class BusesRouteRepository extends Repository {
             flash('班线修改失败', 'error');
         }
         return $result;
+    }
+    public function getBuses_midwayJson($buses_midway){
+       return json_encode(explode(",", $buses_midway));
     }
     public function getpid(){
         return $this->model->where('buses_pid',0)->get();//返回父

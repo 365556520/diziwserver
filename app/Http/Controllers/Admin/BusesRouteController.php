@@ -84,7 +84,7 @@ class BusesRouteController extends CommonController
     public function update(BusesRouteRequest $request, $id)
     {
         $this->busesroute->updateBusesRoute($request->all(),$id);
-        return redirect('admin/busesroute');
+        return redirect('admin/busesroute/'.$id.'/edit');
     }
 
     /**
