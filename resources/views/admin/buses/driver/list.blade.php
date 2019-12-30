@@ -1,4 +1,4 @@
-@extends('admin.layouts.layuicontent')
+@extends('layouts.layuicontent')
 @section('title')
     <title>{{ trans('admin/user.title')}}</title>
 @endsection
@@ -40,6 +40,11 @@
                 </div>
             </script>
         </div>
+        @if(flash()->message)
+            <div style="text-align:center;">
+                <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
+            </div>
+        @endif
     </div>
 @endsection
 @section('js')
@@ -247,6 +252,4 @@
 
         });
     </script>
-    {{--提示代码--}}
-    @include('component.errorsLayer')
 @endsection

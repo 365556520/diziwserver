@@ -1,10 +1,10 @@
-@extends('admin.layouts.layuicontent')
+@extends('layouts.layuicontent')
 @section('title')
     <title>{{ trans('admin/user.title')}}</title>
 @endsection
 @section('css')
-    <link href="{{ asset('/backend/myvebdors/layui/layui_ext/dtree/dtree.css')}}" rel="stylesheet">
-    <link href="{{ asset('/backend/myvebdors/layui/layui_ext/dtree/font/dtreefont.css')}}" rel="stylesheet">
+    <link href="{{ asset('/extend/layui/extend/dtree/dtree.css')}}" rel="stylesheet">
+    <link href="{{ asset('/extend/layui/extend/dtree/font/dtreefont.css')}}" rel="stylesheet">
 @endsection
 @section('content')
     <div class="layui-row">
@@ -52,7 +52,7 @@
     <script type="text/javascript">
         // layui方法
         layui.config({
-            base: '/backend/myvebdors/layui/layui_ext/dtree/'//配置 layui 第三方扩展组件存放的基础目录
+            base: '/extend/layui/extend/dtree/'//配置 layui 第三方扩展组件存放的基础目录
         }).extend({
             dtree: 'dtree' //定义该组件模块名
         }).use(['tree' ,'table', 'layer', 'dtree'], function () {
@@ -272,7 +272,7 @@
                     },
                     @foreach($busesRoute as $v)
                     {
-                        title:'{{$v->buses_start}}--{{$v->buses_midway}}--{{$v->buses_end}}'
+                        title:'{{$v->buses_start}}--{{$v->buses_end}}'
                         ,id:'{{$v->id}}'
                         ,parentId : '{{$v->buses_pid}}'
                         @if($v->children)
@@ -281,7 +281,7 @@
                         }
                             ,children:[
                                 @foreach($v->children as $vs){
-                                title:'{{$vs->buses_start}}--{{$vs->buses_midway}}--{{$vs->buses_end}}'
+                                title:'{{$vs->buses_start}}--{{$vs->buses_end}}'
                                 ,id:'{{$vs->id}}'
                                 ,parentId : '{{$vs->buses_pid}}'
                                 },
@@ -309,14 +309,20 @@
                         }
                     });
                 }else {
-                    newbusesroute_ids = param.param.basicData;
+                    let ids = null;
+                    let busesroute_id = null;
+                    if(param.param.basicData){
+                        ids = JSON.stringify(param.param.basicData);
+                    }else{
+                        busesroute_id =  param.param.nodeId;
+                    }
                     // 加载中...
                     var loadIndex = layer.load(2, {shade: false});
                     // 关闭加载
                     layer.close(loadIndex);
                     // 刷新表格
                     tableIns.reload({
-                        where: {'busesroute_ids':newbusesroute_ids,'busesroute_id':null,'ifs':null,'reload':null} //设定异步数据接口的额外参数
+                        where: {'busesroute_ids':ids,'busesroute_id':busesroute_id,'ifs':null,'reload':null} //设定异步数据接口的额外参数
                         , page: {
                             curr: 1 //重新从第 1 页开始
                         }
@@ -326,6 +332,4 @@
             });
         });
     </script>
-    {{--提示代码--}}
-    @include('component.errorsLayer')
 @endsection

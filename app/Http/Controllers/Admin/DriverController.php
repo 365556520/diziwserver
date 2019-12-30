@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 
-use App\Models\UsersModel\Buses\Buses;
+use App\Models\AminModels\Buses\Buses;
 use Illuminate\Http\Request;
 use App\Repositories\Eloquent\Admin\Buses\DriverRepository;
 

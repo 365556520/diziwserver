@@ -54,9 +54,9 @@ class BusesRepository extends Repository {
     public function createBuses($formData){
         $result = $this->model->create($formData);
         if ($result) {
-            flash('班车添加成功','success');
+            flash('添加成功','success');
         }else{
-            flash('班车添加失败','error');
+            flash('添加失败','error');
         }
         return $result;
     }
@@ -88,9 +88,9 @@ class BusesRepository extends Repository {
         }
         $result = $this->update($attributes,$id);
         if ($result) {
-            flash('班线修改成功','success');
+            flash('修改成功','success');
         }else{
-            flash('班线修改失败', 'error');
+            flash('修改失败', 'error');
         }
         return $result;
     }

@@ -68,7 +68,7 @@ class BusesController extends CommonController
     public function store(Request $request){
         //$request->except('_token')不获取_token的值，其他值正常获取
         $result = $this->buses->createBuses($request->except('_token'));
-        return redirect(url('admin/buses'));
+        return redirect(url('admin/buses/create'));
     }
 
     /**
@@ -109,7 +109,7 @@ class BusesController extends CommonController
     {
 
         $this->buses->updateBuses($request->all(),$id);
-        return redirect('admin/buses');
+        return redirect('admin/buses/'.$id.'/edit');
     }
 
     /**

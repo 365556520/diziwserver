@@ -1,4 +1,4 @@
-@extends('admin.layouts.layuicontent')
+@extends('layouts.layuicontent')
 @section('title')
     <title>{{ trans('admin/user.title')}}</title>
 @endsection
@@ -112,6 +112,11 @@
                 <button class="layui-btn" lay-submit="" lay-filter="demo2">修改班车</button>
             </div>
         </form>
+        @if(flash()->message)
+            <div style="text-align:center;">
+                <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
+            </div>
+        @endif
     </div>
 @endsection
 @section('js')
@@ -126,6 +131,5 @@
             });
         });
     </script>
-    {{--提示代码--}}
-    @include('component.errorsLayer')
+
 @endsection

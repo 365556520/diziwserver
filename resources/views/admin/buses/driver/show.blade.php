@@ -1,4 +1,4 @@
-@extends('admin.layouts.layuicontent')
+@extends('layouts.layuicontent')
 @section('title')
     <title>{{ trans('admin/menu.title')}}</title>
 @endsection
@@ -56,7 +56,7 @@
                 <div  class="layui-col-md4 layui-col-sm4 layui-col-xs4">
                     <div class="xiangkuang"
                          @if(empty($driver->driver_photo))
-                         style ="background:  url({{url('/backend/images/default/default_zhaopian.jpg')}});background-size:100% 100%;"
+                         style ="background:  url('http://public.diziw.cn/diziw/images/default/default_zhaopian.jpg');background-size:100% 100%;"
                          @else
                          style ="background: url({{url($driver->driver_photo)}});background-size:100% 100%;"
                             @endif >
