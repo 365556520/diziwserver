@@ -44,13 +44,6 @@
             padding: 0px 5px;
             font-size: 12px;
         }
-        .success{
-            color: #5ccb22;
-
-        }
-        .error{
-            color: #cb0322;
-        }
     </style>
 @endsection
 @section('content')
@@ -62,11 +55,6 @@
             <br>
             <br>
             <b style="color:#cb0322 ">注意:修改菜单完成后记得保存!</b>
-            @if(flash()->message)
-                <div >
-                    <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
-                </div>
-            @endif
 
             <img src="" onerror="src=''" alt="">
         </div>

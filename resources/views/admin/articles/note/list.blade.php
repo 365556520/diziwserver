@@ -5,11 +5,6 @@
 @section('css')
 @endsection
 @section('content')
-    @if(flash()->message)
-        <div style="text-align:center;">
-            <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
-        </div>
-    @endif
     <div class="layui-row">
         <table class="layui-hide" id="test" lay-filter="test"></table>
         <script type="text/html" id="toolbarDemo">

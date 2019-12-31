@@ -13,3 +13,10 @@ Route::resource('menu','MenuController');
 Route::group(['prefix' => 'menus'],function () {
     Route::get('ajaxIndex', 'MenuController@ajaxIndex');
 });
+
+//修改图像
+Route::get('showheadimg','HomeController@showheadimg')->name('showheadimg');
+//上传图片
+Route::post('headimg','HomeController@headimg')->name('headimg');
+//修改用户资料
+Route::resource('home','HomeController');

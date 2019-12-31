@@ -29,11 +29,6 @@
             </div>
         </form>
     </div>
-    @if(flash()->message)
-        <div style="text-align:center;">
-            <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
-        </div>
-    @endif
 @endsection
 @section('js')
     <script>

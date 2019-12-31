@@ -37,6 +37,11 @@
                 <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i></button>
             </div>
         </script>
+         @if(flash()->message)  {{--//公共接受成功和失败信息--}}
+             <div style="text-align:center;">
+                 <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
+             </div>
+         @endif
         <!-- jQuery -->
         <script src="{{asset('extend/jq/jquery.min.js')}}"></script>
         {{--vue js--}}

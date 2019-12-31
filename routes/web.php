@@ -14,6 +14,11 @@
 
 Auth::routes();
 Route::group(['namespace'=>'Auth'],function () {
+
+    //修改密码视图
+    Route::get('resetPas','UserResetPasswordController@resetPas')->middleware(['auth'])->name('resetPas');
+//修改密码逻辑
+    Route::post('resetPas','UserResetPasswordController@reset')->middleware(['auth'])->name('resetPas');
     //成功页面
     Route::get('auth/success/{massage}', 'RegisterController@success');
     // 引导用户到新浪微博的登录授权页面
@@ -25,7 +30,7 @@ Route::group(['namespace'=>'Auth'],function () {
     Route::get('auth/correlation', 'LoginController@correlation');
 });
 Route::group(['prefix' => 'admin','namespace'=>'Admin','middleware' => ['auth']],function (){
-    //后台页面__DIR__表示当前目录
+    //后台页面__DIR__表示当前目录 修改图像 菜单 修改用户资料
     require(__DIR__.'/adminRoutes/HomeRoute.php');
     //权限路由
     require(__DIR__.'/adminRoutes/PermissionsRoute.php');

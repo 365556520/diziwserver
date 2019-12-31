@@ -6,11 +6,6 @@
 @endsection
 @section('content')
     <div class="layui-row">
-        @if(flash()->message)
-            <div style="text-align:center;">
-                <i class="layui-icon {{flash()->class}}">@if(flash()->class=='success')&#xe6af;@else&#xe69c;@endif {{flash()->message}}</i>
-            </div>
-        @endif
         <table class="layui-hide" id="test" lay-filter="test"></table>
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container layui-btn-group my-btn-box">

@@ -43,6 +43,8 @@
                             <cite>个人资料</cite>
                         </a>
                     </li>
+               {{--     <dd><a href="javascript:;" href-url="{{route('showheadimg') }}"><i class="layui-icon">&#xe621;</i>修改图像</a></dd>
+                    <dd><a href="javascript:;" href-url="{{route('resetPas')}}"><i class="layui-icon">&#xe621;</i>修改密码</a></dd>--}}
                     <li class="layui-nav-item" mobile>
                         <a href="login.html" class="signOut"><i class="iconfont icon-loginout"></i> 退出</a>
                     </li>
@@ -57,19 +59,19 @@
                         </a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="javascript:;" data-url="pages/user/userInfo.html">
+                                <a href="javascript:;" data-url="{{ url('/admin/home/'.Auth::user()->id.'/edit')}}">
                                     <i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i>
                                     <cite>个人资料</cite>
                                 </a>
                             </dd>
                             <dd>
-                                <a href="javascript:;" data-url="pages/user/changePwd.html">
+                                <a href="javascript:;" data-url="{{route('resetPas')}}">
                                     <i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i>
                                     <cite>修改密码</cite>
                                 </a>
                             </dd>
                             <dd>
-                                <a href="javascript:;" data-url="pages/headIcon/headIcon.html">
+                                <a href="javascript:;" data-url="{{route('showheadimg')}}">
                                     <i class="layui-icon" data-icon="&#xe650;">&#xe650;</i>
                                     <cite>更换头像</cite>
                                 </a>
