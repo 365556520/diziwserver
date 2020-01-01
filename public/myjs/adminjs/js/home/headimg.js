@@ -15,8 +15,8 @@ var headimg = function () {
             var options = {
                 aspectRatio: 1/1, // 纵横比
                 preview: '.img-preview', // 预览图的class名
-                minContainerWidth:300,
-                minContainerHeight:350,
+                minContainerWidth:250,
+                minContainerHeight:300,
                 minCanvasWidth:50,
                 minCanvasHeight:50,
             };
@@ -38,11 +38,11 @@ var headimg = function () {
                 },
                 'crop.cropper': function (data) {
                     // 当改变剪裁容器或图片时的事件函数。
-                    //获取位置数据
-                    $('#imgdatax').html(data.x.toFixed(2));
-                    $('#imgdatay').html(data.y.toFixed(2));
-                    $('#imgdatawidth').html(data.width.toFixed(2));
-                    $('#imgdataheight').html(data.height.toFixed(2));
+                    //获取位置数据.
+                    $('#imgdatax').html(data.detail.x.toFixed(2));
+                    $('#imgdatay').html(data.detail.y.toFixed(2));
+                    $('#imgdatawidth').html(data.detail.width.toFixed(2));
+                    $('#imgdataheight').html(data.detail.height.toFixed(2));
                     /*  //打印日志
                      //位置xy
                      console.log(data.x);
