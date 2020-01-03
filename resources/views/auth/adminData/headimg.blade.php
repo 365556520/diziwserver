@@ -59,7 +59,7 @@
                     {{--剪切图片核心--}}
                     <div class="row">
                         <div class="col-md-9 col-sm-12 col-xs-12 img-container" >
-                            <img id="image" src="{{Auth::user()->getUserData->headimg}}"  >
+                            <img id="image" src="{{Auth::user()->headimg}}"  >
                         </div>
 
                         <div class="col-md-3 col-sm-12 col-xs-12 img-Left ">
@@ -79,15 +79,13 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12" >
                                     {{--预览效果end--}}
                                     <p>裁剪结果:</p>
-                                    <img class="layui-circle" src="" id="result">
+                                    <img class="layui-circle" src="{{Auth::user()->headimg}}" id="result">
                                     <br><br>
-                                    <button  class="btn btn-danger" id="submitbtn" value="上传图像"></button>
+                                    <button  class="btn btn-danger" id="submitbtn">上传图像</button>
                                     <form id="submitForm" action="{{route('headimg')}}" method="post">
                                         {{csrf_field()}}
                                         <input type="hidden" name="user_data_img" id="user_data_img" value="{{Auth::user()->id}}"/>
-                                        <input type="hidden" name="past_img" id="past_img" value="{{Auth::user()->getUserData->headimg}}"/>
-                                        <input type="hidden"  name="icon" id="icon"/>
-
+                                        <input type="hidden" name="headimg" id="headimg"/>
                                     </form>
                                 </div>
                             </div>
@@ -107,6 +105,7 @@
     {{--cropperjs 剪切图片插件--}}
     <script src="{{asset('/extend/cropper-master/dist/cropper.min.js')}}"></script>
     <script src="{{ asset('/myjs/adminjs/js/home/headimg.js')}}"></script> {{--自己的js脚本--}}
+    <script src="{{ asset('/myjs/adminjs/js/uuid.js')}}"></script> {{--自己的js脚本--}}
 
     <script>
         //            开始加载

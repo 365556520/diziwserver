@@ -32,9 +32,7 @@ class HomeController extends CommonController
         if($request->session()->has('register')){
             //存在则表示是首次提交，清空session中的'register'
             $request->session()->forget('register');
-            $imgname = $this->home->upimgage($request->all());
-//        更新数据库图片名称
-            User_Data::Where('user_id',$request->all()['user_data_img'])->update(["headimg" => $imgname]);
+            $this->home->qiniuUpHeadimg($request->all());
         }else{
             //否则抛http异常，跳转到403页面
             flash("不能重复提交",'error');

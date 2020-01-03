@@ -94,10 +94,75 @@ var headimg = function () {
 
         //上传提交
         $('#submitbtn').on('click',function () {
-            //获取裁剪图片的
-            $imageinfo = $image.cropper('getCroppedCanvas',{width:300, height:300}).toDataURL();
+            /*            //获取裁剪图片的
+                        $imageinfo = $image.cropper('getCroppedCanvas',{width:300, height:300}).toDataURL();*/
             //把图片放到icon里面
-            $("#icon").val($imageinfo);
+            // $("#icon").val($imageinfo);
+            var token = '' , qiniubucket = '';
+            $.ajax({
+                type: "get",
+                url: "/admin/getQiNiuToken",
+                cache: false,
+                success: function (data) {
+                    token = data.token;
+                    qiniubucket = data.bucket;
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                }
+            });
+            console.log($imageinfo);
+            $.getScript("http://jssdk-v2.demo.qiniu.io/dist/qiniu.min.js",function () {
+                var config = {
+                    useCdnDomain: true,
+                    disableStatisticsReport: false,
+                    retryCount:  6,
+                    region: qiniu.region.z2 //七牛空间上传的区域  华东 z0 华北z1 华南z2
+                };
+                var putExtra = {
+                    fname: "",
+                    params: {},
+                    mimeType: null
+                };
+                var prefix = 'diziw/images/haedimg'; //名字的前缀
+                var file = $imageinfo;  //上传的文件
+                var observable;
+                //文件名字加密
+                var filename= '.'+$imageinfo.type.split("/")[1]; //图片的后缀名
+                // var fileExt=(/[.]/.exec(filename)) ? /[^.]+$/.exec(filename.toLowerCase()) : ''; //后缀名
+                var timestamp=new Date().getMilliseconds(); //当前毫秒数返回值是 0 ~ 999 之间的一个整数
+                var uuid = getUuid.init(8,16); //获取uuid
+                var newfilename = timestamp+uuid+ filename ; //当前毫秒+uuid+后缀名
+                var key = prefix+'/'+newfilename; //这个文件名字需要md5加密
+                putExtra.params["x:name"] = key.split(".")[0];
+                var error = function(err) {
+                    console.log("上传错误信息：" + JSON.stringify(err));
+                };
+
+                var complete = function(res) {
+                    let url = 'http://public.diziw.cn/'+res.key; //图片地址
+                    console.log("上传成功：" + url);
+                    //把图片地址放到icon里面
+                    $("#headimg").val(url);
+                    //提交表单
+                    $('#submitForm').submit();
+                    console.log("上传成功：" + JSON.stringify(res));
+                };
+                var next = function(response) {
+                 /*  上传完成后的数据格式 {"total":{"loaded":165288,"size":165288,"percent":100}}%*/
+                    console.log("上传进度：" + JSON.stringify(response) + "% ");
+                };
+
+                observable = qiniu.upload(file, key, token, putExtra, config);
+                var subObject = {next:next,error:error,complete:complete};
+                if(typeof callback === 'function'){
+                    callback(observable,subObject)
+                }else{
+                    observable.subscribe({next:next,error:error,complete:complete});
+                }
+
+            });
+
         });
 
 
@@ -111,6 +176,7 @@ var headimg = function () {
                 /*裁剪后得到这个图片*/
                 // 裁剪后将图片放到指定标签
                 $target.attr('src',URL.createObjectURL(blob));
+                $imageinfo = blob;
             });
         });
 

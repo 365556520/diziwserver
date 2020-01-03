@@ -3,6 +3,7 @@ namespace App\Repositories\Eloquent\Admin;
 use App\Models\UsersModel\User_Data;
 use App\Repositories\Eloquent\Repository;
 
+use App\Traits\qiniuCosTrait;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage
 ;
@@ -10,11 +11,30 @@ use Illuminate\Support\Facades\Storage
  * 仓库模式继承抽象类
  */
 class HomeRepository extends Repository {
+    use qiniuCosTrait; //七牛traits
     //重写父类的抽象方法
     public function model(){
         return User_Data::class;
     }
-//        上传图片
+    //用七牛修改图像
+    public function qiniuUpHeadimg($request){
+        $user = \Auth::user();
+        //删除七牛原来的图片
+        if (isset($user->headimg)){
+            $imgname =  str_replace(env('QINIU_URL'),"",$user->headimg);
+            $this->qiniuDataDel(env('QINIU_BUCKET'),$imgname);//删除七牛空间旧图片
+        }
+        //更新数据库图片名称
+        $result =  $user->update(["headimg" => $request['headimg']]);
+        if ($result) {
+            flash('图片修改成功','success');
+        } else {
+            flash('图片修改失败', 'error');
+        }
+    }
+
+
+//    本地上传图片 目前没用
     public function upimgage($img){
         if(empty($img)){
             flash("上传失败",'error');
