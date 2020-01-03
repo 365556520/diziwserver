@@ -124,21 +124,20 @@ var headimg = function () {
                     params: {},
                     mimeType: null
                 };
-                var prefix = 'diziw/images/haedimg'; //名字的前缀
                 var file = $imageinfo;  //上传的文件
                 var observable;
                 //文件名字加密
+                var prefix = 'diziw/images/haedimg'; //名字的前缀
                 var filename= '.'+$imageinfo.type.split("/")[1]; //图片的后缀名
                 // var fileExt=(/[.]/.exec(filename)) ? /[^.]+$/.exec(filename.toLowerCase()) : ''; //后缀名
                 var timestamp=new Date().getMilliseconds(); //当前毫秒数返回值是 0 ~ 999 之间的一个整数
                 var uuid = getUuid.init(8,16); //获取uuid
                 var newfilename = timestamp+uuid+ filename ; //当前毫秒+uuid+后缀名
-                var key = prefix+'/'+newfilename; //这个文件名字需要md5加密
+                var key = prefix+'/'+newfilename; //这个是文件的完整名字
                 putExtra.params["x:name"] = key.split(".")[0];
                 var error = function(err) {
                     console.log("上传错误信息：" + JSON.stringify(err));
                 };
-
                 var complete = function(res) {
                     let url = 'http://public.diziw.cn/'+res.key; //图片地址
                     console.log("上传成功：" + url);

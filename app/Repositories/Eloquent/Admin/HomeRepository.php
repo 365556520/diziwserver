@@ -21,7 +21,7 @@ class HomeRepository extends Repository {
         $user = \Auth::user();
         //删除七牛原来的图片
         if (isset($user->headimg)){
-            $imgname =  str_replace(env('QINIU_URL'),"",$user->headimg);
+            $imgname =  str_replace(env('QINIU_URL'),"",$user->headimg); //去除域名获取图片的名字
             $this->qiniuDataDel(env('QINIU_BUCKET'),$imgname);//删除七牛空间旧图片
         }
         //更新数据库图片名称

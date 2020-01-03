@@ -53,7 +53,7 @@
                     </li>
                     <li class="layui-nav-item" pc>
                         <a href="javascript:;">
-                            <img src="{{asset('myimages/images/face.jpg')}}" onerror="javascript:this.src='{{asset("myimages/images/face.jpg")}}'"
+                            <img src="{{Auth::user()->headimg}}" onerror="javascript:this.src='http://public.diziw.cn/diziw/images/default/default_zhaopian.jpg'"
                                  class="layui-circle userIconAs" width="35" height="35">
                             <cite class="userNameAs">admin</cite>
                         </a>
