@@ -35,66 +35,59 @@
 
 @endsection
 @section('content')
-    <div class="">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                修改图像
-            </div>
-            <div class="panel-body">
+    <div class="row" style="margin: 20px">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
 
-                            <label class="btn btn-danger" for="photoInput">
-                                <input type="file" class="sr-only" id="photoInput" accept="image/*">
-                                <span>打开图片</span>
-                            </label>
-                            <button class="btn btn-danger" id="rotate-Left" >右转45度</button>
-                            <button class="btn btn-danger" id="rotate-Right" >左转45度</button>
-                            <button class="btn btn-danger"  id="btnimg">裁剪预览</button>
+                    <label class="btn btn-danger" for="photoInput">
+                        <input type="file" class="sr-only" id="photoInput" accept="image/*">
+                        <span>打开图片</span>
+                    </label>
+                    <button class="btn btn-danger" id="rotate-Left" >右转45度</button>
+                    <button class="btn btn-danger" id="rotate-Right" >左转45度</button>
+                    <button class="btn btn-danger"  id="btnimg">裁剪预览</button>
 
-                        </div>
-                    </div>
-                    <br>
-                    {{--剪切图片核心--}}
-                    <div class="row">
-                        <div class="col-md-9 col-sm-12 col-xs-12 img-container" >
-                            <img id="image" src="{{Auth::user()->headimg}}"  >
-                        </div>
-
-                        <div class="col-md-3 col-sm-12 col-xs-12 img-Left ">
-                            <div class="row ">
-                                <div class="col-md-12 col-sm-12 col-xs-12" >
-                                    <p>预览效果:</p>
-                                    {{--预览效果这里的div必须是这样的样式才能显示--}}
-                                    <div class="docs-preview clearfix ">
-                                        <div class="img-preview  preview-xs layui-circle"></div>
-                                    </div>
-                                    <P>x:<small id="imgdatax"></small> y:<small id="imgdatay"></small></P>
-                                    <P>宽度:<small id="imgdatawidth"></small>px 高度:<small id="imgdataheight"></small>px</P>
-                                    <br>
-                                </div>
-                            </div>
-                            <div class="row ">
-                                <div class="col-md-12 col-sm-12 col-xs-12" >
-                                    {{--预览效果end--}}
-                                    <p>裁剪结果:</p>
-                                    <img class="layui-circle" src="{{Auth::user()->headimg}}" id="result">
-                                    <br><br>
-                                    <button  class="btn btn-danger" id="submitbtn">上传图像</button>
-                                    <form id="submitForm" action="{{route('headimg')}}" method="post">
-                                        {{csrf_field()}}
-                                        <input type="hidden" name="user_data_img" id="user_data_img" value="{{Auth::user()->id}}"/>
-                                        <input type="hidden" name="headimg" id="headimg"/>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                    </div>
-                    {{--剪切图片核心end--}}
                 </div>
             </div>
+            <br>
+            {{--剪切图片核心--}}
+            <div class="row">
+                <div class="col-md-9 col-sm-12 col-xs-12 img-container" >
+                    <img id="image" src="{{Auth::user()->headimg}}"  >
+                </div>
+
+                <div class="col-md-3 col-sm-12 col-xs-12 img-Left ">
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12" >
+                            <p>预览效果:</p>
+                            {{--预览效果这里的div必须是这样的样式才能显示--}}
+                            <div class="docs-preview clearfix ">
+                                <div class="img-preview  preview-xs layui-circle"></div>
+                            </div>
+                            <P>x:<small id="imgdatax"></small> y:<small id="imgdatay"></small></P>
+                            <P>宽度:<small id="imgdatawidth"></small>px</P>
+                            <p>高度:<small id="imgdataheight"></small>px</P>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12" >
+                            {{--预览效果end--}}
+                            <p>裁剪结果:</p>
+                            <img class="layui-circle" src="{{Auth::user()->headimg}}" id="result">
+                            <br><br>
+                            <button  class="btn btn-danger" id="submitbtn">上传图像</button>
+                            <form id="submitForm" action="{{route('headimg')}}" method="post">
+                                {{csrf_field()}}
+                                <input type="hidden" name="user_data_img" id="user_data_img" value="{{Auth::user()->id}}"/>
+                                <input type="hidden" name="headimg" id="headimg"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+            {{--剪切图片核心end--}}
         </div>
     </div>
 @endsection
