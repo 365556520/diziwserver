@@ -20,8 +20,14 @@ class CreatePermissionTables extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('guard_name');
-            $table->integer('pid')->default(0)->comment('父子关系');
             $table->timestamps();
+        });
+        //增加字段
+        Schema::table($tableNames['permissions'], function (Blueprint $table) {
+            if (!Schema::hasColumn($this->tableNames['permissions'],'pid')) {
+                //如果字段不存在就增加
+                $table->integer('pid')->default(0)->comment('父子关系');
+            }
         });
 
         Schema::create($tableNames['roles'], function (Blueprint $table) {

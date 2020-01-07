@@ -42,5 +42,7 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin','middleware' => ['auth']]
     require(__DIR__.'/adminRoutes/articlesRoute.php');
     //班车
     require(__DIR__.'/adminRoutes/BusesRoute.php');
+    //商品管理
+    require(__DIR__.'/adminRoutes/goods.php');
 });
 

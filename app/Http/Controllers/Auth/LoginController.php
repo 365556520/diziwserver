@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -30,6 +31,21 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/admin/home';
 
+
+    //登录逻辑 这里优先级大于变量
+    protected function redirectTo()   {
+//        如果有后台权限就登录到后台没有就登录到前台
+        if(Auth::user()->can(config('admin.permissions.system.login'))||Auth::user()->hasRole('admin')){
+            Log::info(Auth::user()->name.'登陆后台系统！');
+            return 'admin/home';
+        }else{
+            if (Auth::check()) {
+                // 用户已经登录了...
+                Auth::logout();//不是管理员就退出登录
+                abort(500,trans('admin/errors.permissions'));
+            }
+        }
+    }
     /**
      * Create a new controller instance.
      *
@@ -64,6 +80,7 @@ class LoginController extends Controller
     /*重写退出方法*/
     public function logout(Request $request)
     {
+        Log::info(Auth::user()->name.'退出后台系统！');
         $this->guard()->logout();
         $request->session()->invalidate();
         //退出登录后返回后台登录页面
