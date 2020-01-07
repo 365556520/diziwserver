@@ -55,7 +55,7 @@
                         <a href="javascript:;">
                             <img src="{{Auth::user()->headimg}}" onerror="javascript:this.src='http://public.diziw.cn/diziw/images/default/default_zhaopian.jpg'"
                                  class="layui-circle userIconAs" width="35" height="35">
-                            <cite class="userNameAs">admin</cite>
+                            <cite class="userNameAs">{{Auth::user()->name}}</cite>
                         </a>
                         <dl class="layui-nav-child">
                             <dd>
@@ -152,7 +152,7 @@
 
         $(function () {
             //可在这里加载用户信息
-            console.log("%c开源地址：https://gitee.com/cluyun/LayuiCMSluyun ,有什么建议或者bug,欢迎issues。", "color:red");
+            console.log(",有什么建议或者bug,欢迎issues。", "color:red");
 
             layui.use('form', function () {
                 layui.form.on('select(component)', function (data) {
