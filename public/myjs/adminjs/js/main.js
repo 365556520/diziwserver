@@ -45,7 +45,7 @@ $(function () {
 
         var obj = {
             type: 'get'
-            , url: "../../services/data/todoList.json"
+            , url: "../myjs/adminjs/data/todoList.json"
             , contentType: 'application/json'
             , data: '{}'
             , dataType: 'json'
@@ -174,7 +174,7 @@ function renderTodayUserTable(chartId) {
         , limits: [10, 50, 200, 500]
         , page: { theme: '#1E9FFF' }
         , height: 480
-        , url: '../../services/data/todayUserTable.json'
+        , url: '../myjs/adminjs/data/todayUserTable.json'
         , where: {
             batchNumber: chartId
         }
@@ -208,7 +208,7 @@ function pieChartLoad() {
 
     var obj = {
         type: 'get'
-        , url: "../../services/data/todayQuery.json?date=" + todayDate
+        , url: "../myjs/adminjs/data/todayQuery.json?date=" + todayDate
         , contentType: 'application/json'
         , data: '{}'
         , dataType: 'json'

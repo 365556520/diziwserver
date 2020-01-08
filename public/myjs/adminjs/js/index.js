@@ -184,27 +184,21 @@ $(function () {
 
         // 解锁
         $(document).on("click", "#unlock", function () {
-
             var thisEle = this;
-
             if ($(thisEle).siblings(".admin-header-lock-input").val() == '') {
                 layer.msg("请输入解锁密码！", { anim: 10, icon: 0, zIndex: 19991014 });
                 $(thisEle).siblings(".admin-header-lock-input").focus();
             } else {
                 var user = {
-                    userAcc: $('#lockUserName').text(),
                     passwd: $(thisEle).siblings(".admin-header-lock-input").val()
                 }
 
                 $(thisEle).addClass("layui-btn-disabled").prop("disabled", true).text("解锁中…");
-
-
                 setTimeout(function () {
-
-                    if (user.userAcc === 'admin' && user.passwd === '123') {
-
+                    if (user.passwd === window.localStorage.getItem("lockpasswd")) {
                         window.localStorage.setItem("lockcms", false);
                         $(thisEle).siblings(".admin-header-lock-input").val('');
+                        window.localStorage.removeItem("lockpasswd");  //删除锁屏密码
                         layer.closeAll("page");
                         layer.msg("解锁成功.", { anim: 10, icon: 1, zIndex: 19991014 });
                         //如果没有菜单则刷新
@@ -231,8 +225,32 @@ $(function () {
 
         //锁屏
         $(".lockcms").on("click", function () {
-            window.localStorage.setItem("lockcms", true);
-            lockPage();
+            if (window.localStorage.getItem("lockpasswd")){
+                lockPage();
+            }else {
+                layer.msg("请设置锁屏密码！", { anim: 10, icon: 0, zIndex: 19991014 });
+            }
+        });
+        //设置锁屏密码
+        $(".setuplockcms").on("click", function () {
+            setUplockPage();
+        });
+        //设置解锁密码
+        $(document).on("click", "#setUpunlock", function () {
+            var thisEle = this;
+            if ($(thisEle).siblings("#setlockPwd").val() == '') {
+                layer.msg("请输入锁屏密码！", { anim: 10, icon: 0, zIndex: 19991014 });
+                $(thisEle).siblings("#setlockPwd").focus();
+            } else{
+                window.localStorage.setItem("lockpasswd", $(thisEle).siblings("#setlockPwd").val());  //设置锁屏
+                window.localStorage.setItem("lockcms", true);  //设置锁屏
+                //从缓存取页面刷新
+                window.location.reload(false);
+                //从服务器重新取页面刷新
+                window.location.reload(true);
+                //跳转式刷新
+                window.location.href = window.location.href;
+            }
         });
 
         //锁屏页面回车
@@ -343,6 +361,28 @@ function skins() {
     }
 }
 
+//设置锁屏
+function setUplockPage() {
+    top.layer.closeAll();
+    layer.closeAll();
+    top.layer.open({
+        title: false,
+        type: 1,
+        content: '	<div class="admin-header-lock" id="lock-box">' +
+            '<div class="admin-header-lock-img"><img src="' + localStorage.getItem("userIconAs") + '"  onerror="javascript:this.src=\'http://public.diziw.cn/diziw/images/default/default_zhaopian.jpg\'" /></div>' +
+            '<div class="admin-header-lock-name" id="lockUserName">' + (localStorage.getItem("userNameAs") || 'admin') + '</div>' +
+            '<div class="input_btn">' +
+            '<input type="password" class="admin-header-lock-input layui-input" autocomplete="off" placeholder="请输入密码解锁.." name="setlockPwd" id="setlockPwd" />' +
+            '<button class="layui-btn layui-btn-normal" style="width: 100px;" id="setUpunlock">确认锁屏</button>' +
+            '</div>' +
+            '<p>设置锁屏,请输入锁屏密码.</p>' +
+            '</div>',
+        closeBtn: 1,
+        shade: 0.9,
+        zIndex: 19891020
+    })
+}
+
 //锁屏
 function lockPage() {
     top.layer.closeAll();
@@ -357,7 +397,7 @@ function lockPage() {
             '<input type="password" class="admin-header-lock-input layui-input" autocomplete="off" placeholder="请输入密码解锁.." name="lockPwd" id="lockPwd" />' +
             '<button class="layui-btn layui-btn-normal" style="width: 80px;" id="unlock">解锁</button>' +
             '</div>' +
-            '<p>页面已锁定,请输入登陆密码解锁.</p>' +
+            '<p>页面已锁定,请输入密码解锁.</p>' +
             '</div>',
         closeBtn: 0,
         shade: 0.9,
@@ -377,7 +417,7 @@ function showNotice() {
         id: 'LAY_layuipro',
         btn: ['我知道了'],
         moveType: 1,
-        content: '<div style="padding:15px 20px; text-align:justify; line-height: 22px; text-indent:2em;border-bottom:1px solid #e2e2e2;"><p>基于layui开发的一套纯前端后台框架。致力于简洁代码和拿来即用。欢迎在<a href="https://gitee.com/cluyun/LayuiCMSluyun" target="_blank">码云</a>Issues中提建议和bug。</p><p>非常感谢马哥的<a href="https://gitee.com/layuicms/layuicms" target="_blank">layuicms</a>，我的成长从他那里开始。</p></div>',
+        content: '<div style="padding:15px 20px; text-align:justify; line-height: 22px; text-indent:2em;border-bottom:1px solid #e2e2e2;"><p>基于layui开发的一套纯前端后台框架。二次开发<a href="https://gitee.com/cluyun/LayuiCMSluyun" target="_blank">码云</p><p>非常感谢马哥的<a href="https://gitee.com/layuicms/layuicms" target="_blank">layuicms</a>，我的成长从他那里开始。</p></div>',
         success: function (layero) {
             var btn = layero.find('.layui-layer-btn');
             btn.css('text-align', 'center');

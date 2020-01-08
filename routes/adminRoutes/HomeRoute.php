@@ -3,7 +3,7 @@
  * 存档home的路由
  */
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/homepage', 'HomeController@homepage')->name('homepage');
 Route::get('/menus', 'HomeController@menus')->name('menus'); //左侧菜单数据
 //图标路由
 Route::get('icons', 'MenuController@icons');

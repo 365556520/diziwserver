@@ -161,7 +161,8 @@ class  MenuRepository extends Repository{
     }
     /*递归menu得到左边菜单数据*/
     public function getMenu($menus){
-        $arr = [];
+        $arr = [
+        ];
         if (empty($menus)){
             return '';
         };

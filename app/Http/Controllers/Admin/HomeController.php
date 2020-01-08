@@ -106,4 +106,9 @@ class HomeController extends CommonController
         return ['code' => 200,"token"=>'','msg'=>'成功获取列表','data' => $this->menu->getMenuListJson()];
 
     }
+    //后台主页面
+    public function homepage()
+    {
+        return view('admin/home');
+    }
 }
