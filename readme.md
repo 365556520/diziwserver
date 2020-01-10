@@ -11,4 +11,3 @@
 <p align="center">spatie/laravel-flash  成功和错误消息的发送 </p>
 <p align="center">mews/captcha 验证码</p>
 <p align="center">socialiteproviders/weibo  微博第三方登录</p>
-ceshi
