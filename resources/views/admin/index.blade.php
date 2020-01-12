@@ -6,7 +6,17 @@
     <link href="{{ asset('mycss/admincss/css/font_tnyc012u2rlwstt9.css')}}" rel="stylesheet" media="all">
     <link href="{{ asset('mycss/admincss/css/main.css')}}" rel="stylesheet" media="all">
     <link href="{{ asset('mycss/admincss/css/index.css')}}" rel="stylesheet" media="all">
-
+    <style>
+        .navBarContent { {{--因为图像和导航超出100%的高度导致左边部分出现滚动条所以分配下高度占率--}}
+            height: 100%
+        }
+        .nevBarhead{
+            height: 20%
+        }
+        .nevBarBody{
+            height: 80%
+        }
+    </style>
 @endsection
 @section('content')
     <div class="layui-layout layui-layout-admin">
@@ -113,11 +123,17 @@
         </div>
         <!-- 左侧导航 -->
         <div class="layui-side layui-bg-black">
-           {{--  <div class="user-photo">
-                <a class="img" title="我的头像"><img src="/images/face.jpg" class="userIconAs" ></a>
-                <p>你好！<strong><span class="userName userNameAs">admin</span></strong>, 欢迎登录</p>
-            </div>--}}
-            <div class="navBar layui-side-scroll"></div>
+            <div class="navBarContent">
+                <div class="nevBarhead">
+                    <div class="user-photo" >
+                        <a class="img" title="我的头像"><img src="{{Auth::user()->headimg}}" onerror="javascript:this.src='http://public.diziw.cn/diziw/images/default/default_zhaopian.jpg'" class="userIconAs" ></a>
+                        <p>你好！<strong><span class="userName userNameAs">{{Auth::user()->name}}</span></strong>, 欢迎登录</p>
+                    </div>
+                </div>
+                <div class="nevBarBody">
+                    <div class="navBar layui-side-scroll"></div>
+                </div>
+            </div>
         </div>
         <!-- 右侧内容 -->
         <div class="layui-body layui-form">
