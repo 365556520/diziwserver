@@ -70,7 +70,6 @@
                 </div>
             </form>
         </div>
-        测试
     </div>
 @endsection
 @section('js')
