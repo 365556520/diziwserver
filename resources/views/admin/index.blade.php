@@ -13,7 +13,7 @@
         <!-- 顶部 -->
         <div class="layui-header header">
             <div class="layui-main">
-                <a href="index.html" class="logo" style="font-size:16px;font-weight:600;">diziw后台管理系统</a>
+                <a href="javascript:;" class="logo" style="font-size:16px;font-weight:600;">diziw后台管理系统</a>
                 <!-- 显示/隐藏菜单 -->
                 <a href="javascript:;" class="iconfont hideMenu icon-menu1"></a>
               {{--  <!-- 搜索 -->
