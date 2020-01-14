@@ -1,16 +1,15 @@
 <?php
 namespace App\Traits;
 
-trait ResponseTrait
+trait ApiResponseTrait
 {
     //api接口统一返回Trait
-    public function response($code, $desc=null, $result=null){
+    public function response($data,$msg = null,$code = null){
         $arr = [
             'code' => $code,
-            'desc' => $desc,
-            'result' => $result
+            'msg' => $msg,
+            'data' => $data
         ];
-        print json_encode($arr, true);
-        exit(0);
+        return json_encode($arr, true);
     }
 }
