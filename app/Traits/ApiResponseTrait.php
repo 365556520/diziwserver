@@ -4,7 +4,7 @@ namespace App\Traits;
 trait ApiResponseTrait
 {
     //api接口统一返回Trait
-    public function response($data,$msg = null,$code = null){
+    public function response($data,$msg = null,$code = 400){
         $arr = [
             'code' => $code,
             'msg' => $msg,
