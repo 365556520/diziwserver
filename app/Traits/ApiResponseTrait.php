@@ -10,6 +10,7 @@ trait ApiResponseTrait
             'msg' => $msg,
             'data' => $data
         ];
-        return json_encode($arr, true);
+       // return json_encode($arr, true);
+        return $arr;
     }
 }

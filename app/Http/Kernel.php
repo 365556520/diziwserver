@@ -63,6 +63,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         //自定义中间件
         'check.permission' => \App\Http\Middleware\CheckPermission::class,
+        //跨域中间件
+        'cors' => \App\Http\Middleware\EnableCrossRequestMiddleware::class,
     ];
 
     /**
