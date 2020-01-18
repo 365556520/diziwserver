@@ -132,48 +132,14 @@ class ArticlesRepository extends Repository {
         $pattern = "/<img.*?src=[\'|\"](.*?)[\'|\"].*?[\/]?>/";
         preg_match_all($pattern, htmlspecialchars_decode($content), $match);
         if (!empty($match[1])) {
-            return $match[1];
+            $imgs = $match[1];
+            //这行代码是取所有图片地址的前三条
+            $imgs = array_slice($imgs,0,3);
+            return $imgs;
         }
         return null;
     }
 
-
-  /*  //删除服务器图片
-    public function deImg($img){
-        return Storage::delete('backend/images/articleImages/'.$img);
-    }
-    //得到图片删除图片
-    public function getImg($thumb){
-        $result =  false;
-        $thumbs = '';
-        if(is_array($thumb)){
-            $thumbs = implode($thumb); //把图片数组转换成字符串
-        } else {
-            $thumbs =  $thumb;
-        }
-        $imgs = array_filter(explode("/", $thumbs));//以/为分割符转换为数组    array_filter去掉数组中值为空的
-        foreach ($imgs as $v){
-            $result =  $this->deImg($v);
-        }
-        return $result;
-    }
-    //获取图片名字，并转换成字符串
-    public function getImgArr($imgs){
-        $img ='';
-        foreach ($imgs as $v){
-            $img .= strrchr($v,'/'); //获取图片名字
-        }
-        //把图片名字以字符串行式存到数组
-        return $img;
-    }
-    //获取完整的图片名字数组
-    public function getimgurl($imgs){
-        foreach ($imgs as &$v){
-            $v->thumb =explode("/",ltrim($v->thumb, "/"));
-        }
-        //把图片名字以字符串行式存到数组
-        return $imgs;
-    }*/
 
 
     //前台
@@ -218,5 +184,43 @@ class ArticlesRepository extends Repository {
         //因为结果是个2维数组所以只需要0键的内容
        return $content['0'];
     }
+
+
+    /*  //删除服务器图片
+    public function deImg($img){
+        return Storage::delete('backend/images/articleImages/'.$img);
+    }
+    //得到图片删除图片
+    public function getImg($thumb){
+        $result =  false;
+        $thumbs = '';
+        if(is_array($thumb)){
+            $thumbs = implode($thumb); //把图片数组转换成字符串
+        } else {
+            $thumbs =  $thumb;
+        }
+        $imgs = array_filter(explode("/", $thumbs));//以/为分割符转换为数组    array_filter去掉数组中值为空的
+        foreach ($imgs as $v){
+            $result =  $this->deImg($v);
+        }
+        return $result;
+    }
+    //获取图片名字，并转换成字符串
+    public function getImgArr($imgs){
+        $img ='';
+        foreach ($imgs as $v){
+            $img .= strrchr($v,'/'); //获取图片名字
+        }
+        //把图片名字以字符串行式存到数组
+        return $img;
+    }
+    //获取完整的图片名字数组
+    public function getimgurl($imgs){
+        foreach ($imgs as &$v){
+            $v->thumb =explode("/",ltrim($v->thumb, "/"));
+        }
+        //把图片名字以字符串行式存到数组
+        return $imgs;
+    }*/
 
 }

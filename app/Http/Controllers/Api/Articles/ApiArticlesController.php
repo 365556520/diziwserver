@@ -32,7 +32,6 @@ class ApiArticlesController extends CommonController
         $data['limit']=(int)$data['limit'];
         $data['page']=(int)$data['page'];
         $result = $this->articles->getArticles($data);
-        $result['data'] = $this->articles->getimgurl($result['data']);
         return $this->response($result,'backend/images/articleImages/','200');
     }
     //获取文章内容
