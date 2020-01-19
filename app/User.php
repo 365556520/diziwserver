@@ -7,11 +7,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
     use HasRoles;
-    use Notifiable;
+    use HasApiTokens,Notifiable;
 
     protected $guard_name = 'web'; // 使用任何你想要的守卫
     //这个表的路由的前缀

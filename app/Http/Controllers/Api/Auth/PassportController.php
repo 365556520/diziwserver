@@ -22,6 +22,7 @@ class PassportController extends CommonController
     //登录
     public function login(){
         //判断用户存在不
+       // $dome = new \App\Repositories\Eloquent\UserFacadeRepository;
         $this->content =  UserFacade::userLogin(request('username'),request('password'));
         if($this->content['code'] == 200)
         {
