@@ -124,7 +124,7 @@ class CommentsRepository extends Repository {
     //获取该文章所有评论
     public function getComments($topic_id){
         if(isset($topic_id)){
-            $commnets = $this->model->where('topic_id',$topic_id)->with('getFrom_uid.getUserData','getFrom_uid:id,name','getTo_uid:id,name')->orderBy('created_at','desc')->get();
+            $commnets = $this->model->where('topic_id',$topic_id)->with('getFrom_uid:id,name,headimg','getTo_uid:id,name,headimg')->orderBy('created_at','desc')->get();
             $commnets =  $this->getTree($commnets,'comments_pid',0);
             return $commnets;
 
