@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
+    //文章分类模型
+    protected $table='menus';
+    public $action =  'menus';
     protected $fillable = [
         'name',
         'icon',

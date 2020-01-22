@@ -9,7 +9,7 @@ class Goods extends Model
     //文章分类模型
     protected $table='goods';
     //这个表的路由的前缀
-    private $action =  'goods';
+    public $action =  'goods';
     protected $fillable = [
         'user_id',
         'goods_name',

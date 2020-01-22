@@ -44,7 +44,7 @@ class BusesRouteRepository extends Repository {
     public function createBusesRoute($formData){
         //先一点为准把字符串转换成数组，然后把数组转化成json
         $formData['buses_midway'] = $this->getBuses_midwayJson($formData['buses_midway']);
-        $result = $this->model->create($formData);
+        $result = $this->create($formData);
         if ($result) {
             flash('添加成功','success');
         }else{

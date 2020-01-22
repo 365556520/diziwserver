@@ -9,7 +9,7 @@ class BusesRoute extends Model
     //线路模型
     protected $table='busesroute';
     //这个表的路由的前缀
-    private $action =  'busesroute';
+    public $action =  'busesroute';
     protected $fillable = [
         'buses_start',
         'buses_midway',

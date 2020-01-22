@@ -10,7 +10,7 @@ class Driver extends Model
     protected $table = 'driver';
 
     //这个表的路由的前缀
-    private $action = 'driver';
+    public $action = 'driver';
     protected $fillable = [
         "driver_name",
         "driver_phone",

@@ -9,7 +9,7 @@ class GoodsCategorys extends Model
     //文章分类模型
     protected $table='goodscategorys';
     //这个表的路由的前缀
-    private $action =  'goodscategorys';
+    public $action =  'goodscategorys';
     protected $fillable = [
         'goodscategorys_name',
         'goodscategorys_order',

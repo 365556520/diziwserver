@@ -9,7 +9,7 @@ class Comments extends Model
     //文章分类模型
     protected $table='comments';
     //这个表的路由的前缀
-    private $action =  'comments';
+    public $action =  'comments';
     protected $fillable = [
         'topic_id',
         'topic_type',

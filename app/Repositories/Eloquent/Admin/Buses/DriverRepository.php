@@ -41,7 +41,7 @@ class DriverRepository extends Repository {
     }
     /*添加驾驶员*/
     public function createDriver($formData){
-        $result = $this->model->create($formData);
+        $result = $this->create($formData);
         if ($result) {
             flash('驾驶员添加成功','success');
         }else{

@@ -9,7 +9,7 @@ class GoodsOrder extends Model
     //模型
     protected $table='goodsorder';
     //这个表的路由的前缀
-    private $action =  'goodsorder';
+    public $action =  'goodsorder';
     protected $fillable = [
         'user_id',
         'goods_id',

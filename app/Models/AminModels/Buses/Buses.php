@@ -10,7 +10,7 @@ class Buses extends Model
     protected $table='buses';
 
     //这个表的路由的前缀
-    private $action =  'buses';
+    public $action =  'buses';
     protected $fillable = [
         'buses_name',
         'busesroute_id',

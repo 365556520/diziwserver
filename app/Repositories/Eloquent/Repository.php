@@ -4,6 +4,8 @@ namespace App\Repositories\Eloquent;
 use App\Repositories\Contracts\RepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Container\Container as Application;
+use Illuminate\Support\Facades\Log;
+
 /*仓库实实现类接口*/
 abstract class Repository implements RepositoryInterface{
     /*App容器*/
@@ -130,6 +132,7 @@ abstract class Repository implements RepositoryInterface{
          */
         public function create(array $attributes){
             $model = new $this->model;
+            Log::info($model->action.'表添加新的数据。');
             return $model->fill($attributes)->save();
         }
         /**
@@ -142,6 +145,7 @@ abstract class Repository implements RepositoryInterface{
          */
         public function update(array $attributes, $id){
             $model = $this->model->findOrFail($id);
+            Log::info($model->action.'表中ID：'.$id.'的数据更新了。');
             return  $model->fill($attributes)->save();
         }
         /**
@@ -164,6 +168,7 @@ abstract class Repository implements RepositoryInterface{
          * @return int
          */
         public function delete($id){
+            Log::info('删除'.$this->model->action.'表中ID：'.$id.'的数据。');
             return $this->model->destroy($id);
         }
         /**

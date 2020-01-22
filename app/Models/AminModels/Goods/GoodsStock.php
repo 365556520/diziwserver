@@ -9,7 +9,7 @@ class GoodsStock extends Model
     //模型
     protected $table='goodsstock';
     //这个表的路由的前缀
-    private $action =  'goodsstock';
+    public $action =  'goodsstock';
     protected $fillable = [
         'user_id',
         'goods_id',

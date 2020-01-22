@@ -62,7 +62,7 @@ class ArticlesRepository extends Repository {
         $formData['thumb']= json_encode($imgs);
         //防止xxs攻击过滤
         $formData['content'] =Purifier::clean($formData['content'],array('Attr.EnableID' => true));
-        $result = $this->model->create($formData);
+        $result = $this->create($formData);
         if ($result) {
             flash('文章添加成功','success');
         }else{

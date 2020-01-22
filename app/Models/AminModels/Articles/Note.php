@@ -10,6 +10,8 @@ class Note extends Model
     //文章模型
     protected $table='note';
     //这个表的路由的前缀
+    public $action =  'note';
+    //这个表的路由的前缀
     protected $fillable = [
         'id',
         'title',

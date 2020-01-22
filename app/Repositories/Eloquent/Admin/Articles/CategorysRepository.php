@@ -45,7 +45,7 @@ class CategorysRepository extends Repository {
 
     /*添加文章分类*/
     public function createCategorys($formData){
-        $result = $this->model->create($formData);
+        $result = $this->create($formData);
         if ($result) {
             flash('文章分类添加成功','success');
         }else{

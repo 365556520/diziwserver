@@ -11,7 +11,7 @@ class Articles extends Model
     //文章模型
     protected $table='articles';
     //这个表的路由的前缀
-    private $action =  'articles';
+    public $action =  'articles';
     protected $fillable = [
         'id',
         'title',
