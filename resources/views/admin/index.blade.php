@@ -175,7 +175,7 @@
     <script>
         (function () {
             if (getIsWeb() === false) {
-                alert('建议在web服务容器中打开此网页，如iis、Apache Tomcat、Nginx、node server等。当前状态下被限制了很多功能。');
+              alert('建议在web服务容器中打开此网页，如iis、Apache Tomcat、Nginx、node server等。当前状态下被限制了很多功能。');
             }
             pageKeepTop();
         }());

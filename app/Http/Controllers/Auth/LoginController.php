@@ -121,14 +121,17 @@ class LoginController extends Controller
         }
         // 手动登录该用户
         Auth::login($user);
-      /*  // 登录成功后将用户重定向到首页
-        //判断登录用户是否有后台权限没有权限就退出登录
-        if (Auth::user()->can(config('admin.permissions.system.login'))) {
+        // 登录成功后将用户重定向到首页
+        //        如果有后台权限就登录到后台没有就登录到前台
+        if(Auth::user()->can(config('admin.permissions.system.login'))||Auth::user()->hasRole('admin')){
+            Log::info(Auth::user()->name.'登陆后台系统！');
             return redirect(url('/admin/home'));
-        } else {
-            // 用户已经登录了...
-            Auth::logout();//不是管理员就退出登录
-            abort(500, trans('admin/errors.permissions'));
-        }*/
+        }else{
+            if (Auth::check()) {
+                // 用户已经登录了...
+                Auth::logout();//不是管理员就退出登录
+                abort(500,trans('admin/errors.permissions'));
+            }
+        }
     }
 }
