@@ -11,10 +11,9 @@
 |
 */
 
-
+Route::view('/','home');
 Auth::routes();
 Route::group(['namespace'=>'Auth'],function () {
-
     //修改密码视图
     Route::get('resetPas','UserResetPasswordController@resetPas')->middleware(['auth'])->name('resetPas');
 //修改密码逻辑
