@@ -16,14 +16,14 @@ class CheckPermission
      * @return mixed
      */
     public function handle($request, Closure $next,$model){
-        if($request->user()->hasRole('admin')){//判断角色是否超级管理员 如果是超级管理员直接通过
+        if(\auth('guard_name')->user()->hasRole('admin')){//判断角色是否超级管理员 如果是超级管理员直接通过
             return $next($request);
         }
         if ($model == config('admin.permissions.system.login')) {
             $this->check($request,$model);
         }
         //获取当前用户路由名称
-       $routeName = Route::currentRouteName();
+        $routeName = Route::currentRouteName();
 
         $permission = '';
         //用switch获取链接对应的权限
