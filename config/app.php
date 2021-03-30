@@ -172,6 +172,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         //微博和qq第三方登录
         SocialiteProviders\Manager\ServiceProvider::class, // add
+        // 权限管理
+        Spatie\Permission\PermissionServiceProvider::class,
 
     ],
 

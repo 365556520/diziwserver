@@ -16,7 +16,7 @@ class CheckPermission
      * @return mixed
      */
     public function handle($request, Closure $next,$model){
-        if(\auth('guard_name')->user()->hasRole('admin')){//判断角色是否超级管理员 如果是超级管理员直接通过
+        if(\auth()->user()->hasRole('admin')){//判断角色是否超级管理员 如果是超级管理员直接通过
             return $next($request);
         }
         if ($model == config('admin.permissions.system.login')) {
@@ -49,12 +49,12 @@ class CheckPermission
             default:
                 return $next($request); //其他情况直接通过
         }
-        $this->check($request,$permission);
+       $this->check($request,$permission);
         return $next($request);
     }
     private function check($request,$permission){
         //判断有没有登录后台权限
-        if (!$request->user()->can($permission)) {
+        if (!\auth()->user()->givePermissionTo($permission)) {
             abort(500,trans('admin/errors.permissions'));
         }
     }
