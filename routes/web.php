@@ -10,8 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+//前端
+Route::group(['prefix' => 'fore',],function (){
 
+});
 Route::view('/','home');
+
 Auth::routes();
 Route::group(['namespace'=>'Auth'],function () {
     //修改密码视图
