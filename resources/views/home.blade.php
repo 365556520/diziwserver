@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('css')
-
 @endsection
 @section('content')
 
@@ -10,20 +9,18 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6 col-sm-12 mt-lg-0 mt-4">
-                    <span class="title-small">Hello</span>
-                    <h1 class="mb-2 title"> <span>I'm</span> Alexander </h1>
-                    <h1 class="mb-4 title"> a <span class="typed-text"></span><span class="cursor">&nbsp</span></h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, excepturi.
-                        Distinctio accusantium fugit odit? Fugit ipsam. Sed ac fringilla ex. Nam mauris velit, ac
-                        cursus quis, non leo.</p>
+                    <span class="title-small">欢迎，来到我的世界！</span>
+                    <h1 class="mb-2 title"> <span>I'm</span> Papa </h1>
+                    <h1 class="mb-4 title"> <span class="typed-text"></span><span class="cursor">&nbsp</span></h1>
+                    <p>这是我做的一个手机游戏，因水平还在提升中，很多不好的地方和bug希望，玩家大爷们多多教育。</p>
                     <div class="mt-sm-5 mt-4">
-                        <a class="btn btn-primary btn-style mr-2" href="contact.html"> Hire Me </a>
-                        <a class="btn btn-outline-primary btn-style mr-2" href="#portfolio"> Portfolio </a>
+                        <a class="btn btn-primary btn-style mr-2" href="contact.html"> 关于游戏 </a>
+  {{--                      <a class="btn btn-outline-primary btn-style mr-2" href="#portfolio"> Portfolio </a>--}}
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-8 col-sm-10 mt-lg-0 mt-4">
                     <div class="img-effect text-lg-center">
-                        <img src="{{ asset('mycss/qiantai/assets/images/photo.png') }}" alt="myphoto" class="img-fluid">
+                        <img src="{{ asset('mycss/qiantai/assets/images/shouji1.png') }}" alt="shouji" class="img-fluid" >
                     </div>
                 </div>
             </div>
@@ -38,7 +35,8 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="position-relative">
-                            <img src="assets/images/myphoto.jpg" alt="" class="radius-image img-fluid">
+                            <img src="{{ asset('mycss/qiantai/assets/images/shouji1.png') }}" class="radius-image img-fluid">
+
                         </div>
                     </div>
                     <div class="col-lg-8 mt-lg-0 mt-5">
@@ -458,12 +456,12 @@
 
     <script  src="{{ asset('mycss/qiantai/assets/js/jquery-3.3.1.min.js')}}" ></script><!-- default jQuery -->
 
-    <!-- /typig-text-->
+    <!-- /typig-text  第一页滚动字-->
     <script>
         const typedTextSpan = document.querySelector(".typed-text");
         const cursorSpan = document.querySelector(".cursor");
 
-        const textArray = ["游戏开发者", "自由爱好者", "游戏设计爱好者"];
+        const textArray = ["这个手机游戏叫", "“妖怪哪里跑”没后续", "但是我开发其他游戏。"];
         const typingDelay = 200;
         const erasingDelay = 10;
         const newTextDelay = 100; // Delay between current and next text
