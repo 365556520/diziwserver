@@ -33,12 +33,12 @@
         <div class="midd-w3 py-5">
             <div class="container py-lg-5 py-md-3">
                 <div class="row">
-                    <div class="col-lg-4">
+                   {{-- <div class="col-lg-4">
                         <div class="position-relative">
                             <img src="{{ asset('mycss/qiantai/assets/images/shouji1.png') }}" class="radius-image img-fluid">
 
                         </div>
-                    </div>
+                    </div>--}}
                     <div class="col-lg-8 mt-lg-0 mt-5">
                         <h5 class="title-small mb-2">Who am i?</h5>
                         <h3 class="title-big">I'm Alexander Smith, a visual UI/UX Designer and Web Developer</h3>
@@ -55,20 +55,6 @@
     </section>
     <!-- //home page about section -->
 
-    <!-- home page second section -->
-    <div class="py-5 w3l-resume">
-        <div class="container py-lg-5 py-3">
-            <h5 class="title-small mb-2"> My resume</h5>
-            <h3 class="title-big mb-4">I Would Love to make your Ideas real </h3>
-            <p>I love graphic design and photography and have been working on my portfolio since 2016. You can download my
-                resume in order to learn the details of my professional life as a designer and photographer. Contact me and
-                we will discuss your projects!</p>
-            <div class="mt-5">
-                <a href="#download" class="btn btn-style btn-primary">Download resume</a>
-            </div>
-        </div>
-    </div>
-    <!-- //home page second section -->
 
     <!-- home page services section -->
     <section class="w3l-services">
@@ -181,168 +167,8 @@
     </section>
     <!-- //home page services section -->
 
-    <!-- stats -->
-    <section class="w3l-stats py-lg-5 py-4" id="stats">
-        <div class="gallery-inner container py-md-5 py-4">
-            <div class="row stats-con">
-                <div class="col-sm-3 col-6 stats_info counter_grid">
-                    <span class="fa fa-laptop"></span>
-                    <p class="counter">700</p>
-                    <h4>Completed projects</h4>
-                </div>
-                <div class="col-sm-3 col-6 stats_info counter_grid1">
-                    <span class="fa fa-hourglass-end"></span>
-                    <p class="counter">120</p>
-                    <h4>In processes</h4>
-                </div>
-                <div class="col-sm-3 col-6 stats_info counter_grid mt-sm-0 mt-5">
-                    <span class="fa fa-gift"></span>
-                    <p class="counter">12</p>
-                    <h4>Awards Received</h4>
-                </div>
-                <div class="col-sm-3 col-6 stats_info counter_grid2 mt-sm-0 mt-5">
-                    <span class="fa fa-smile-o"></span>
-                    <p class="counter">1050</p>
-                    <h4>Happy Clients</h4>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- //stats -->
-    <!-- testimonials -->
-    <section class="w3l-clients" id="clients">
-        <!-- /grids -->
-        <div class="cusrtomer-layout py-5">
-            <div class="container py-lg-5 py-md-4">
-                <div class="heading text-center mx-auto">
-                    <h6 class="title-small text-center">Testimonials</h6>
-                    <h3 class="title-big mb-md-5 mb-4">What my clients think about Me </h3>
-                </div>
-                <!-- /grids -->
-                <div class="testimonial-width">
-                    <div id="owl-demo1" class="owl-carousel owl-theme mb-4">
-                        <div class="item">
-                            <div class="testimonial-content">
-                                <div class="testimonial">
-                                    <blockquote>
-                                        <q>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit beatae laudantium
-                                            voluptate rem ullam dolore nisi voluptatibus esse quasi, doloribus tempora.
-                                            Dolores molestias adipisci dolor sit amet!.</q>
-                                    </blockquote>
-                                    <div class="testi-des">
-                                        <div class="test-img"><img src="assets/images/team1.jpg" class="img-fluid" alt="client-img">
-                                        </div>
-                                        <div class="peopl align-self">
-                                            <h3>John wilson</h3>
-                                            <p class="indentity">Seattle, Washington</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-content">
-                                <div class="testimonial">
-                                    <blockquote>
-                                        <q>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit beatae laudantium
-                                            voluptate rem ullam dolore nisi voluptatibus esse quasi, doloribus tempora.
-                                            Dolores molestias adipisci dolor sit amet!.</q>
-                                    </blockquote>
-                                    <div class="testi-des">
-                                        <div class="test-img"><img src="assets/images/team2.jpg" class="img-fluid" alt="client-img">
-                                        </div>
-                                        <div class="peopl align-self">
-                                            <h3>Julia sakura</h3>
-                                            <p class="indentity">Seattle, Washington</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-content">
-                                <div class="testimonial">
-                                    <blockquote>
-                                        <q>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit beatae laudantium
-                                            voluptate rem ullam dolore nisi voluptatibus esse quasi, doloribus tempora.
-                                            Dolores molestias adipisci dolor sit amet!.</q>
-                                    </blockquote>
-                                    <div class="testi-des">
-                                        <div class="test-img"><img src="assets/images/team3.jpg" class="img-fluid" alt="client-img">
-                                        </div>
-                                        <div class="peopl align-self">
-                                            <h3>Roy Linderson</h3>
-                                            <p class="indentity">Seattle, Washington</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-content">
-                                <div class="testimonial">
-                                    <blockquote>
-                                        <q>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit beatae laudantium
-                                            voluptate rem ullam dolore nisi voluptatibus esse quasi, doloribus tempora.
-                                            Dolores molestias adipisci dolor sit amet!.</q>
-                                    </blockquote>
-                                    <div class="testi-des">
-                                        <div class="test-img"><img src="assets/images/team4.jpg" class="img-fluid" alt="client-img">
-                                        </div>
-                                        <div class="peopl align-self">
-                                            <h3>Mike Thyson</h3>
-                                            <p class="indentity">Seattle, Washington</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-content">
-                                <div class="testimonial">
-                                    <blockquote>
-                                        <q>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit beatae laudantium
-                                            voluptate rem ullam dolore nisi voluptatibus esse quasi, doloribus tempora.
-                                            Dolores molestias adipisci dolor sit amet!.</q>
-                                    </blockquote>
-                                    <div class="testi-des">
-                                        <div class="test-img"><img src="assets/images/team2.jpg" class="img-fluid" alt="client-img">
-                                        </div>
-                                        <div class="peopl align-self">
-                                            <h3>Laura gill</h3>
-                                            <p class="indentity">Seattle, Washington</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-content">
-                                <div class="testimonial">
-                                    <blockquote>
-                                        <q>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit beatae laudantium
-                                            voluptate rem ullam dolore nisi voluptatibus esse quasi, doloribus tempora.
-                                            Dolores molestias adipisci dolor sit amet!.</q>
-                                    </blockquote>
-                                    <div class="testi-des">
-                                        <div class="test-img"><img src="assets/images/team3.jpg" class="img-fluid" alt="client-img">
-                                        </div>
-                                        <div class="peopl align-self">
-                                            <h3>Smith Johnson</h3>
-                                            <p class="indentity">Seattle, Washington</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /grids -->
-        </div>
-        <!-- //grids -->
-    </section>
-    <!-- //testimonials -->
+
+
 
     <!-- home page video popup section -->
     <section class="w3l-index5" id="about">
@@ -461,7 +287,7 @@
         const typedTextSpan = document.querySelector(".typed-text");
         const cursorSpan = document.querySelector(".cursor");
 
-        const textArray = ["这个手机游戏叫", "“妖怪哪里跑”没后续", "但是我开发其他游戏。"];
+        const textArray = ["这个手机游戏叫", "“妖怪哪里跑”没后续", "但是我会做其他游戏。"];
         const typingDelay = 200;
         const erasingDelay = 10;
         const newTextDelay = 100; // Delay between current and next text

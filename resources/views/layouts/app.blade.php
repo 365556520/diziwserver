@@ -48,14 +48,18 @@
                             <li class="nav-item active">
                                 <a class="nav-link" href="{{ url('/') }}">首页<span class="sr-only">(current)</span></a>
                             </li>
+
+                            <li class="nav-item @@contact__active">
+                                <a class="nav-link" href="contact.html">软记忆</a>
+                            </li>
+                            <li class="nav-item @@contact__active">
+                                <a class="nav-link" href="contact.html">快乐爱好</a>
+                            </li>
+                            <li class="nav-item @@contact__active">
+                                <a class="nav-link" href="contact.html">游戏</a>
+                            </li>
                             <li class="nav-item @@about__active">
-                                <a class="nav-link" href="about.html">关于我</a>
-                            </li>
-                            <li class="nav-item @@contact__active">
-                                <a class="nav-link" href="contact.html">笔记</a>
-                            </li>
-                            <li class="nav-item @@contact__active">
-                                <a class="nav-link" href="contact.html">我的游戏</a>
+                                <a class="nav-link" href="about.html">关于</a>
                             </li>
                         </ul>
                     </div>
