@@ -67,12 +67,16 @@ Route::group(['namespace'=>'Api'],function(){
         Route::post('social/login', 'PassportController@socialLogin');
         //app第三方绑定账号
         Route::post('social/correlation', 'PassportController@correlation');
+
         //用户令牌认证过滤
         Route::group(['middleware' => 'auth:api'], function() {
             //获取用户信息
             Route::post('passport', 'PassportController@passport');
             //退出用户删除令牌
             Route::post('logout','PassportController@logout');
+            //获取大一key
+            Route::post('getDayiKey', 'PassportController@getDayiKey');
+
         });
     });
 });

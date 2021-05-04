@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\CommonController;
 use App\Models\Role;
 use App\Models\UsersModel\User_Data;
 use App\User;
+use http\Client;
 use Validator;
 use Illuminate\Http\Request;
 use Auth;
@@ -140,5 +141,16 @@ class PassportController extends CommonController
             $this->successStatus = 401;
         }
         return response()->json($this->content, $this->successStatus);
+    }
+    //获取获取大一平台登录key一次只能用30分钟
+    public function  getDayiKey(){
+        $date = '';
+        $dayiuser = 'xxfhgj';
+        $dayipassword = 'ae38996dc4d1e2a1fdf605cf86613677';
+        $url = "http://123.162.189.21/gps-web/api/login.jsp?password=".$dayipassword."&userId=".$dayiuser."&loginType=user&loginWay=interface&loginLang=zh_CN";
+        $client = new \GuzzleHttp\Client();
+        $res =  $client->request('POST',$url);
+        $date = $res->getBody()->getContents();
+        return response()->json($date, $this->successStatus);
     }
 }
