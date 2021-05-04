@@ -12,6 +12,8 @@ use Validator;
 use Illuminate\Http\Request;
 use Auth;
 use \Illuminate\Auth\Passwords\PasswordBroker;
+use GuzzleHttp\Exception\RequestException;
+use Spatie\Permission\Models\Permission;
 
 class PassportController extends CommonController
 {
@@ -146,11 +148,20 @@ class PassportController extends CommonController
     public function  getDayiKey(){
         $date = '';
         $dayiuser = 'xxfhgj';
-        $dayipassword = 'ae38996dc4d1e2a1fdf605cf86613677'; //密码需要MD532位加密
+        $pass = Permission::where('guard_name','dayikey')->first();
+        $dayipassword = $pass->name; //密码需要MD532位加密'ae38996dc4d1e2a1fdf605cf86613677'
         $url = "http://123.162.189.21/gps-web/api/login.jsp?password=".$dayipassword."&userId=".$dayiuser."&loginType=user&loginWay=interface&loginLang=zh_CN";
         $client = new \GuzzleHttp\Client();
-        $res =  $client->request('POST',$url);
-        $date = $res->getBody()->getContents();
-        return response()->json($date, $this->successStatus);
+        try {
+            $res =  $client->request('POST',$url);
+            $date = json_decode($res->getBody()->getContents());//把获取的json数据转换成数组
+            $this->successStatus = 200;
+        } catch (RequestException $e) {
+            if ($e->hasResponse()) {
+                $this->date =  $e->getResponse();
+                $this->successStatus = 401;
+            }
+        }
+        return response()->json(['data' => $date,'code'=>$this->successStatus]);
     }
 }
