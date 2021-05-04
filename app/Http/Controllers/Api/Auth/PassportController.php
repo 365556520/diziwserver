@@ -146,7 +146,7 @@ class PassportController extends CommonController
     public function  getDayiKey(){
         $date = '';
         $dayiuser = 'xxfhgj';
-        $dayipassword = 'ae38996dc4d1e2a1fdf605cf86613677';
+        $dayipassword = 'ae38996dc4d1e2a1fdf605cf86613677'; //密码需要MD532位加密
         $url = "http://123.162.189.21/gps-web/api/login.jsp?password=".$dayipassword."&userId=".$dayiuser."&loginType=user&loginWay=interface&loginLang=zh_CN";
         $client = new \GuzzleHttp\Client();
         $res =  $client->request('POST',$url);
