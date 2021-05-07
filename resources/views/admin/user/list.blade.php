@@ -6,20 +6,16 @@
 @endsection
 @section('content')
     <div class="layui-row">
-
-        <div class="layui-card">
-            <div class="layui-card-header">用户管理</div>
-            <div class="layui-card-body">
-                <table class="layui-hide" id="test" lay-filter="test"></table>
-                {{--操作按钮--}}
-                <script type="text/html" id="barbtn">
-                    <div class="layui-btn-group">
-                        <button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="empower">授权</button>
-                        <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button>
-                    </div>
-                </script>
+        <a class="layui-btn" href="javascript:;createAccount()">增加用户</a>
+        <b style="color:#cb0322 ">注意:不开放注册只有登录后台的用户才能添加用户!</b>
+        <table class="layui-hide" id="test" lay-filter="test"></table>
+        {{--操作按钮--}}
+        <script type="text/html" id="barbtn">
+            <div class="layui-btn-group">
+                <button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="empower">授权</button>
+                <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button>
             </div>
-        </div>
+        </script>
     </div>
 @endsection
 @section('js')
@@ -106,5 +102,19 @@
                 });
             }
         });
+        //创建新用户
+        function createAccount() {
+            layer.open({
+                type: 2,//2类型窗口 这里内容是一个网址
+                title: '创建新用户',
+                shadeClose: true,
+                shade: false,
+                anim: 2, //打开动画
+                maxmin: true, //开启最大化最小化按钮
+                area: ['60%', '95%'],
+                content: '{{url("/register")}}',
+            });
+        }
+
     </script>
 @endsection

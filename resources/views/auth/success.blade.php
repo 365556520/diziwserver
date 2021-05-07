@@ -20,6 +20,7 @@
             <div class="layui-col-sm12">
                 <div class="cont"><i class="layui-icon layui-icon-face-smile" style="font-size: 80px;color: #1E9FFF;"></i>  </div>
                 <div class="cont">{{$massage}}</div>
+                <div class="cont"> <a href="{{ url()->previous() }}" >返回上一页</a></div>
             </div>
         </div>
     </div>

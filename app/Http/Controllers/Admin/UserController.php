@@ -50,6 +50,7 @@ class UserController extends CommonController
      * @return \Illuminate\Http\Response
      */
     public function store(UserRequest $request){
+
     }
 
     /**

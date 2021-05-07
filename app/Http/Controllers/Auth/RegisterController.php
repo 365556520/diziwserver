@@ -48,10 +48,10 @@ class RegisterController extends Controller
         $auth->getUserData()->save( new User_Data(['user_id' => Auth::user()->id]));
         if (Auth::check()) {
             // 用户已经登录了...
-            Auth::logout();
-            $massage = '恭喜注册成功！';
-            return 'auth/success/'.$massage;
+           // Auth::logout();
         }
+        $massage = '恭喜注册成功！';
+        return 'auth/success/'.$massage;
     }
 
     /**
