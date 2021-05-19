@@ -147,14 +147,13 @@ class PassportController extends CommonController
     //获取获取大一平台登录key一次只能用30分钟
     public function  getDayiKey(){
         $date = '';
-        $dayiuser = 'xxfhgj';
-        $pass = Permission::where('guard_name','dayikey')->first();
-        $dayipassword = $pass->name; //密码需要MD532位加密'ae38996dc4d1e2a1fdf605cf86613677'
-        $url = "http://123.162.189.21/gps-web/api/login.jsp?password=".$dayipassword."&userId=".$dayiuser."&loginType=user&loginWay=interface&loginLang=zh_CN";
+        $pass = Permission::where('name','xxfhgj')->first();
+        $url = "http://123.162.189.21/gps-web/api/login.jsp?password=".$pass->guard_name."&userId=".$pass->name."&loginType=user&loginWay=interface&loginLang=zh_CN";
         $client = new \GuzzleHttp\Client();
         try {
             $res =  $client->request('POST',$url);
             $date = json_decode($res->getBody()->getContents());//把获取的json数据转换成数组
+            $date->usersid = $pass->name;
             $this->successStatus = 200;
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
