@@ -49,8 +49,9 @@ return [
     'register_providers'       => [],
     'cleaners'                 => [
         // If you use the session/authentication/passport in your project
-        // Hhxsv5\LaravelS\Illuminate\Cleaners\SessionCleaner::class,
-        // Hhxsv5\LaravelS\Illuminate\Cleaners\AuthCleaner::class,
+        // 如果你的项目中使用到了Session、Authentication、Passport，需配置如下清理器
+         Hhxsv5\LaravelS\Illuminate\Cleaners\SessionCleaner::class,
+         Hhxsv5\LaravelS\Illuminate\Cleaners\AuthCleaner::class,
 
         // If you use the package "tymon/jwt-auth" in your project
         // Hhxsv5\LaravelS\Illuminate\Cleaners\SessionCleaner::class,
