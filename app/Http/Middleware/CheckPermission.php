@@ -54,7 +54,7 @@ class CheckPermission
     }
     private function check($request,$permission){
         //判断有没有登录后台权限
-        if (!\auth()->user()->givePermissionTo($permission)) {
+        if (!\auth()->user()->hasPermissionTo($permission)) {
             abort(500,trans('admin/errors.permissions'));
         }
     }
