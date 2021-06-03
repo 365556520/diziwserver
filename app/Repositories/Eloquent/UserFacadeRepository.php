@@ -6,6 +6,10 @@ namespace App\Repositories\Eloquent;
  * Date: 2018/1/14
  * Time: 9:43
  */
+
+use App\Models\AminModels\model_has_roles;
+use App\Models\AminModels\role_has_permissions;
+use Spatie\Permission\Models\Permission;
 use App\Models\Role;
 use App\Models\UsersModel\User_Data;
 use App\User;
@@ -83,5 +87,16 @@ class UserFacadeRepository implements UserInterface {
      * */
     public function isUser($lname,$data){
        return User::where($lname, $data)->exists();
+    }
+    /*
+     * 获取当前登录账号的所有角色和权限
+     * $id 当前登录用户id
+     * */
+    public function getUserAllPermission(){
+        $userRoles = model_has_roles::select('role_id')->where('model_id',Auth::user()->id)->get();//已经拥有的角色id
+        $userPermissionsId = role_has_permissions::whereIn('role_id',$userRoles)->pluck('permission_id');
+        $userPermissions = Permission::select('name')->whereIn('id',$userPermissionsId)->get();
+        return $userPermissions;
+
     }
 }

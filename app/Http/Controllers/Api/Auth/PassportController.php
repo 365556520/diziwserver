@@ -80,6 +80,7 @@ class PassportController extends CommonController
     public function passport()
     {
         $userdata = User::select('id','name','headimg')->where('id',Auth::user()->id)->with('getUserData')->get();
+        $userdata['parmission'] = UserFacade::getUserAllPermission(); //当前登录用户所有的权限
         return response()->json(['user' => $userdata],$this->successStatus);
     }
 
@@ -154,29 +155,25 @@ class PassportController extends CommonController
             $pass = Permission::where('name','xxfhgj')->first();
         }else if (Auth::user()->hasPermissionTo('keyun')){
             $pass = Permission::where('name','nyswxxjad')->first();
-        }else{
-            $this->successStatus = 401;
-            return response()->json(['data' => '没有权限','code'=>$this->successStatus]);
         }
-        $url = "http://123.162.189.21/gps-web/api/login.jsp?password=".$pass->guard_name."&userId=".$pass->name."&loginType=user&loginWay=interface&loginLang=zh_CN";
-        $client = new \GuzzleHttp\Client();
-        try {
-            $res =  $client->request('POST',$url);
-            $date = json_decode($res->getBody()->getContents());//把获取的json数据转换成数组
-            $date->Permission = '';
-            if(Auth::user()->hasPermissionTo('api.admin')){ //判断当前用户是否是管理
-                $date->Permission =  'api.admin'; //设置账号为管理员权限
+        //判断是否有权限
+        if ($pass!=''){
+            $url = "http://123.162.189.21/gps-web/api/login.jsp?password=".$pass->guard_name."&userId=".$pass->name."&loginType=user&loginWay=interface&loginLang=zh_CN";
+            $client = new \GuzzleHttp\Client();
+            try {
+                $res =  $client->request('POST',$url);
+                $date = json_decode($res->getBody()->getContents());//把获取的json数据转换成数组
+                $date->usersid = $pass->name; //返回账号名字
+                $this->successStatus = 200;
+            } catch (RequestException $e) {
+                if ($e->hasResponse()) {
+                    $this->date =  $e->getResponse();
+                    $this->successStatus = 401;
+                }
             }
-            if (Auth::user()->hasPermissionTo('api.user')){
-                $date->Permission =  'api.user'; //设置账号为普通用户权限
-            }
-            $date->usersid = $pass->name; //返回账号名字
-            $this->successStatus = 200;
-        } catch (RequestException $e) {
-            if ($e->hasResponse()) {
-                $this->date =  $e->getResponse();
-                $this->successStatus = 401;
-            }
+        }else{
+            $this->successStatus = 300;
+            $date = '权限不够';
         }
         return response()->json(['data' => $date,'code'=>$this->successStatus]);
     }
