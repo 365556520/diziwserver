@@ -18,17 +18,21 @@
 @section('content')
     <div style="padding: 10px;">
         <div class="row">
-            <div class="layui-col-md4 layui-col-sm12 layui-col-xs12 " >
+            <div class="layui-col-md3 layui-col-sm12 layui-col-xs12 " >
                 车牌号:{{$buses->buses_name}}
             </div>
-            <div class="layui-col-md4 layui-col-sm12 layui-col-xs12 " >
-                车型:{{$buses->buses_type}}
+            <div class="layui-col-md3 layui-col-sm12 layui-col-xs12 " >
+                营运类型:{{$buses->buses_yingyun_type}}
             </div>
-            <div class="layui-col-md4 layui-col-sm12 layui-col-xs12 " >
+            <div class="layui-col-md3 layui-col-sm12 layui-col-xs12 " >
                 核载:{{$buses->buses_sit}}人
+            </div>
+            <div class="layui-col-md3 layui-col-sm12 layui-col-xs12 " >
+                车型:{{$buses->buses_type}}
             </div>
         </div>
         <div class="row">
+
             <div class="layui-col-md6 layui-col-sm12 layui-col-xs12 " >
                 车主:{{$buses->buses_boss}}
             </div>

@@ -23,6 +23,7 @@ class Buses extends Model
         'buses_phone',
         'buses_start_date',
         'buses_end_date',
+        'buses_yingyun_type',
     ];
     //获取驾驶员
     public function getDriver()

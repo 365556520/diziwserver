@@ -34,9 +34,9 @@ class CreateBusesTable extends Migration
             $table->string('driver_permit')->comment('准驾车型');
             $table->string('driver_archive_number')->comment('驾驶证档案号');
             $table->string('driver_card')->comment('驾驶证号');
-            $table->string('driver_qualification')->comment('从业资格证号');
+            $table->string('driver_qualification')->nullable()->comment('从业资格证号');
             $table->string('driver_card_date')->comment('驾驶证审验有效时间');
-            $table->string('driver_qualification_date')->comment('资格证审验有效时间');
+            $table->string('driver_qualification_date')->nullable()->comment('资格证审验有效时间');
             $table->string('driver_phone')->comment('电话');
             $table->timestamps();
         });
@@ -47,13 +47,15 @@ class CreateBusesTable extends Migration
             $table->string('buses_name')->comment('车号');
             $table->string('buses_type')->comment('车型');
             $table->string('buses_sit')->comment('核载');
-            $table->string('buses_approve_date')->comment('车辆审验时间');
-            $table->string('buses_insurance_date')->comment('保险期限');
+            $table->string('buses_approve_date')->nullable()->comment('车辆审验时间');
+            $table->string('buses_insurance_date')->nullable()->comment('保险期限');
             $table->integer('buses_driver_id')->unsigned()->comment('驾驶员');
             $table->string('buses_boss')->comment('车主');
             $table->string('buses_phone')->comment('随车电话');
-            $table->string('buses_start_date')->comment('发车时间');
-            $table->string('buses_end_date')->comment('返回时间');
+            $table->string('buses_start_date')->nullable()->comment('发车时间');
+            $table->string('buses_end_date')->nullable()->comment('返回时间');
+            //后续添加村村通属性
+            $table->string('buses_yingyun_type')->comment('车营运类型');
             //外检约束更新和删除都绑定
             $table->foreign('busesroute_id')->references('id')->on('busesroute') ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('buses_driver_id')->references('id')->on('driver') ->onUpdate('cascade')->onDelete('cascade');

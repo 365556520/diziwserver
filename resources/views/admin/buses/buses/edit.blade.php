@@ -19,6 +19,13 @@
                         <input type="text" name="buses_name" value="{{$buses->buses_name}}" lay-verify="required" placeholder="请输入车牌号" autocomplete="off" class="layui-input">
                     </div>
                 </div>
+                {{--车营运类型--}}
+                <div class="layui-inline">
+                    <label class="layui-form-label">营运类型</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="buses_yingyun_type"  value="{{$buses->buses_yingyun_type}}" lay-verify="required" placeholder="请输入营运类型" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
                 {{--车型--}}
                 <div class="layui-inline">
                     <label class="layui-form-label">车型</label>
@@ -26,27 +33,28 @@
                         <input type="text" name="buses_type" value="{{$buses->buses_type}}"   lay-verify="required" placeholder="请输入车型" autocomplete="off" class="layui-input">
                     </div>
                 </div>
+
+            </div>
+            <div  class="layui-form-item">
                 {{--核载--}}
                 <div class="layui-inline">
                     <label class="layui-form-label">核载</label>
                     <div class="layui-input-block">
-                        <input type="text" name="buses_sit" value="{{$buses->buses_sit}}" lay-verify="required" placeholder="请输入核载人数" autocomplete="off" class="layui-input" style="width: 67%">
+                        <input type="text" name="buses_sit" value="{{$buses->buses_sit}}" lay-verify="required" placeholder="请输入核载人数" autocomplete="off" class="layui-input" >
                     </div>
                 </div>
-            </div>
-            <div  class="layui-form-item">
                 {{--保险期限--}}
                 <div class="layui-inline">
                     <label class="layui-form-label" style=" padding: 9px 3px;">保险期限</label>
                     <div class="layui-input-block">
-                        <input type="text" name="buses_insurance_date" value="{{$buses->buses_insurance_date}}" lay-verify="required"  placeholder="请输入保险期限" autocomplete="off" class="layui-input">
+                        <input type="text" name="buses_insurance_date" value="{{$buses->buses_insurance_date}}" lay-verify=""  placeholder="请输入保险期限" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 {{--车辆审验时间--}}
                 <div class="layui-inline">
                     <label class="layui-form-label" style="padding:9px 2px;">车辆审验时间</label>
                     <div class="layui-input-block">
-                        <input type="text" name="buses_approve_date" value="{{$buses->buses_approve_date}}" lay-verify="required"  placeholder="请输入车辆审验时间" autocomplete="off" class="layui-input" >
+                        <input type="text" name="buses_approve_date" value="{{$buses->buses_approve_date}}" lay-verify=""  placeholder="请输入车辆审验时间" autocomplete="off" class="layui-input" >
                     </div>
                 </div>
             </div>
@@ -55,13 +63,13 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">发车时间</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="buses_start_date" value="{{$buses->buses_start_date}}" lay-verify="required" autocomplete="off" class="layui-input">
+                        <input type="text" name="buses_start_date" value="{{$buses->buses_start_date}}" lay-verify="" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">返回时间</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="buses_end_date" value="{{$buses->buses_end_date}}"  lay-verify="required" autocomplete="off" class="layui-input">
+                        <input type="text" name="buses_end_date" value="{{$buses->buses_end_date}}"  lay-verify="" autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-form-mid layui-word-aux">往返时间填写格式例如时间多的用,号隔开（发车时间;6:20,12:10返回时间:9:10,5:20）</div>
                 </div>

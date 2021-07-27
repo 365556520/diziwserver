@@ -79,11 +79,12 @@
                     {type: 'checkbox', fixed: 'left'}
                     , {field: 'id', title: 'ID', width: 60, sort: true,fixed: 'left'}
                     , {field: 'buses_name', title: '车号', width: 120 ,fixed: 'left'}
+                    , {field: 'buses_yingyun_type', title: '营运类型', width: 90}
                     , {field: 'buses_type', title: '车型', width: 90}
                     , {field: 'buses_sit', title: '核载', width: 90}
-                    , {field: 'buses_approve_date', title: '车辆审验时间', width: 130}
+                   // , {field: 'buses_approve_date', title: '车辆审验时间', width: 130}
                     // , {field: 'state', title: '文章状态', width: 90}
-                    ,{field:'buses_insurance_date', title:'保险期限', width:130, templet: '#switchTpl', unresize: true}
+                  //  ,{field:'buses_insurance_date', title:'保险期限', width:130, templet: '#switchTpl', unresize: true}
                     , {field: 'buses_boss', title: '车主', width: 100 ,sort: true,}
                     , {field: 'buses_phone', title: '随车电话', width: 150}
                     , {field: 'buses_start_date', title: '发车时间', width: 120}
@@ -168,7 +169,7 @@
                     case 'add':
                         layer.open({
                             type: 2,//2类型窗口 这里内容是一个网址
-                            title: '<div><i class="layui-icon layui-icon-edit" style="font-size: 22px; color: #ff2315;"></i>添加文章</div>',
+                            title: '<div><i class="layui-icon layui-icon-edit" style="font-size: 22px; color: #ff2315;"></i>添加车辆</div>',
                             shadeClose: true,
                             shade: false,
                             anim: 2, //打开动画
@@ -222,7 +223,7 @@
                 } else if(obj.event === 'edit'){
                     layer.open({
                         type: 2,//2类型窗口 这里内容是一个网址
-                        title: '修改文章分类',
+                        title: '修改车辆',
                         shadeClose: true,
                         shade: false,
                         anim: 2, //打开动画
