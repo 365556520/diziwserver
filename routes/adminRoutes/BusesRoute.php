@@ -7,7 +7,8 @@ Route::group(['prefix' => 'busesroute'],function (){
     Route::get('ajaxIndex','BusesRouteController@ajaxIndex');
 });
 Route::resource('busesroute','BusesRouteController');
-/* 班车路由
+/*
+班车路由
 */
 Route::group(['prefix' => 'buses'],function (){
     //列表数据
@@ -27,3 +28,15 @@ Route::group(['prefix' => 'driver'],function (){
 });
 Route::resource('driver','DriverController');
 
+/**
+ *班车事件
+ */
+Route::group(['prefix' => 'busesevent'],function (){
+    //列表数据
+    Route::get('ajaxIndex','BusesEventController@ajaxIndex');
+    //上传驾驶员照片图片
+    Route::post('upload','BusesEventController@upload');
+    //批量删除
+    Route::post('destroys/{id}','BusesEventController@destroys');
+});
+Route::resource('busesevent','BusesEventController');
