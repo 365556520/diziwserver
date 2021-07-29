@@ -10,12 +10,12 @@ use App\Repositories\Eloquent\Admin\Buses\DriverRepository;
 class BusesEventController extends CommonController
 {
     /*驾驶员控制器*/
-    private $driver;
-    function __construct(DriverRepository $driver)
+    private $busesevent;
+    function __construct(DriverRepository $busesevent)
     {
         //调用父累的构造方法
-        parent::__construct('driver');
-        $this->driver = $driver;
+        parent::__construct('busesevent');
+        $this->busesevent = $busesevent;
     }
 
     /**
@@ -62,7 +62,7 @@ class BusesEventController extends CommonController
      */
     public function create()
     {
-        return view("admin.buses.driver.add");
+        return view("admin.buses.busesevent.add");
     }
 
     /**

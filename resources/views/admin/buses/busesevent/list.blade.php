@@ -17,7 +17,7 @@
                     <span class="fl">
                         <div class="layui-btn-group">
                             <button class="layui-btn layui-btn-danger layui-btn-xs"  lay-event="delete-all">批量删除</button>
-                            <button class="layui-btn btn-default btn-add layui-btn-xs"  lay-event="add">添加驾驶员</button>
+                            <button class="layui-btn btn-default btn-add layui-btn-xs"  lay-event="add">添加车辆事件</button>
                         </div>
 
                     </span>
@@ -160,13 +160,13 @@
                     case 'add':
                         layer.open({
                             type: 2,//2类型窗口 这里内容是一个网址
-                            title: '<div><i class="layui-icon layui-icon-edit" style="font-size: 22px; color: #ff2315;"></i>添加驾驶员</div>',
+                            title: '<div><i class="layui-icon layui-icon-edit" style="font-size: 22px; color: #ff2315;"></i>添加事件</div>',
                             shadeClose: true,
                             shade: false,
                             anim: 2, //打开动画
                             maxmin: true, //开启最大化最小化按钮
                             area: ['85%', '100%'],
-                            content: '{{url("/admin/driver/create")}}',
+                            content: '{{url("/admin/busesevent/create")}}',
                             cancel: function(index, layero){
                                 // 刷新表格
                                 tableIns.reload();
