@@ -25,10 +25,7 @@
                         <div class="layui-inline">
                             <div class="layui-input-inline">
                                     <select name="ifs" id="ifs" lay-verify="">
-                                          <option value="driver_name">名字</option>
-                                          <option value="driver_sex">性别</option>
-                                          <option value="driver_permit">准驾车型</option>
-                                          <option value="driver_age">年龄</option>
+                                          <option value="buses_id">车辆id</option>
                                     </select>
                             </div>
                             <div class="layui-input-inline">
@@ -56,7 +53,7 @@
                 elem: '#dateTable'                  //指定原始表格元素选择器（推荐id选择器）
                 , height: $(window).height() - ( $('.my-btn-box').outerHeight(true) ? $('.my-btn-box').outerHeight(true) + 35 :  40 )    //获取高度容器高度
                 , id: 'dataCheck'
-                , url: '/admin/driver/ajaxIndex'
+                , url: '/admin/busesevent/ajaxIndex'
                 ,toolbar: '#toolbarDemo'
                 , where: {'ifs':null,'reload':null} //设定异步数据接口的额外参数
                 , method: 'get'
@@ -66,16 +63,11 @@
                 , loading: false
                 , cols: [[                  //标题栏
                     {type: 'checkbox', fixed: 'left'}
-                    , {field: 'id', title: 'ID', width: 60, sort: true,fixed: 'left'}
-                    , {field: 'driver_name', title: '名字', width: 100 ,fixed: 'left'}
-                    , {field: 'driver_age', title: '年龄', width: 70 ,sort: true}
-                    , {field: 'driver_sex', title: '性别', width: 70 }
-                    , {field: 'driver_phone', title: '联系电话', width: 150}
-                    , {field: 'driver_permit', title: '准驾车型', width: 100}
-                    , {field: 'driver_archive_number', title: '驾驶证档案编号', width: 160}
-                    // , {field: 'state', title: '文章状态', width: 90}
-                    ,{field:'driver_card', title:'驾驶证号', width:180, templet: '#switchTpl', unresize: true}
-                    , {field: 'driver_qualification', title: '资格证号', width: 190}
+                    , {field: 'id', title: 'ID', width: 60, sort: true}
+                    , {field: 'buses_id', title: '车辆id', width: 100 }
+                    , {field: 'event_photo', title: '图片', width: 100 ,sort: true}
+                    , {field: 'content', title: '事件内容', width: 300 }
+                    , {field: 'event_time', title: '事件时间', width: 150}
                     , {fixed: 'right', title: '操作', width: 160, align: 'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
                 ]]
                 , done: function (res, curr, count) {
@@ -235,12 +227,12 @@
                     //多窗口模式，层叠置顶
                     layer.open({
                         type: 2 //1类型窗口 这里内容可以自己写
-                        ,title:'<h3>'+data.driver_name+'</h3>'
+                        ,title:'<h3>'+data.id+'</h3>'
                         ,area: ['40%', '90%']
                         ,shade: false
                         ,anim: 2 //打开动画
                         ,maxmin: true
-                        ,content:'{{url("/admin/driver")}}/'+ data.id
+                        ,content:'{{url("/admin/busesevent")}}/'+ data.id
                     });
                 }
             });

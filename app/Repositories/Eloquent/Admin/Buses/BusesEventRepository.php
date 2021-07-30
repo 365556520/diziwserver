@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquent\Admin\Buses;
 use App\Models\AminModels\Buses\busesevent;
 use App\Repositories\Eloquent\Repository;
 use Illuminate\Support\Facades\Storage;
+use function Faker\Provider\pt_BR\check_digit;
 
 /**
  * 仓库模式继承抽象类
@@ -18,7 +19,7 @@ class BusesEventRepository extends Repository {
     /*权限表显示数据*/
     public function ajaxIndex($data){
         //得到模型
-        $driver = $this->model;
+        $busesevent = $this->model;
         $length = $data['limit']; //查询得条数
         $start = $data['page'] -1;//查询的页数 开始查询数据从0开始所以要减去1
         if ($start!=0){
@@ -26,18 +27,18 @@ class BusesEventRepository extends Repository {
         }
         if ($data['reload']!= null) {
             //模糊查找name、id列
-            $drivers = $driver->where($data["ifs"], 'like', "%{$data['reload']}%")->orWhere($data["ifs"],'like', "%{$data['reload']}%")->offset($start)->limit($length)->get();
-            $count = $driver->where($data["ifs"], 'like', "%{$data['reload']}%")->orWhere($data["ifs"],'like', "%{$data['reload']}%")->count();//查出所有数据的条数
+            $busesevents = $busesevent->where($data["ifs"], 'like', "%{$data['reload']}%")->orWhere($data["ifs"],'like', "%{$data['reload']}%")->offset($start)->limit($length)->get();
+            $count = $busesevent->where($data["ifs"], 'like', "%{$data['reload']}%")->orWhere($data["ifs"],'like', "%{$data['reload']}%")->count();//查出所有数据的条数
         }else{
-            $drivers = $driver->offset($start)->limit($length)->get();//得到全部数据
-            $count = $driver->count();//查出所有数据的条数
+            $busesevents = $busesevent->offset($start)->limit($length)->get();//得到全部数据
+            $count = $busesevent->count();//查出所有数据的条数
     }
         // datatables固定的返回格式
         return [
             'code' => 0,
             'msg' => '',//消息
             'count' => $count,//总条数
-            'data' => $drivers,//数据
+            'data' => $busesevents,//数据
         ];
     }
     /*添加车辆事件*/

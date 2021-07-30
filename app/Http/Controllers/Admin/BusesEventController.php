@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\AminModels\Buses\Buses;
 use Illuminate\Http\Request;
-use App\Repositories\Eloquent\Admin\Buses\DriverRepository;
+use App\Repositories\Eloquent\Admin\Buses\BusesEventRepository;
 
 class BusesEventController extends CommonController
 {
     /*驾驶员控制器*/
     private $busesevent;
-    function __construct(DriverRepository $busesevent)
+    function __construct(BusesEventRepository $busesevent)
     {
         //调用父累的构造方法
         parent::__construct('busesevent');
@@ -30,7 +30,7 @@ class BusesEventController extends CommonController
 
     //列表表DataTables
     public function ajaxIndex(Request $request){
-        $result = $this->driver->ajaxIndex($request->all());
+        $result = $this->busesevent->ajaxIndex($request->all());
         return response()->json($result);
     }
     /*
@@ -73,8 +73,8 @@ class BusesEventController extends CommonController
      */
     public function store(Request $request){
         //$request->except('_token')不获取_token的值，其他值正常获取
-        $result = $this->driver->createDriver($request->except('_token','field'));
-        return view("admin.buses.driver.add");
+        $result = $this->busesevent->createBusesevent($request->except('_token','field'));
+        return view("admin.buses.busesevent.add");
     }
 
     /**
@@ -84,8 +84,8 @@ class BusesEventController extends CommonController
      */
     public function show($id)
     {
-        $driver = $this->driver->find($id);
-        return view('admin.buses.driver.show')->with(compact('driver'));
+        $busesevent = $this->busesevent->find($id);
+        return view('admin.buses.busesevent.show')->with(compact('busesevent'));
     }
 
     /**

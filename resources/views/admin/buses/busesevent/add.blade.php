@@ -25,7 +25,7 @@
                      <div class="layui-form-item">
                          <label class="layui-form-label">事件时间</label>
                          <div class="layui-input-block">
-                             <input type="text" name="event_photo" lay-verify="required" placeholder="请输入事件时间" autocomplete="off" class="layui-input">
+                             <input type="text" name="event_time" lay-verify="required" placeholder="请输入事件时间" autocomplete="off" class="layui-input">
                          </div>
                      </div>
                  </div>
@@ -56,7 +56,7 @@
                 </div>
 
              <div class="layui-form-item" STYLE="padding-top: 30px">
-                 <button class="layui-btn" lay-submit="" lay-filter="demo2">添加驾驶员</button>
+                 <button class="layui-btn" lay-submit="" lay-filter="demo2">添加事件</button>
              </div>
 
         </form>
