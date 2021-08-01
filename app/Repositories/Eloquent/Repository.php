@@ -168,7 +168,7 @@ abstract class Repository implements RepositoryInterface{
          * @return int
          */
         public function delete($id){
-            Log::info('删除'.$this->model->action.'表中ID：'.$id.'的数据。');
+     //       Log::info('删除'.$this->model->action.'表中ID：'.$id.'的数据。');
             return $this->model->destroy($id);
         }
         /**

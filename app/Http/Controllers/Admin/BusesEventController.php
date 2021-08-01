@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 
-use App\Models\AminModels\Buses\Buses;
+use App\Models\AminModels\Buses\busesevent;
 use Illuminate\Http\Request;
 use App\Repositories\Eloquent\Admin\Buses\BusesEventRepository;
 
@@ -96,8 +96,8 @@ class BusesEventController extends CommonController
      */
     public function edit($id)
     {
-        $driver = $this->driver->editView($id);
-        return view('admin.buses.driver.edit')->with(compact('driver'));
+        $busesevent = $this->busesevent->editView($id);
+        return view('admin.buses.busesevent.edit')->with(compact('busesevent'));
     }
 
     /**
@@ -109,8 +109,8 @@ class BusesEventController extends CommonController
      */
     public function update(Request $request, $id)
     {
-        $this->driver->updateDriver($request->all(),$id);
-        return redirect('admin/driver/'.$id.'/edit');
+        $this->busesevent->updateDriver($request->all(),$id);
+        return redirect('admin/busesevent/'.$id.'/edit');
     }
 
     /**
@@ -121,12 +121,9 @@ class BusesEventController extends CommonController
      */
     public function destroy($id)
     {
-        if(Buses::where('buses_driver_id',$id)->exists()){
-            return response()->json(['code' => 0,'msg'=>'删除失败，该驾驶员绑定有车辆！']);
-        }else{
-            $this->driver->destroyDriver($id);
-            return response()->json(['code' => 200,'msg'=>'删除成功']);
-        }
+        $this->busesevent->destroyBusesevent($id);
+        return response()->json(['code' => 200,'msg'=>'删除成功']);
+
     }
     /*
     * 批量删除
@@ -134,14 +131,12 @@ class BusesEventController extends CommonController
     public function destroys(Request $request,$id){
         //把json转换成数组然后用数组函数支取id列
         $id = array_column(json_decode($id), 'id');
-        if(Buses::whereIn('buses_driver_id',$id)->exists()){
-            return response()->json(['code' => 0,'msg'=>'删除失败，有驾驶员绑定有车辆！']);
-        }else {
-            //得到图片
-            $thumb = $request->all()['thumb'];
-            $this->driver->destroyDrivers($thumb, $id);
-            return response()->json(['code' => 200, 'msg' => '删除成功']);
-        }
+        //得到图片
+        $thumb = $request->all()['thumb'];
+        $this->busesevent->destroyBusesevents($thumb, $id);
+
+        return response()->json(['code' => 200, 'msg' => '删除成功']);
+
     }
 
 }

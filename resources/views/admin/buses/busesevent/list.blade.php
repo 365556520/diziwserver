@@ -66,7 +66,7 @@
                     , {field: 'id', title: 'ID', width: 60, sort: true}
                     , {field: 'buses_id', title: '车辆id', width: 100 }
                     , {field: 'event_photo', title: '图片', width: 100 ,sort: true}
-                    , {field: 'content', title: '事件内容', width: 300 }
+                    , {field: 'content', title: '事件内容', width: 500 }
                     , {field: 'event_time', title: '事件时间', width: 150}
                     , {fixed: 'right', title: '操作', width: 160, align: 'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
                 ]]
@@ -111,13 +111,13 @@
                             ids.push({
                                 'id' : data[k]['id'],
                             });
-                            thumbs.push(data[k]['driver_photo']);
+                            thumbs.push(data[k]['event_photo']);
                         }
                         if(data.length>0){
                             layer.confirm('真的删除这些分类吗？', function(index){
                                 $.ajax({
                                     type: "POST",
-                                    url: "{{url('/admin/driver/destroys')}}/"+ JSON.stringify(ids),
+                                    url: "{{url('/admin/busesevent/destroys')}}/"+ JSON.stringify(ids),
                                     cache: false,
                                     data:{"thumb":thumbs},
                                     success: function (data) {
@@ -180,7 +180,7 @@
                     layer.confirm('真的删除此分类吗？', function(index){
                         $.ajax({
                             type: "POST",
-                            url: "{{url('/admin/driver')}}/"+data.id,
+                            url: "{{url('/admin/busesevent')}}/"+data.id,
                             cache: false,
                             data:{_method:"DELETE", _token: "{{csrf_token()}}"},
                             success: function (data) {
@@ -216,7 +216,7 @@
                         anim: 2, //打开动画
                         maxmin: true, //开启最大化最小化按钮
                         area: ['85%', '100%'],
-                        content: '{{url("/admin/driver")}}/'+ data.id + '/edit',
+                        content: '{{url("/admin/busesevent")}}/'+ data.id + '/edit',
                         cancel: function(index, layero){
                             // 刷新表格
                             tableIns.reload();
