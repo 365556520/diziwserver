@@ -3,7 +3,7 @@ layui.define('layer', function(exports){
 	exports('qiniuyun', {
         loader:function (options,callback) {
 			console.log(options);
-            $.getScript("http://jssdk-v2.demo.qiniu.io/dist/qiniu.min.js",function () {
+            $.getScript(layui.cache.base+"/qiniuyun/qiniu.min.js",function () {
 				if(!options.token){
                     layer.msg('初始化参数：token不能为空.', {icon: 2});
                     return;
@@ -14,34 +14,30 @@ layui.define('layer', function(exports){
                 }
 				var token = options.token;
 				var domain = options.domain;
-
+				
 				var config = {
 					useCdnDomain: true,
 					disableStatisticsReport: false,
-					retryCount: options.browse_button || 6,
-					region: options.browse_button || qiniu.region.z2 //七牛空间上传的区域  华东 z0 华北z1 华南z2
+					retryCount: options.retryCount || 6,
+					region: options.region || qiniu.region.z0
 				};
 				var putExtra = {
 					fname: "",
 					params: {},
 					mimeType: null
 				};
-                var prefix = options.prefix; //名字的前缀
+				
 				$(options.elem).unbind("change").bind("change",function(){
 					var file = this.files[0];
 					var finishedAttr = [];
 					var compareChunks = [];
 					var observable;
-                    //文件名字加密
-                    var filename= file.name;
-                   // var fileExt=(/[.]/.exec(filename)) ? /[^.]+$/.exec(filename.toLowerCase()) : ''; //后缀名
-                    var timestamp=new Date().getTime(); //当前时间戳
-                    var newfilename = timestamp+'jia'+ filename ; //当前时间戳+文件名字
-                    var key = prefix+'/'+newfilename; //这个文件名字需要md5加密
+					var key = file.name;
+					
 					putExtra.params["x:name"] = key.split(".")[0];
-
+					
 					var error = function(err) {
-						if(typeof options.complete === 'function'){
+						if(typeof options.error === 'function'){
 							options.error(err);
 						}else{
 							layer.msg("上传失败:"+JSON.stringify(err), {icon: 2});
@@ -57,7 +53,7 @@ layui.define('layer', function(exports){
 					};
 
 					var next = function(response) {
-						if(typeof options.complete === 'function'){
+						if(typeof options.next === 'function'){
 							options.next(response);
 						}else{
 							var chunks = response.chunks || [];
@@ -78,7 +74,7 @@ layui.define('layer', function(exports){
 							compareChunks = chunks;
 						}
 					};
-
+					
 					observable = qiniu.upload(file, key, token, putExtra, config);
 					var subObject = {next:next,error:error,complete:complete};
 					if(typeof callback === 'function'){

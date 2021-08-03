@@ -20,7 +20,7 @@ trait qiniuCosTrait{
         return new Auth($accessKey, $secretKey);
     }
 
-    //获取七牛token
+    //获取七牛上传token
     public function getQiniuToken(){
         // 构建鉴权对象
         $auth = $this->getQiniuAuth();
@@ -41,7 +41,7 @@ trait qiniuCosTrait{
         $bucketManager = new \Qiniu\Storage\BucketManager($auth, $config);
         $err = $bucketManager->delete($bucket,$key);
         if ($err) {
-            dd($err);
+
             return false;
         }
         return true;

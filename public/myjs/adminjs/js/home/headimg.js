@@ -112,7 +112,7 @@ var headimg = function () {
                 }
             });
             console.log($imageinfo);
-            $.getScript("http://jssdk-v2.demo.qiniu.io/dist/qiniu.min.js",function () {
+            $.getScript("/extend/layui/extend/layui-qiniuyun-master/qiniuyun/qiniu.min.js",function () {
                 var config = {
                     useCdnDomain: true,
                     disableStatisticsReport: false,
@@ -128,16 +128,18 @@ var headimg = function () {
                 var observable;
                 //文件名字加密
                 var prefix = 'diziw/images/haedimg'; //名字的前缀
-                var filename= '.'+$imageinfo.type.split("/")[1]; //图片的后缀名
+                var filename= '.'+$imageinfo.type.split("/")[1]; //图片的后缀名  //z这个地方可能会错
                 // var fileExt=(/[.]/.exec(filename)) ? /[^.]+$/.exec(filename.toLowerCase()) : ''; //后缀名
                 var timestamp=new Date().getMilliseconds(); //当前毫秒数返回值是 0 ~ 999 之间的一个整数
                 var uuid = getUuid.init(8,16); //获取uuid
                 var newfilename = timestamp+uuid+ filename ; //当前毫秒+uuid+后缀名
                 var key = prefix+'/'+newfilename; //这个是文件的完整名字
                 putExtra.params["x:name"] = key.split(".")[0];
+                //上传错误信息
                 var error = function(err) {
                     console.log("上传错误信息：" + JSON.stringify(err));
                 };
+                //上传成功
                 var complete = function(res) {
                     let url = 'http://public.diziw.cn/'+res.key; //图片地址
                     console.log("上传成功：" + url);
@@ -147,11 +149,12 @@ var headimg = function () {
                     $('#submitForm').submit();
                     console.log("上传成功：" + JSON.stringify(res));
                 };
+              //  上传进度
                 var next = function(response) {
                  /*  上传完成后的数据格式 {"total":{"loaded":165288,"size":165288,"percent":100}}%*/
                     console.log("上传进度：" + JSON.stringify(response) + "% ");
                 };
-
+                //上传到七牛
                 observable = qiniu.upload(file, key, token, putExtra, config);
                 var subObject = {next:next,error:error,complete:complete};
                 if(typeof callback === 'function'){

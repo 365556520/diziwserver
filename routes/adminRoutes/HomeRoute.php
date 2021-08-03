@@ -17,6 +17,6 @@ Route::group(['prefix' => 'menus'],function () {
 //修改图像
 Route::get('showheadimg','HomeController@showheadimg')->name('showheadimg');
 //上传图片
-Route::post('headimg','HomeController@headimg')->name('headimg');
+Route::get('headimg','HomeController@headimg')->name('headimg');
 //修改用户资料
 Route::resource('home','HomeController');

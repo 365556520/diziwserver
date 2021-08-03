@@ -32,12 +32,13 @@ class HomeController extends CommonController
         if($request->session()->has('register')){
             //存在则表示是首次提交，清空session中的'register'
             $request->session()->forget('register');
-            $this->home->qiniuUpHeadimg($request->all());
+
         }else{
             //否则抛http异常，跳转到403页面
             flash("不能重复提交",'error');
         }
-        return view('auth.adminData.headimg');
+        $this->home->qiniuUpHeadimg($request->all());
+        return view('auth/adminData/headimg');
     }
 
     /**

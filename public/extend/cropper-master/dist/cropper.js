@@ -739,8 +739,11 @@
    */
 
   function addTimestamp(url) {
-    var timestamp = "timestamp=".concat(new Date().getTime());
-    return url + (url.indexOf('?') === -1 ? '?' : '&') + timestamp;
+ //   var timestamp = "timestamp=".concat(new Date().getTime());
+
+ //   return url + (url.indexOf('?') === -1 ? '?' : '&') + timestamp;
+    /*因为这里加上时间戳后打不开图片*/
+    return url;
   }
   /**
    * Get transforms base on the given object.
